@@ -1,0 +1,62 @@
+##
+##  Tigase XMPP/Jabber Test Suite
+##  Copyright (C) 2004-2009 "Artur Hefczyc" <artur.hefczyc@tigase.org>
+##
+##  This program is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License.
+##
+##  This program is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with this program. Look for COPYING file in the top folder.
+##  If not, see http://www.gnu.org/licenses/.
+##
+##  $Rev$
+##  Last modified by $Author$
+##  $Date$
+##
+
+# Test for XMPP ServiceDiscovery - XEP-0030: make sure the server returns
+# all expected elements including whole features set.
+# http://www.xmpp.org/extensions/xep-0030.html
+# @author <a href="mailto:artur.hefczyc@tigase.org">Artur Hefczyc</a>
+# @version $Rev$
+
+### Request discovery info:
+send: {
+<iq to='$(hostname)' id='disco_1' type='get'>
+  <query xmlns="http://jabber.org/protocol/disco#info"/>
+</iq>
+}
+expect:
+{
+<iq from="$(hostname)" type="result" id="disco_1" >
+  <query xmlns="http://jabber.org/protocol/disco#info">
+    <identity category="server" type="im"/>
+		<feature var="http://jabber.org/protocol/disco#info" />
+		<feature var="http://jabber.org/protocol/disco#items" />
+		<feature var="http://jabber.org/protocol/commands" />
+		<feature var="http://jabber.org/protocol/stats" />
+		<feature var="jabber:iq:version" />
+  </query>
+</iq>
+}
+
+### Request discovery items:
+send: {
+<iq type="get" to="$(hostname)" id="disco_2" >
+  <query xmlns="http://jabber.org/protocol/disco#items"/>
+</iq>
+}
+expect: {
+<iq from="$(hostname)" type="result" id="disco_2" >
+  <query xmlns="http://jabber.org/protocol/disco#items">
+    <item name="Configuration management" jid="basic-conf@$(hostname)" />
+    <item node="stats" name="Server statistics" jid="stats@$(hostname)" />
+  </query>
+</iq>
+}

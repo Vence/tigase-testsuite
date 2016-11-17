@@ -1,0 +1,185 @@
+send: {
+<iq type="set" id="aad2a">
+  <command xmlns="http://jabber.org/protocol/commands" node="add-script" >
+    <x xmlns="jabber:x:data" type="submit" >
+      <field type="text-single" var="Description" >
+	<value>Short description</value>
+      </field>
+      <field type="text-single" var="Command Id" >
+	<value>new-command</value>
+      </field>
+      <field type="list-single" var="Language" >
+	<value>groovy</value>
+      </field>
+      <field type="text-multi" var="Script text" >
+	<value>package tigase.admin</value>
+	<value></value>
+	<value>import tigase.server.*</value>
+	<value>import tigase.xmpp.*</value>
+	<value>import tigase.xmpp.impl.roster.*</value>
+	<value>import tigase.xml.*</value>
+	<value>import tigase.db.UserRepository</value>
+	<value></value>
+	<value>class Field { String name; String label; String type; String defVal = ""}</value>
+	<value></value>
+	<value>class RosterChangesControler {</value>
+	<value>	UserRepository repository </value>
+	<value>	Map&lt;String, XMPPSession&gt; sessions</value>
+	<value></value>
+	<value>	Field addOperation = new Field(name: "addJid", label: "Add")</value>
+	<value>	Field removeOperation = new Field(name: "removeJid", label: "Remove")</value>
+	<value>	List&lt;Field&gt; operationTypes = [addOperation, removeOperation]</value>
+	<value></value>
+	<value>	Field subscriptionNone = new Field(name: "none", label: "None")</value>
+	<value>	Field subscriptionFrom = new Field(name: "from", label: "From")</value>
+	<value>	Field subscriptionTo = new Field(name: "to", label: "To")</value>
+	<value>	Field subscriptionBoth = new Field(name: "both", label: "Both")</value>
+	<value>	List&lt;Field&gt; subscriptionTypes = [subscriptionNone, subscriptionFrom, subscriptionTo, subscriptionBoth]</value>
+	<value></value>
+	<value>	Field ownerJid = new Field(name: "rosterOwnerJID", label: "Roster owner JID", type: "jid-single")</value>
+	<value>	Field jidToChange= new Field(name: "jidToManipulate", label: "JID to manipulate", type: "jid-single")</value>
+	<value>	Field groups = new Field(name: "groups", label: "Comma separated groups")</value>
+	<value>	Field operationType = new Field(name: "operationType", label: "Operation type", </value>
+	<value>			defVal: addOperation.name)</value>
+	<value>	Field subscriptionType = new Field(name: "subscriptionType", </value>
+	<value>			label: "Subscription type", defVal: subscriptionBoth.name)</value>
+	<value>	List&lt;Field&gt; formFields = [ownerJid, jidToChange, groups, operationType, subscriptionType]</value>
+	<value>	</value>
+	<value>	def addField(Packet form, Field field, List&lt;Field&gt; listFields = []) {</value>
+	<value>		if (listFields != null &amp;&amp; listFields.size() == 0)</value>
+	<value>			Command.addFieldValue(form, field.name, field.defVal, field.type, field.label) 	</value>
+	<value>		else {</value>
+	<value>			def listValues = (listFields.collect { it.name }).toArray(new String[0])</value>
+	<value>			def listLabels = (listFields.collect { it.label }).toArray(new String[0])</value>
+	<value>			Command.addFieldValue(form, field.name, field.defVal, field.label, listLabels, listValues)</value>
+	<value>		}</value>
+	<value>	}</value>
+	<value></value>
+	<value>	def getFieldValue(Packet form, Field field) { return Command.getFieldValue(form, field.name) }		</value>
+	<value>		</value>
+	<value>	def processPacket(Packet p) {</value>
+	<value>		if ((formFields.find { it.name != groups.name &amp;&amp; Command.getFieldValue(p, it.name) == null}) == null) {</value>
+	<value>			String ownerJidStr = getFieldValue(p, ownerJid)</value>
+	<value>			String jidToManipulate = getFieldValue(p, jidToChange)</value>
+	<value>			String[] groups = (getFieldValue(p, groups) ?: "").split(",")</value>
+	<value>			String operationTypeStr = getFieldValue(p, operationType)</value>
+	<value>			String subscriptionTypeStr = getFieldValue(p, subscriptionType)</value>
+	<value>			</value>
+	<value>			Queue&lt;Packet&gt; results;</value>
+	<value>			if (operationTypeStr == addOperation.name)</value>
+	<value>				results = addJidToRoster(ownerJidStr, jidToManipulate, groups, subscriptionTypeStr)</value>
+	<value>			else</value>
+	<value>				results = removeJidFromRoster(ownerJidStr, jidToManipulate)	</value>
+	<value>			</value>
+	<value>			Packet result = p.commandResult(Command.DataType.result)</value>
+	<value>			Command.addTextField(result, "Note", "Operation successful");</value>
+	<value>			results.add(result)</value>
+	<value>			return results</value>
+	<value>		}</value>
+	<value>		else {</value>
+	<value>			Packet result = p.commandResult(Command.DataType.form)</value>
+	<value>			addField(result, ownerJid)</value>
+	<value>			addField(result, jidToChange)</value>
+	<value>			addField(result, groups)</value>
+	<value>			addField(result, operationType, operationTypes)</value>
+	<value>			addField(result, subscriptionType, subscriptionTypes)		</value>
+	<value>			return result</value>
+	<value>		}</value>
+	<value>	}</value>
+	<value>		</value>
+	<value>	def getActiveConnections(String ownerJid) {</value>
+	<value>		XMPPSession session = sessions.get(ownerJid)</value>
+	<value>		return (session == null) ? [] : session.getActiveResources()</value>
+	<value>	}</value>
+	<value>	</value>
+	<value>	def subscription(String str) { return RosterAbstract.SubscriptionType.valueOf(str) }</value>
+	<value></value>
+	<value>	Queue&lt;Packet&gt; updateLiveRoster(String jid, String jidToChange, boolean remove, </value>
+	<value>			String[] groups = null, String subStr = null) {</value>
+	<value>		RosterAbstract rosterUtil = RosterFactory.getRosterImplementation(true)</value>
+	<value>		Queue&lt;Packet&gt; packets = new LinkedList&lt;Packet&gt;()</value>
+	<value>		List&lt;XMPPResourceConnection&gt; activeConnections = getActiveConnections(jid)</value>
+	<value>		for (XMPPResourceConnection conn : activeConnections) {</value>
+	<value>			if (remove == false) {</value>
+	<value>				rosterUtil.addBuddy(conn, jidToChange, jidToChange, groups)</value>
+	<value>				rosterUtil.setBuddySubscription(conn, subscription(subStr), jidToChange)</value>
+	<value>				rosterUtil.updateBuddyChange(conn, packets,</value>
+	<value>						rosterUtil.getBuddyItem(conn, jidToChange))				</value>
+	<value>			} else {</value>
+	<value>				Element it = new Element("item")</value>
+	<value>				it.setAttribute("jid", jidToChange)</value>
+	<value>				it.setAttribute("subscription", "remove")</value>
+	<value>				rosterUtil.updateBuddyChange(conn, packets, it)</value>
+	<value>				rosterUtil.removeBuddy(conn, jidToChange) </value>
+	<value>			}</value>
+	<value>		}</value>
+	<value>		return packets</value>
+	<value>	}	</value>
+	<value>	</value>
+	<value>	def modifyDbRoster(String ownerJid, modifyFunc) {</value>
+	<value>		String rosterStr = repository.getData(BareJID.bareJIDInstanceNS(ownerJid), null, RosterAbstract.ROSTER, null)</value>
+	<value>		rosterStr = (rosterStr == null) ? "" : rosterStr</value>
+	<value>		Map&lt;String, RosterElement&gt; roster = new LinkedHashMap&lt;String, RosterElement&gt;()</value>
+	<value>		RosterFlat.parseRoster(rosterStr, roster, null)</value>
+	<value>		modifyFunc(roster)</value>
+	<value>		StringBuilder sb = new StringBuilder()</value>
+	<value>		for (RosterElement relem: roster.values())</value>
+	<value>			sb.append(relem.getRosterElement().toString())</value>
+	<value>		repository.setData(BareJID.bareJIDInstanceNS(ownerJid), null, RosterAbstract.ROSTER, sb.toString());		</value>
+	<value>	}</value>
+	<value>	</value>
+	<value>	Queue&lt;Packet&gt; addJidToRoster(ownerJid, jidToAdd, groups, subscriptionType) {</value>
+	<value>		List&lt;XMPPResourceConnection&gt; activeConnections = getActiveConnections(ownerJid)</value>
+	<value>		if (activeConnections.size() == 0) {</value>
+	<value>			modifyDbRoster(ownerJid, { roster -&gt; </value>
+	<value>				RosterElement userToAdd = roster.get(jidToAdd)</value>
+	<value>				if (userToAdd == null) {</value>
+	<value>					userToAdd = new RosterElement(</value>
+	<value>							jidToAdd, jidToAdd, groups, null)</value>
+	<value>				}</value>
+	<value>				userToAdd.setSubscription(subscription(subscriptionType))</value>
+	<value>				userToAdd.setGroups(groups)</value>
+	<value>				roster.put(jidToAdd, userToAdd)								</value>
+	<value>			})</value>
+	<value>			return new LinkedList&lt;Packet&gt;()</value>
+	<value>		} </value>
+	<value>		else</value>
+	<value>			return updateLiveRoster(ownerJid, jidToAdd, false, groups, subscriptionType)</value>
+	<value>	}</value>
+	<value>	</value>
+	<value>	Queue&lt;Packet&gt; removeJidFromRoster(ownerJid, jidToRemove) {</value>
+	<value>		List&lt;XMPPResourceConnection&gt; activeConnections = getActiveConnections(ownerJid)</value>
+	<value>		if (activeConnections.size() == 0) {</value>
+	<value>			modifyDbRoster(ownerJid, { roster -&gt; </value>
+	<value>				RosterElement userToRemove = roster.get(jidToRemove)</value>
+	<value>				if (userToRemove == null) {</value>
+	<value>					thrscalaow new Exception("User to be deleted is not on roster")</value>
+	<value>				}</value>
+	<value>				roster.remove(jidToRemove)</value>
+	<value>			})</value>
+	<value>			return new LinkedList&lt;Packet&gt;()</value>
+	<value>		} </value>
+	<value>		else</value>
+	<value>			return updateLiveRoster(ownerJid, jidToRemove, true)</value>
+	<value>	}	</value>
+	<value>}</value>
+	<value></value>
+	<value>new RosterChangesControler(repository: userRepository, </value>
+	<value>		sessions: userSessions).processPacket((Packet)packet)</value>
+      </field>
+    </x>
+  </command>
+</iq>
+}
+
+expect: {
+<iq type="result" id="aad2a" >
+  <command xmlns="http://jabber.org/protocol/commands" status="completed" node="add-script" >
+    <x xmlns="jabber:x:data" type="result" >
+      <field type="fixed" var="Note" >
+	<value>Script loaded successfuly.</value>
+      </field>
+    </x>
+  </command>
+</iq>
+}

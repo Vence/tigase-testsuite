@@ -1,0 +1,82 @@
+##
+##  Tigase XMPP/Jabber Test Suite
+##  Copyright (C) 2004-2009 "Artur Hefczyc" <artur.hefczyc@tigase.org>
+##
+##  This program is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License.
+##
+##  This program is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with this program. Look for COPYING file in the top folder.
+##  If not, see http://www.gnu.org/licenses/.
+##
+##  $Rev$
+##  Last modified by $Author$
+##  $Date$
+##
+-version = "2.0.0"
+
+-output-format  = html
+-output-file    = "../www/functional-tests.html"
+-output-history = yes
+-history-format = separate-file
+-output-cols    = 7
+-title          = "XMPP Server functional tests."
+
+$(server-host) = test-d
+$(virtual-host) = test-domain
+$(def-user)    = all-xmpp-test
+$(def-user-pass) = all-xmpp-test-password
+$(def-user-resr) = def-user-resource
+$(daemon-user) = all-xmpp-test_1
+$(blocking-user) = blocking-test-user_1
+$(long-list-user) = long-list-user_1
+$(ssl-tls-wait) = 15000
+$(stats-user) = admin
+$(stats-pass) = stats
+$(tester-user) = tester_1
+$(number) = 1
+
+
+-serverip    = "127.0.0.1"
+-host        = $(server-host)
+-user-name   = $(def-user)
+-user-pass   = $(def-user-pass)
+-user-resr   = $(def-user-resr)
+-number      = $(number)
+-socket-wait = 15000
+-base-ns     = "jabber:client"
+-def-auth    = auth-sasl
+-def-stream  = stream-client
+-keys-file-password   = keystore
+-trusts-file-password = truststore
+-keys-file            = "certs/keystore"
+-trusts-file          = "certs/client_truststore"
+
+#-debug
+-debug-on-error
+-stop-on-fail = true
+
+Global settings:
+{
+  -loop = 1
+  
+  Prepare@user-register: >> XEP-0077 - In-Band Registration, register <<
+  
+
+  MUC 1@common: {
+#    -user-resr   = res-2
+    # This delay is only needed because before MUC tests there is large queue tests running
+    # which overloads the server for a while
+    #-delay = 30000
+    -source-file = "tests/data/MUCCreateRoom.cot"
+   } >> Send room create presence request to MUC component. <<
+
+}
+>> Script generating large queues and network I/O traffic <<
+  

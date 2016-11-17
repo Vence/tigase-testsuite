@@ -1,0 +1,185 @@
+##
+##  Tigase XMPP/Jabber Test Suite
+##  Copyright (C) 2004-2013 "Artur Hefczyc" <artur.hefczyc@tigase.org>
+##
+##  This program is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License.
+##
+##  This program is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with this program. Look for COPYING file in the top folder.
+##  If not, see http://www.gnu.org/licenses/.
+##
+##  $Rev$
+##  Last modified by $Author$
+##  $Date$
+##
+send: {
+<iq type="get" id="roster_1" >
+  <query xmlns="jabber:iq:roster"/>
+</iq>
+}
+expect: {
+<iq type="result" id="roster_1" >
+  <query xmlns="jabber:iq:roster"/>
+</iq>
+}
+expect: {
+<iq id="@{roster-test-id}" type="set">
+  <query xmlns="jabber:iq:roster">
+    <item name="dynrost" subscription="both" jid="dynrost@test-d">
+      <group>@{roster-test-group}</group>
+    </item>
+  </query>
+</iq>
+}
+
+send: {
+<iq type="result" id="@{roster-test-id}"/>
+<iq type="set" id="roster_2">
+  <query xmlns="jabber:iq:roster">
+    <item jid="Santa.Claus@north.pole" name="claus"/>
+  </query>
+</iq>
+}
+expect: {
+<iq type="result" id="roster_2"/>
+<iq type="set">
+  <query xmlns="jabber:iq:roster">
+    <item jid="Santa.Claus@north.pole" name="claus" subscription="none"/>
+  </query>
+</iq>
+}
+expect: {
+<iq type="result" id="roster_2"/>
+<iq type="set">
+  <query xmlns="jabber:iq:roster">
+    <item jid="Santa.Claus@north.pole" name="claus" subscription="none"/>
+  </query>
+</iq>
+}
+
+send: {
+<iq type="get" id="roster_3">
+  <query xmlns="jabber:iq:roster"/>
+</iq>
+}
+expect: {
+<iq type="result" id="roster_3">
+  <query xmlns="jabber:iq:roster">
+    <item jid="Santa.Claus@north.pole" name="claus" subscription="none"/>
+  </query>
+</iq>
+}
+expect: {
+<iq id="@{roster-test-id1}" type="set">
+  <query xmlns="jabber:iq:roster">
+    <item name="dynrost" subscription="both" jid="dynrost@test-d">
+      <group>test group</group>
+    </item>
+  </query>
+</iq>
+}
+
+send: {
+<iq type="set" id="roster_4">
+  <query xmlns="jabber:iq:roster">
+    <item jid="Santa.Claus@north.pole" name="claus">
+		  <group>guests</group>
+		</item>
+  </query>
+</iq>
+}
+expect: {
+<iq type="result" id="roster_4"/>
+<iq type="set">
+  <query xmlns="jabber:iq:roster">
+    <item jid="Santa.Claus@north.pole" name="claus" subscription="none">
+		  <group>guests</group>
+		</item>
+  </query>
+</iq>
+}
+expect: {
+<iq type="result" id="roster_4"/>
+<iq type="set">
+  <query xmlns="jabber:iq:roster">
+    <item jid="Santa.Claus@north.pole" name="claus" subscription="none">
+		  <group>guests</group>
+		</item>
+  </query>
+</iq>
+}
+
+send: {
+<iq type="get" id="roster_5">
+  <query xmlns="jabber:iq:roster"/>
+</iq>
+}
+expect: {
+<iq type="result" id="roster_5">
+  <query xmlns="jabber:iq:roster">
+    <item jid="Santa.Claus@north.pole" name="claus" subscription="none">
+		  <group>guests</group>
+		</item>
+  </query>
+</iq>
+}
+expect: {
+<iq id="@{roster-test-id2}" type="set">
+  <query xmlns="jabber:iq:roster">
+    <item name="dynrost" subscription="both" jid="dynrost@test-d">
+      <group>test group</group>
+    </item>
+  </query>
+</iq>
+}
+
+send: {
+<iq type="set" id="roster_6">
+  <query xmlns="jabber:iq:roster">
+    <item jid="santa.claus@north.pole" name="claus" subscription="remove"/>
+  </query>
+</iq>
+}
+expect: {
+<iq type="result" id="roster_6"/>
+<iq type="set">
+  <query xmlns="jabber:iq:roster">
+    <item jid="santa.claus@north.pole" subscription="remove"/>
+  </query>
+</iq>
+}
+expect: {
+<iq type="result" id="roster_6"/>
+<iq type="set">
+  <query xmlns="jabber:iq:roster">
+    <item jid="santa.claus@north.pole" subscription="remove"/>
+  </query>
+</iq>
+}
+
+send: {
+<iq type="get" id="roster_7" >
+  <query xmlns="jabber:iq:roster"/>
+</iq>
+}
+expect: {
+<iq type="result" id="roster_7" >
+  <query xmlns="jabber:iq:roster"/>
+</iq>
+}
+expect: {
+<iq id="@{roster-test-id3}" type="set">
+  <query xmlns="jabber:iq:roster">
+    <item name="dynrost" subscription="both" jid="dynrost@test-d">
+      <group>test group</group>
+    </item>
+  </query>
+</iq>
+}

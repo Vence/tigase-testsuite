@@ -1,0 +1,253 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance http://www.springmodules.org/schema/cache/springmodules-cache.xsd http://www.springmodules.org/schema/cache/springmodules-ehcache.xsd" 
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd ">
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.build.timestamp.format>yyyy-MM-dd/HH:mm:ss</maven.build.timestamp.format>
+
+		<sign-keystore>/path/to/jks.keystore</sign-keystore>
+		<sign-alias>alias</sign-alias>
+		<sign-storepass>storepass</sign-storepass>
+		<sign-keypass>keypass</sign-keypass>
+		<sign-skip>true</sign-skip>
+		<verbose-log>false</verbose-log>
+		<tsa>${tsa-uri}</tsa>
+	</properties>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>tigase</groupId>
+	<artifactId>tigase-testsuite</artifactId>
+	<packaging>jar</packaging>
+	<name>Tigase Test Suite</name>
+	<version>2.3.0-SNAPSHOT</version>
+	<description>Tigase Test Suite - automated testing framework for Tigase Jabber/XMPP Server.</description>
+	<url>http://www.tigase.org</url>
+	<issueManagement>
+		<system>Redmine</system>
+		<url>https://projects.tigase.org/projects/tigase-testsuite</url>
+	</issueManagement>
+	<inceptionYear>2005</inceptionYear>
+	<developers>
+		<developer>
+			<name>Artur Hefczyc</name>
+			<roles>
+				<role>architect</role>
+				<role>developer</role>
+			</roles>
+		</developer>
+		<developer>
+			<id>bmalkow</id>
+			<name>Bartosz Malkowski</name>
+			<email>bmalkow@tigase.org</email>
+			<url>http://claimid.com/bmalkow</url>
+			<roles>
+				<role>developer</role>
+			</roles>
+			<timezone>+1</timezone>
+		</developer>
+	</developers>
+	<licenses>
+		<license>
+			<name>GNU General Public License</name>
+			<url>http://www.gnu.org/licenses/gpl.txt</url>
+		</license>
+	</licenses>
+	<scm>
+		<connection>scm:git:https://repository.tigase.org/git/tigase-testsuite.git</connection>
+		<developerConnection>scm:git:https://repository.tigase.org/git/tigase-testsuite.git</developerConnection>
+		<url>https://projects.tigase.org/projects/tigase-testsuite/repository</url>
+	  <tag>HEAD</tag>
+  </scm>
+	<organization>
+		<name>Tigase</name>
+		<url>http://www.tigase.org</url>
+	</organization>
+	<build>
+	<pluginManagement>
+		<!-- 
+		<defaultGoal>install</defaultGoal>
+		<directory>${basedir}/jars</directory>
+		<finalName>${project.artifactId}</finalName>
+		 -->
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>buildnumber-maven-plugin</artifactId>
+				<version>1.1</version>
+				<configuration>
+					<timestampFormat>{0,date} {0,time}</timestampFormat>
+					<doCheck>false</doCheck>
+					<doUpdate>false</doUpdate>
+					 <shortRevisionLength>8</shortRevisionLength>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>validate</phase>
+						<goals>
+							<goal>create</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.gmaven</groupId>
+				<artifactId>gmaven-plugin</artifactId>
+				<version>1.5</version>
+				<executions>
+					<execution>
+						<id>gitver</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>execute</goal>
+						</goals>
+						<configuration>
+							<providerSelection>2.0</providerSelection>
+							<properties>
+								<script>git rev-list HEAD --count</script>
+							</properties>
+							<source>
+								def version
+								try {
+									def command = project.properties.script
+									def process = command.execute()
+									process.waitFor()
+
+									version = process.in.text.trim()
+								} catch (Exception e) {
+									version = '0'
+								}
+								println "setting revision to: " + version
+
+								project.properties.setProperty( 'gitVersion' , version )
+
+							</source>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.5.1</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+					<archive>
+						<manifest>
+							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+						</manifest>
+						<manifestEntries>
+							<Implementation-Version>${project.version}-b${gitVersion}/${buildNumber}</Implementation-Version>
+							<Implementation-Build>${gitVersion}/${buildNumber} (${maven.build.timestamp})</Implementation-Build>
+						</manifestEntries>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>package</phase>
+						<goals>
+						<goal>copy-dependencies</goal>
+					</goals>
+					<configuration>
+						<outputDirectory>${basedir}/libs</outputDirectory>
+						<overWriteReleases>false</overWriteReleases>
+						<overWriteSnapshots>true</overWriteSnapshots>
+						<stripVersion>true</stripVersion>
+					</configuration>
+				</execution>
+			</executions>
+		</plugin>
+<plugin>
+  <artifactId>maven-release-plugin</artifactId>
+  <version>2.5.1</version>
+</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jarsigner-plugin</artifactId>
+				<version>1.4</version>
+				<executions>
+					<execution>
+						<id>sign</id>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<archiveDirectory>${project.basedir}</archiveDirectory>
+					<includes>
+						<include>target/tigase*.?ar</include>
+						<include>jars/tigase*.?ar</include>
+					</includes>
+					<processMainArtifact>false</processMainArtifact>
+					<processAttachedArtifacts>false</processAttachedArtifacts>
+					<tsa>${tsa-uri}</tsa>
+					<skip>${sign-skip}</skip>
+
+					<keystore>${sign-keystore}</keystore>
+					<alias>${sign-alias}</alias>
+					<storepass>${sign-storepass}</storepass>
+					<keypass>${sign-keypass}</keypass>
+					<verbose>${verbose-log}</verbose>
+				</configuration>
+			</plugin>
+	</plugins>
+	</pluginManagement>
+</build>
+<dependencies>
+		<dependency>
+			<groupId>tigase</groupId>
+			<artifactId>tigase-utils</artifactId>
+			<version>3.5.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>tigase</groupId>
+			<artifactId>tigase-xmltools</artifactId>
+			<version>3.5.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.10</version>
+		</dependency>
+	</dependencies>
+	<repositories>
+		<repository>
+			<id>tigase</id>
+			<name>Tigase repository</name>
+			<url>http://maven-repo.tigase.org/repository/release</url>
+		</repository>
+		<repository>
+			<id>tigase-snapshot</id>
+			<name>Tigase repository</name>
+			<url>http://maven-repo.tigase.org/repository/snapshot</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+	<distributionManagement>
+		<repository>
+			<id>tigase</id>
+			<name>Tigase repository</name>
+			<url>http://maven-repo.tigase.org/repository/release</url>
+		</repository>
+		<snapshotRepository>
+			<id>tigase-snapshot</id>
+			<name>Tigase snapshot repository</name>
+			<url>http://maven-repo.tigase.org/repository/snapshot</url>
+		</snapshotRepository>
+	</distributionManagement>
+</project>

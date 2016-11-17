@@ -1,0 +1,43 @@
+send: {
+<iq type="set" id="aadaa" >
+  <command xmlns="http://jabber.org/protocol/commands"
+           node="http://jabber.org/protocol/admin#user-roster-management-ext" >
+    <x xmlns="jabber:x:data" type="submit" >
+      <field type="jid-single" var="roster-owner-jid" >
+        <value>$(jid-1)</value>
+      </field>
+      <field type="text-single" var="roster-owner-name" >
+        <value>$(nick-1)</value>
+      </field>
+      <field type="jid-single" var="roster-item-jid" >
+        <value>$(jid-2)</value>
+      </field>
+      <field type="text-single" var="roster-item-name" >
+        <value>$(nick-2)</value>
+      </field>
+      <field type="text-single" var="roster-item-groups" >
+        <value>test-group</value>
+      </field>
+      <field type="list-single" var="roster-item-subscr" >
+        <value>both</value>
+      </field>
+      <field type="list-single" var="roster-action" >
+        <value>update-ext</value>
+      </field>
+    </x>
+  </command>
+</iq>
+}
+
+expect: {
+<iq type="result" id="aadaa" >
+  <command xmlns="http://jabber.org/protocol/commands" status="completed" 
+           node="http://jabber.org/protocol/admin#user-roster-management-ext" >
+    <x xmlns="jabber:x:data" type="result" >
+      <field type="fixed" var="Note" >
+	      <value>Operation successful</value>
+      </field>
+    </x>
+  </command>
+</iq>
+}

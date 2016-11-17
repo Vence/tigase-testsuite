@@ -1,0 +1,84 @@
+##
+##  Tigase XMPP/Jabber Test Suite
+##  Copyright (C) 2004-2009 "Artur Hefczyc" <artur.hefczyc@tigase.org>
+##
+##  This program is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License.
+##
+##  This program is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with this program. Look for COPYING file in the top folder.
+##  If not, see http://www.gnu.org/licenses/.
+##
+##  $Rev: $
+##  Last modified by $Author: $
+##  $Date: $
+##
+-version = "2.0.0"
+
+-output-format  = html
+-output-file    = "../www/load-test.html"
+-output-history = no
+-history-format = separate-file
+-output-cols    = 7
+-title          = "Repository init..."
+
+$(server-host) = "tigase.test"
+$(def-user)    = load-tester
+$(daemon-user) = tester_1
+$(ssl-tls-wait) = 5000
+$(stats-user) = admin
+$(stats-pass) = stats
+
+-serverip    = "127.0.0.1"
+-host        = $(server-host)
+-user-name   = $(stats-user)
+-user-pass   = $(stats-pass)
+-socket-wait = 10000
+-base-ns     = "jabber:client"
+-def-auth    = auth-sasl
+-def-stream  = stream-client
+-keys-file-password   = keystore
+-trusts-file-password = truststore
+-keys-file            = "certs/keystore"
+-trusts-file          = "certs/client_truststore"
+
+-debug-on-error
+
+Version@auth-sasl;iq-version: { -user-name=$(stats-user) -user-pass=$(stats-pass) } >> Get server version <<
+Configuration@command-get-config: { -user-name=$(stats-user) -user-pass=$(stats-pass) } >> Server configuration <<
+Statistics@iq-stats: { -user-name=$(stats-user) -user-pass=$(stats-pass) } >> Server statistics <<
+
+Prep 1@user-register: {
+  -loop = 10000000
+  -loop-start = 1
+  -no-record
+  -user-name = "load-tester_$(loop)"
+  -user-pass = "load-tester_$(loop)"
+} >> Create tester user accounts <<
+
+Prep 2: {
+  -loop = 10000000
+  -loop-start = 1
+  -no-record
+  -loop-only
+
+  Intern loop@common: {
+    -loop=50
+    -loop-start=$(outer-loop)
+    -on-one-socket
+    #-debug
+
+    $(jid-1)="load-tester_$(outer-loop)@$(server-host)"
+    $(nick-1)="load-tester"
+    $(jid-2)="load-tester_$(loop)@$(server-host)"
+    $(nick-2)="load-tester"
+    -source-file = "tests/data/AdHocRosterAddBoth.cot"
+  } >> Load 100 elements to user roster <<
+
+} >> Load 100 elements to user rosters <<

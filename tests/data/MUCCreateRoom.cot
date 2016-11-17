@@ -1,0 +1,43 @@
+##
+##  Tigase XMPP/Jabber Test Suite
+##  Copyright (C) 2004-2009 "Artur Hefczyc" <artur.hefczyc@tigase.org>
+##
+##  This program is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License.
+##
+##  This program is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with this program. Look for COPYING file in the top folder.
+##  If not, see http://www.gnu.org/licenses/.
+##
+##  $Rev$
+##  Last modified by $Author$
+##  $Date$
+##
+
+# Test for the Tigase MUC component. This is a simple test checking whether
+# room creation works which is an indication whether the MUC component works
+# and answers requests
+# @author <a href="mailto:artur.hefczyc@tigase.org">Artur Hefczyc</a>
+# @version $Rev$
+
+### Send room creation presence request:
+send: {
+<presence from='$(from-jid)' to='new_chat@muc.$(hostname)/my_nick'>
+  <x xmlns='http://jabber.org/protocol/muc'/>
+</presence>
+}
+expect: {
+<presence to="$(from-jid)" from="new_chat@muc.$(hostname)/my_nick">
+  <x xmlns="http://jabber.org/protocol/muc#user">
+    <status code="110"/>
+    <status code="201"/>
+    <item role="moderator" affiliation="owner" jid="$(from-jid)"/>
+  </x>
+</presence>
+}

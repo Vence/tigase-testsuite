@@ -1,0 +1,215 @@
+##
+##  Tigase XMPP/Jabber Test Suite
+##  Copyright (C) 2004-2009 "Artur Hefczyc" <artur.hefczyc@tigase.org>
+##
+##  This program is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License.
+##
+##  This program is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with this program. Look for COPYING file in the top folder.
+##  If not, see http://www.gnu.org/licenses/.
+##
+##  $Rev: $
+##  Last modified by $Author: $
+##  $Date: $
+##
+-version = "2.0.0"
+
+-output-format  = html
+-output-file    = "../www/stability-tests.html"
+-output-history = no
+-output-cols    = 7
+-title          = "XMPP Server stability tests."
+
+# Other global settings
+#-debug-on-error
+
+$(repeats)      = 1000000
+$(daemon-users) = 1
+$(messages)     = 10
+$(server-host)  = localhost
+$(long-list-user) = long-list-user_1
+$(stats-user) = admin
+$(stats-pass) = stats
+
+-serverip    = "127.0.0.1"
+-host        = $(server-host)
+-socket-wait = 5000
+-base-ns     = "jabber:client"
+
+Version@iq-version: { -loop = 1 } >> Get server version <<
+Configuration@command-get-config:
+{ -loop = 1 -user-name=$(stats-user) -user-pass=$(stats-pass) }
+>> Server configuration <<
+Statistics@iq-stats: { -loop = 1 -user-name=$(stats-user) -user-pass=$(stats-pass) }
+>> Get server statistics <<
+
+-loop                 = $(repeats)
+-keys-file-password   = keystore
+-trusts-file-password = truststore
+-keys-file            = "certs/keystore"
+-trusts-file          = "certs/client_truststore"
+-def-auth             = auth-plain
+
+-user-name = all-xmpp-test
+-user-pass = all-xmpp-test-password
+-user_resr = xmpp-test
+
+Global settings:
+{
+
+  Init 1@user-unregister: { -no-record -loop = 1 } >> Remove test account <<
+
+  Test 1@user-register;user-unregister:
+  !! Remove user@user-unregister: { -loop = 1 }
+  >> Add and remove user account over plain socket <<
+
+  Prep 1@user-register: { -no-record -loop = 1 }
+  >> Create test user account for using by later tests  <<
+
+  Test 2@xmpp-session: >> XMPP session bind <<
+
+  Prep 2@user-unregister: {
+    -no-record
+    -user-name = $(long-list-user)
+    -loop = 1
+  } >> Remove test account. <<
+
+  Prep 3@user-register: {
+    -no-record
+    -user-name = $(long-list-user)
+    -loop = 1
+  } >> Create a daemon user account with very long privacy list <<
+
+  Prep 4@privacy-long-list;msg-listen: {
+    -no-record
+    -daemon
+
+    -loop = 1
+    -socket-wait = 0
+    -user-name   = $(long-list-user)
+    -delay       = 10000
+  } >> Setup a user daemon with very long privacy list <<
+
+  Test 3@msg-send: Send messages to user with very long privacy list
+  {
+    -on-one-socket
+
+    -delay    = 0
+    -loop     = $(repeats)
+    -messages = $(messages)
+    -to-jid   = "$(long-list-user)@$(server-host)/xmpp-test"
+  } >> Send a messages to test user with very long privacy list
+        and wait for message response <<
+
+  Test end@user-unregister: { -no-record -loop = 1 }
+  >> Cleanup - test user unregister <<
+
+}
+>> Script with performance tests, selected tests are repeated $(repeats)
+times and processing time is measured for each XMPP/Jabber features <<
+
+Multi thread tests:
+{
+  Daemon users 10: {
+    -no-record
+
+    $(daemon-users) = 10
+    -loop = $(daemon-users)
+
+    Prep 1@user-register: {
+      -on-one-socket
+
+      -user-name = "all-xmpp-test_1_$(loop)"
+    } >> Create $(daemon-users) user account <<
+
+    Prep 2@msg-listen: {
+      -daemon
+
+      -socket-wait = 0
+      -delay       = 1000
+      -user-name   = "all-xmpp-test_1_$(loop)"
+    } >> Setup $(daemon-users) user daemon wating for messages <<
+  } >> Setup $(daemon-users) daemon users <<
+
+  Register@user-register:
+  {
+    -no-record
+    -loop = 10
+    -user-name = "multi-reg_$(loop)"
+  } >> JEP-0077 - setup test accounts <<
+
+  Multi 1: {
+    -multi-thread
+    -on-one-socket
+
+    -to-jid   = $(daemons)
+    -messages = $(messages)
+
+    Message send@msg-send: { -user-name = multi-reg_0 }
+    >> Send a message to daemon user <<
+    Message send@msg-send: { -user-name = multi-reg_1 }
+    >> Send a message to daemon user <<
+    Message send@msg-send: { -user-name = multi-reg_2 }
+    >> Send a message to daemon user <<
+    Message send@msg-send: { -user-name = multi-reg_3 }
+    >> Send a message to daemon user <<
+    Message send@msg-send: { -user-name = multi-reg_4 }
+    >> Send a message to daemon user <<
+    Message send@msg-send: { -user-name = multi-reg_5 }
+    >> Send a message to daemon user <<
+    Message send@msg-send: { -user-name = multi-reg_6 }
+    >> Send a message to daemon user <<
+    Message send@msg-send: { -user-name = multi-reg_7 }
+    >> Send a message to daemon user <<
+    Message send@msg-send: { -user-name = multi-reg_8 }
+    >> Send a message to daemon user <<
+    Message send@msg-send: { -user-name = multi-reg_9 }
+    >> Send a message to daemon user <<
+  } >> Multi-thread test of message send to daemon user <<
+
+  Multi 2: {
+    -multi-thread
+    -on-one-socket
+
+    -to-jid   = "$(long-list-user)@$(server-host)/xmpp-test"
+    -messages = $(messages)
+
+    Message send@msg-send: { -user-name = multi-reg_0 }
+    >> Send a message to daemon user <<
+    Message send@msg-send: { -user-name = multi-reg_1 }
+    >> Send a message to daemon user <<
+    Message send@msg-send: { -user-name = multi-reg_2 }
+    >> Send a message to daemon user <<
+    Message send@msg-send: { -user-name = multi-reg_3 }
+    >> Send a message to daemon user <<
+    Message send@msg-send: { -user-name = multi-reg_4 }
+    >> Send a message to daemon user <<
+    Message send@msg-send: { -user-name = multi-reg_5 }
+    >> Send a message to daemon user <<
+    Message send@msg-send: { -user-name = multi-reg_6 }
+    >> Send a message to daemon user <<
+    Message send@msg-send: { -user-name = multi-reg_7 }
+    >> Send a message to daemon user <<
+    Message send@msg-send: { -user-name = multi-reg_8 }
+    >> Send a message to daemon user <<
+    Message send@msg-send: { -user-name = multi-reg_9 }
+    >> Send a message to daemon user <<
+  } >> Multi-thread test send messages to user with very long privacy list <<
+
+  Unregister@user-unregister:
+  {
+    -no-record
+    -loop = 10
+    -user-name = "multi-reg_$(loop)"
+  }
+  !! Remove user@user-unregister: { -loop = 1 }
+  >> JEP-0077 - remove tests accounts <<
+
+}  >> Multi-threaded stability tests for selected XMPP functions <<

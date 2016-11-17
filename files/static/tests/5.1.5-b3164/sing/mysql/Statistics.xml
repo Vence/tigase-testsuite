@@ -1,0 +1,27 @@
+<test-history test='Statistics'>
+<OUTPUT test='Statistics'>
+<![CDATA[<stream:stream xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' to='$(server-host)' version='1.0'/>
+]]></OUTPUT>
+<INPUT test='Statistics'>
+<![CDATA[<stream:stream xmlns="jabber:client" from="127.0.0.1" version="1.0" xmlns:stream="http://etherx.jabber.org/streams" id="tigase-error-tigase" xml:lang="en"/>
+]]></INPUT>
+<OUTPUT test='Statistics'>
+<![CDATA[<auth xmlns='urn:ietf:params:xml:ns:xmpp-sasl' mechanism='CRAP-NO-MECHS-IN-FEATURES'/>
+]]></OUTPUT>
+<INPUT test='Statistics'>
+<![CDATA[tigase.test.impl.TestSASL, admin@$(server-host)(stats), Software caused connection abort: recv failed
+]]></INPUT>
+<OUTPUT test='Statistics'>
+<![CDATA[<iq type='set' id='bind1'><bind xmlns='urn:ietf:params:xml:ns:xmpp-bind'><resource>xmpp-test</resource></bind></iq>
+]]></OUTPUT>
+<INPUT test='Statistics'>
+<![CDATA[tigase.test.impl.TestXMPPBind, admin@$(server-host)(stats), Software caused connection abort: socket write error
+]]></INPUT>
+<OUTPUT test='Statistics'>
+<![CDATA[<iq type='set' id='stats_1' to='stats@$(server-host)'><command xmlns='http://jabber.org/protocol/commands' node='stats'><x xmlns='jabber:x:data' type='submit'><field type='list-single' var='Stats level' ><value>FINER</value></field></x></command></iq>
+]]></OUTPUT>
+<INPUT test='Statistics'>
+<![CDATA[tigase.test.impl.TestIQStats, admin@$(server-host)(stats), Software caused connection abort: socket write error
+]]></INPUT>
+
+</test-history>

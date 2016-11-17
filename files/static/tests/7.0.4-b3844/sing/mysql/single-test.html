@@ -1,0 +1,219 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+ <head>
+  <title>XMPP Server single, common test.</title>
+ </head>
+ <body>
+  <h2>XMPP Server single, common test.</h2>
+  <b>
+   <ol>
+    <li> Get server version </li>
+    <li> Server configuration </li>
+    <li> Server statistics </li>
+    <li> Common test </li>
+   </ol>
+  </b>
+
+  <p>Test start time: <b>2016-11-15 16:39:09</b></p>
+   <h3>Server version info:</h3>
+   <table>
+    <tr valign="top"><td width="15%">Name:</td><td width="3%">&nbsp;</td><td width="2%">&nbsp;</td><td width="80%"><b>Tigase</b></td></tr>
+    <tr valign="top"><td width="15%">Version:</td><td width="3%">&nbsp;</td><td width="2%">&nbsp;</td><td width="80%"><b>7.0.4-b3844/014490ac (2016-04-28/09:01:54)</b></td></tr>
+    <tr valign="top"><td width="15%">OS:</td><td width="3%">&nbsp;</td><td width="2%">&nbsp;</td><td width="80%"><b>Linux-amd64-3.19.0-26-generic, Java HotSpot(TM) 64-Bit Server VM-25.111-b14-Oracle Corporation</b></td></tr>
+    <tr valign="top"><td width="15%">&nbsp;</td><td width="3%">&nbsp;</td><td width="2%">&nbsp;</td><td width="80%">&nbsp;</td></tr>
+    <tr valign="top"><td width="15%">Local IP:</td><td width="3%">&nbsp;</td><td width="2%">&nbsp;</td><td width="80%"><b>192.168.72.1</b></td></tr>
+    <tr valign="top"><td width="15%">Remote IP:</td><td width="3%">&nbsp;</td><td width="2%">&nbsp;</td><td width="80%"><b>192.168.72.130</b></td></tr>
+   </table>
+      <h3>Server basic configuration parameters:</h3>
+   <table>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/component-id</td><td width="2%">&nbsp;</td><td width="58%"><b>sess-man@ubuntu</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/def-hostname</td><td width="2%">&nbsp;</td><td width="58%"><b>ubuntu</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/admins</td><td width="2%">&nbsp;</td><td width="58%"><b>admin@192.168.72.130</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/scripts-dir</td><td width="2%">&nbsp;</td><td width="58%"><b>scripts/admin</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/command/ALL</td><td width="2%">&nbsp;</td><td width="58%"><b>ADMIN</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/max-queue-size</td><td width="2%">&nbsp;</td><td width="58%"><b>5060</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/scheduler-threads</td><td width="2%">&nbsp;</td><td width="58%"><b>1</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/incoming-filters</td><td width="2%">&nbsp;</td><td width="58%"><b>tigase.server.filters.PacketCounter</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/outgoing-filters</td><td width="2%">&nbsp;</td><td width="58%"><b>tigase.server.filters.PacketCounter</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/admin-scripts-dir</td><td width="2%">&nbsp;</td><td width="58%"><b>scripts/admin/</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/plugins</td><td width="2%">&nbsp;</td><td width="58%"><b>session-close, session-open, default-handler, jabber:iq:register, jabber:iq:auth, urn:ietf:params:xml:ns:xmpp-sasl, urn:ietf:params:xml:ns:xmpp-bind, urn:ietf:params:xml:ns:xmpp-session, jabber:iq:roster, jabber:iq:privacy, jabber:iq:version, http://jabber.org/protocol/stats, starttls, vcard-temp, http://jabber.org/protocol/commands, jabber:iq:private, urn:xmpp:ping, presence, disco, domain-filter, zlib, message-carbons, message-archive-xep-0136, kunlun-pep, kunlun-amp, message-apns</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/plugins-concurrency</td><td width="2%">&nbsp;</td><td width="58%"><b></b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/skip-privacy</td><td width="2%">&nbsp;</td><td width="58%"><b>false</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/trusted</td><td width="2%">&nbsp;</td><td width="58%"><b>admin@192.168.72.130</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/offline-user-autocreate</td><td width="2%">&nbsp;</td><td width="58%"><b>false</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/sm-threads-pool</td><td width="2%">&nbsp;</td><td width="58%"><b>default</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/force-detail-stale-connection-check</td><td width="2%">&nbsp;</td><td width="58%"><b>true</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/stale-connection-closer-queue-size</td><td width="2%">&nbsp;</td><td width="58%"><b>1000</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/auth-timeout</td><td width="2%">&nbsp;</td><td width="58%"><b>120</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/sm-cluster-strategy-class</td><td width="2%">&nbsp;</td><td width="58%"><b>tigase.cluster.strategy.DefaultClusteringStrategy</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/error-forwarding</td><td width="2%">&nbsp;</td><td width="58%"><b>drop</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/domain-name</td><td width="2%">&nbsp;</td><td width="58%"><b>192.168.72.130</b></td></tr>
+   </table>
+  </p>
+   <h3>Tests results:</h3>
+  <p>
+  <table border='1' style='min-width: 800px;'>
+   <thead valign='middle'>
+    <tr>
+     <th width='225px'>Test name</th>
+     <th>Result</th>
+     <th>Total time</th>
+     <th>OK</th>
+     <th>Average</th>
+     <th>Description</th>
+     <th width='225px'>History</th>
+    </tr>
+   </thead>
+   <tr valign="top">    <td>Version</td>    <td bgcolor="#90FF90"><b>success</b></td>    <td>0 sec</td>    <td>1</td>    <td><b>121</b> ms</td>    <td> Get server version </td>    <td><a href='Version.xml'>Version</a></td>   </tr>
+   <tr valign="top">    <td>Configuration</td>    <td bgcolor="#90FF90"><b>success</b></td>    <td>0 sec</td>    <td>1</td>    <td><b>202</b> ms</td>    <td> Server configuration </td>    <td><a href='Configuration.xml'>Configuration</a></td>   </tr>
+   <tr valign="top">    <td>Statistics</td>    <td bgcolor="#90FF90"><b>success</b></td>    <td>0 sec</td>    <td>1</td>    <td><b>225</b> ms</td>    <td> Server statistics </td>    <td><a href='Statistics.xml'>Statistics</a></td>   </tr>
+   <tr valign="top">    <td>Common test</td>    <td bgcolor="#90FF90"><b>success</b></td>    <td>0 sec</td>    <td>1</td>    <td><b>145</b> ms</td>    <td> Common test </td>    <td><a href='Common_test.xml'>Common test</a></td>   </tr>
+  </table>
+  </p>
+  <p>Test end time: <b>2016-11-15 16:39:10</b></p>
+  <p>Total test time: 0 hours, 0 minutes, 1 seconds, 433 ms.</p>      <h3>Server stats after test:</h3>
+   <table>
+    <tr valign="top"><td width="20%">vhost-man:</td><td width="20%">Number of VHosts</td><td width="2%">&nbsp;</td><td width="58%"><b>1</b></td></tr>
+    <tr valign="top"><td width="20%">vhost-man:</td><td width="20%">Checks: is local domain</td><td width="2%">&nbsp;</td><td width="58%"><b>279636</b></td></tr>
+    <tr valign="top"><td width="20%">vhost-man:</td><td width="20%">Get components for local domain</td><td width="2%">&nbsp;</td><td width="58%"><b>59</b></td></tr>
+    <tr valign="top"><td width="20%">message-router:</td><td width="20%">Last second packets</td><td width="2%">&nbsp;</td><td width="58%"><b>80</b></td></tr>
+    <tr valign="top"><td width="20%">message-router:</td><td width="20%">Last hour packets</td><td width="2%">&nbsp;</td><td width="58%"><b>3051</b></td></tr>
+    <tr valign="top"><td width="20%">message-router:</td><td width="20%">Processing threads</td><td width="2%">&nbsp;</td><td width="58%"><b>4</b></td></tr>
+    <tr valign="top"><td width="20%">message-router:</td><td width="20%">Packets received</td><td width="2%">&nbsp;</td><td width="58%"><b>227059</b></td></tr>
+    <tr valign="top"><td width="20%">message-router:</td><td width="20%">Packets sent</td><td width="2%">&nbsp;</td><td width="58%"><b>60</b></td></tr>
+    <tr valign="top"><td width="20%">message-router:</td><td width="20%">Average processing time on last 100 runs [ms]</td><td width="2%">&nbsp;</td><td width="58%"><b>1</b></td></tr>
+    <tr valign="top"><td width="20%">message-router:</td><td width="20%">IN_QUEUE processed messages</td><td width="2%">&nbsp;</td><td width="58%"><b>374</b></td></tr>
+    <tr valign="top"><td width="20%">message-router:</td><td width="20%">IN_QUEUE processed presences</td><td width="2%">&nbsp;</td><td width="58%"><b>32</b></td></tr>
+    <tr valign="top"><td width="20%">message-router:</td><td width="20%">IN_QUEUE processed other</td><td width="2%">&nbsp;</td><td width="58%"><b>226653</b></td></tr>
+    <tr valign="top"><td width="20%">message-router:</td><td width="20%">IN_QUEUE processed IQ no XMLNS</td><td width="2%">&nbsp;</td><td width="58%"><b>47460</b></td></tr>
+    <tr valign="top"><td width="20%">message-router:</td><td width="20%">IN_QUEUE processed IQ jabber:iq:version</td><td width="2%">&nbsp;</td><td width="58%"><b>80</b></td></tr>
+    <tr valign="top"><td width="20%">message-router:</td><td width="20%">IN_QUEUE processed IQ bind</td><td width="2%">&nbsp;</td><td width="58%"><b>14780</b></td></tr>
+    <tr valign="top"><td width="20%">message-router:</td><td width="20%">IN_QUEUE processed IQ jabber:iq:roster</td><td width="2%">&nbsp;</td><td width="58%"><b>8</b></td></tr>
+    <tr valign="top"><td width="20%">message-router:</td><td width="20%">IN_QUEUE processed IQ jabber:iq:privacy</td><td width="2%">&nbsp;</td><td width="58%"><b>42</b></td></tr>
+    <tr valign="top"><td width="20%">message-router:</td><td width="20%">IN_QUEUE processed IQ session</td><td width="2%">&nbsp;</td><td width="58%"><b>3594</b></td></tr>
+    <tr valign="top"><td width="20%">message-router:</td><td width="20%">IN_QUEUE processed IQ jabber:iq:register</td><td width="2%">&nbsp;</td><td width="58%"><b>67272</b></td></tr>
+    <tr valign="top"><td width="20%">message-router:</td><td width="20%">IN_QUEUE processed IQ vCard</td><td width="2%">&nbsp;</td><td width="58%"><b>8</b></td></tr>
+    <tr valign="top"><td width="20%">message-router:</td><td width="20%">IN_QUEUE processed IQ error</td><td width="2%">&nbsp;</td><td width="58%"><b>55</b></td></tr>
+    <tr valign="top"><td width="20%">message-router:</td><td width="20%">IN_QUEUE processed IQ command</td><td width="2%">&nbsp;</td><td width="58%"><b>78484</b></td></tr>
+    <tr valign="top"><td width="20%">message-router:</td><td width="20%">IN_QUEUE processed IQ http://jabber.org/protocol/disco#info</td><td width="2%">&nbsp;</td><td width="58%"><b>22</b></td></tr>
+    <tr valign="top"><td width="20%">message-router:</td><td width="20%">IN_QUEUE processed IQ jabber:iq:private</td><td width="2%">&nbsp;</td><td width="58%"><b>9</b></td></tr>
+    <tr valign="top"><td width="20%">message-router:</td><td width="20%">IN_QUEUE processed total IQ</td><td width="2%">&nbsp;</td><td width="58%"><b>211814</b></td></tr>
+    <tr valign="top"><td width="20%">message-router:</td><td width="20%">OUT_QUEUE processed other</td><td width="2%">&nbsp;</td><td width="58%"><b>60</b></td></tr>
+    <tr valign="top"><td width="20%">message-router:</td><td width="20%">OUT_QUEUE processed IQ command</td><td width="2%">&nbsp;</td><td width="58%"><b>56</b></td></tr>
+    <tr valign="top"><td width="20%">message-router:</td><td width="20%">OUT_QUEUE processed IQ http://jabber.org/protocol/disco#info</td><td width="2%">&nbsp;</td><td width="58%"><b>4</b></td></tr>
+    <tr valign="top"><td width="20%">message-router:</td><td width="20%">OUT_QUEUE processed total IQ</td><td width="2%">&nbsp;</td><td width="58%"><b>60</b></td></tr>
+    <tr valign="top"><td width="20%">message-router:</td><td width="20%">Local hostname</td><td width="2%">&nbsp;</td><td width="58%"><b>ubuntu</b></td></tr>
+    <tr valign="top"><td width="20%">message-router:</td><td width="20%">Uptime</td><td width="2%">&nbsp;</td><td width="58%"><b>6 hours, 50 mins</b></td></tr>
+    <tr valign="top"><td width="20%">message-router:</td><td width="20%">Load average</td><td width="2%">&nbsp;</td><td width="58%"><b>0.11</b></td></tr>
+    <tr valign="top"><td width="20%">message-router:</td><td width="20%">CPU usage [%]</td><td width="2%">&nbsp;</td><td width="58%"><b>5.784062</b></td></tr>
+    <tr valign="top"><td width="20%">message-router:</td><td width="20%">HEAP usage [%]</td><td width="2%">&nbsp;</td><td width="58%"><b>29.961094</b></td></tr>
+    <tr valign="top"><td width="20%">message-router:</td><td width="20%">NONHEAP usage [%]</td><td width="2%">&nbsp;</td><td width="58%"><b>100.0</b></td></tr>
+    <tr valign="top"><td width="20%">message-router:</td><td width="20%">CPU usage</td><td width="2%">&nbsp;</td><td width="58%"><b>5.8%</b></td></tr>
+    <tr valign="top"><td width="20%">message-router:</td><td width="20%">Max Heap mem</td><td width="2%">&nbsp;</td><td width="58%"><b>198,016 KB</b></td></tr>
+    <tr valign="top"><td width="20%">message-router:</td><td width="20%">Used Heap</td><td width="2%">&nbsp;</td><td width="58%"><b>59,327 KB</b></td></tr>
+    <tr valign="top"><td width="20%">message-router:</td><td width="20%">Free Heap</td><td width="2%">&nbsp;</td><td width="58%"><b>138,688 KB</b></td></tr>
+    <tr valign="top"><td width="20%">message-router:</td><td width="20%">Max NonHeap mem</td><td width="2%">&nbsp;</td><td width="58%"><b>0 KB</b></td></tr>
+    <tr valign="top"><td width="20%">message-router:</td><td width="20%">Used NonHeap</td><td width="2%">&nbsp;</td><td width="58%"><b>60,756 KB</b></td></tr>
+    <tr valign="top"><td width="20%">message-router:</td><td width="20%">Free NonHeap</td><td width="2%">&nbsp;</td><td width="58%"><b>0 KB</b></td></tr>
+    <tr valign="top"><td width="20%">amp:</td><td width="20%">Processing threads</td><td width="2%">&nbsp;</td><td width="58%"><b>1</b></td></tr>
+    <tr valign="top"><td width="20%">bosh:</td><td width="20%">Processing threads</td><td width="2%">&nbsp;</td><td width="58%"><b>4</b></td></tr>
+    <tr valign="top"><td width="20%">c2s:</td><td width="20%">Last second packets</td><td width="2%">&nbsp;</td><td width="58%"><b>49</b></td></tr>
+    <tr valign="top"><td width="20%">c2s:</td><td width="20%">Last hour packets</td><td width="2%">&nbsp;</td><td width="58%"><b>1649</b></td></tr>
+    <tr valign="top"><td width="20%">c2s:</td><td width="20%">Processing threads</td><td width="2%">&nbsp;</td><td width="58%"><b>4</b></td></tr>
+    <tr valign="top"><td width="20%">c2s:</td><td width="20%">Packets received</td><td width="2%">&nbsp;</td><td width="58%"><b>122512</b></td></tr>
+    <tr valign="top"><td width="20%">c2s:</td><td width="20%">Packets sent</td><td width="2%">&nbsp;</td><td width="58%"><b>104368</b></td></tr>
+    <tr valign="top"><td width="20%">c2s:</td><td width="20%">IN_QUEUE processed messages</td><td width="2%">&nbsp;</td><td width="58%"><b>104</b></td></tr>
+    <tr valign="top"><td width="20%">c2s:</td><td width="20%">IN_QUEUE processed presences</td><td width="2%">&nbsp;</td><td width="58%"><b>12</b></td></tr>
+    <tr valign="top"><td width="20%">c2s:</td><td width="20%">IN_QUEUE processed other</td><td width="2%">&nbsp;</td><td width="58%"><b>103382</b></td></tr>
+    <tr valign="top"><td width="20%">c2s:</td><td width="20%">IN_QUEUE processed IQ no XMLNS</td><td width="2%">&nbsp;</td><td width="58%"><b>28355</b></td></tr>
+    <tr valign="top"><td width="20%">c2s:</td><td width="20%">IN_QUEUE processed IQ jabber:iq:version</td><td width="2%">&nbsp;</td><td width="58%"><b>40</b></td></tr>
+    <tr valign="top"><td width="20%">c2s:</td><td width="20%">IN_QUEUE processed IQ bind</td><td width="2%">&nbsp;</td><td width="58%"><b>7364</b></td></tr>
+    <tr valign="top"><td width="20%">c2s:</td><td width="20%">IN_QUEUE processed IQ jabber:iq:roster</td><td width="2%">&nbsp;</td><td width="58%"><b>4</b></td></tr>
+    <tr valign="top"><td width="20%">c2s:</td><td width="20%">IN_QUEUE processed IQ jabber:iq:register</td><td width="2%">&nbsp;</td><td width="58%"><b>21277</b></td></tr>
+    <tr valign="top"><td width="20%">c2s:</td><td width="20%">IN_QUEUE processed IQ vCard</td><td width="2%">&nbsp;</td><td width="58%"><b>4</b></td></tr>
+    <tr valign="top"><td width="20%">c2s:</td><td width="20%">IN_QUEUE processed IQ error</td><td width="2%">&nbsp;</td><td width="58%"><b>52</b></td></tr>
+    <tr valign="top"><td width="20%">c2s:</td><td width="20%">IN_QUEUE processed IQ command</td><td width="2%">&nbsp;</td><td width="58%"><b>38859</b></td></tr>
+    <tr valign="top"><td width="20%">c2s:</td><td width="20%">IN_QUEUE processed IQ http://jabber.org/protocol/disco#info</td><td width="2%">&nbsp;</td><td width="58%"><b>6</b></td></tr>
+    <tr valign="top"><td width="20%">c2s:</td><td width="20%">IN_QUEUE processed IQ jabber:iq:private</td><td width="2%">&nbsp;</td><td width="58%"><b>4</b></td></tr>
+    <tr valign="top"><td width="20%">c2s:</td><td width="20%">IN_QUEUE processed total IQ</td><td width="2%">&nbsp;</td><td width="58%"><b>95965</b></td></tr>
+    <tr valign="top"><td width="20%">c2s:</td><td width="20%">OUT_QUEUE processed messages</td><td width="2%">&nbsp;</td><td width="58%"><b>270</b></td></tr>
+    <tr valign="top"><td width="20%">c2s:</td><td width="20%">OUT_QUEUE processed presences</td><td width="2%">&nbsp;</td><td width="58%"><b>12</b></td></tr>
+    <tr valign="top"><td width="20%">c2s:</td><td width="20%">OUT_QUEUE processed other</td><td width="2%">&nbsp;</td><td width="58%"><b>104086</b></td></tr>
+    <tr valign="top"><td width="20%">c2s:</td><td width="20%">OUT_QUEUE processed IQ no XMLNS</td><td width="2%">&nbsp;</td><td width="58%"><b>91</b></td></tr>
+    <tr valign="top"><td width="20%">c2s:</td><td width="20%">OUT_QUEUE processed IQ jabber:iq:version</td><td width="2%">&nbsp;</td><td width="58%"><b>40</b></td></tr>
+    <tr valign="top"><td width="20%">c2s:</td><td width="20%">OUT_QUEUE processed IQ bind</td><td width="2%">&nbsp;</td><td width="58%"><b>7416</b></td></tr>
+    <tr valign="top"><td width="20%">c2s:</td><td width="20%">OUT_QUEUE processed IQ jabber:iq:roster</td><td width="2%">&nbsp;</td><td width="58%"><b>4</b></td></tr>
+    <tr valign="top"><td width="20%">c2s:</td><td width="20%">OUT_QUEUE processed IQ jabber:iq:privacy</td><td width="2%">&nbsp;</td><td width="58%"><b>42</b></td></tr>
+    <tr valign="top"><td width="20%">c2s:</td><td width="20%">OUT_QUEUE processed IQ session</td><td width="2%">&nbsp;</td><td width="58%"><b>3594</b></td></tr>
+    <tr valign="top"><td width="20%">c2s:</td><td width="20%">OUT_QUEUE processed IQ jabber:iq:register</td><td width="2%">&nbsp;</td><td width="58%"><b>45995</b></td></tr>
+    <tr valign="top"><td width="20%">c2s:</td><td width="20%">OUT_QUEUE processed IQ vCard</td><td width="2%">&nbsp;</td><td width="58%"><b>4</b></td></tr>
+    <tr valign="top"><td width="20%">c2s:</td><td width="20%">OUT_QUEUE processed IQ command</td><td width="2%">&nbsp;</td><td width="58%"><b>39467</b></td></tr>
+    <tr valign="top"><td width="20%">c2s:</td><td width="20%">OUT_QUEUE processed IQ http://jabber.org/protocol/disco#info</td><td width="2%">&nbsp;</td><td width="58%"><b>6</b></td></tr>
+    <tr valign="top"><td width="20%">c2s:</td><td width="20%">OUT_QUEUE processed IQ jabber:iq:private</td><td width="2%">&nbsp;</td><td width="58%"><b>5</b></td></tr>
+    <tr valign="top"><td width="20%">c2s:</td><td width="20%">OUT_QUEUE processed total IQ</td><td width="2%">&nbsp;</td><td width="58%"><b>96664</b></td></tr>
+    <tr valign="top"><td width="20%">c2s:</td><td width="20%">Open connections</td><td width="2%">&nbsp;</td><td width="58%"><b>2</b></td></tr>
+    <tr valign="top"><td width="20%">c2s:</td><td width="20%">Bytes sent</td><td width="2%">&nbsp;</td><td width="58%"><b>19774265</b></td></tr>
+    <tr valign="top"><td width="20%">c2s:</td><td width="20%">Bytes received</td><td width="2%">&nbsp;</td><td width="58%"><b>9797990</b></td></tr>
+    <tr valign="top"><td width="20%">c2s:</td><td width="20%">Watchdog runs</td><td width="2%">&nbsp;</td><td width="58%"><b>41</b></td></tr>
+    <tr valign="top"><td width="20%">cl-comp:</td><td width="20%">Processing threads</td><td width="2%">&nbsp;</td><td width="58%"><b>8</b></td></tr>
+    <tr valign="top"><td width="20%">cl-comp:</td><td width="20%">Watchdog runs</td><td width="2%">&nbsp;</td><td width="58%"><b>41</b></td></tr>
+    <tr valign="top"><td width="20%">cl-comp:</td><td width="20%">Last day disconnects</td><td width="2%">&nbsp;</td><td width="58%"><b>[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]</b></td></tr>
+    <tr valign="top"><td width="20%">cl-comp:</td><td width="20%">Last hour disconnects</td><td width="2%">&nbsp;</td><td width="58%"><b>[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]</b></td></tr>
+    <tr valign="top"><td width="20%">cl-comp:</td><td width="20%">Average compression ratio</td><td width="2%">&nbsp;</td><td width="58%"><b>NaN</b></td></tr>
+    <tr valign="top"><td width="20%">cl-comp:</td><td width="20%">Average decompression ratio</td><td width="2%">&nbsp;</td><td width="58%"><b>NaN</b></td></tr>
+    <tr valign="top"><td width="20%">monitor:</td><td width="20%">Processing threads</td><td width="2%">&nbsp;</td><td width="58%"><b>1</b></td></tr>
+    <tr valign="top"><td width="20%">s2s:</td><td width="20%">Processing threads</td><td width="2%">&nbsp;</td><td width="58%"><b>4</b></td></tr>
+    <tr valign="top"><td width="20%">s2s:</td><td width="20%">Watchdog runs</td><td width="2%">&nbsp;</td><td width="58%"><b>41</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">Last second packets</td><td width="2%">&nbsp;</td><td width="58%"><b>19</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">Last hour packets</td><td width="2%">&nbsp;</td><td width="58%"><b>1392</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">Processing threads</td><td width="2%">&nbsp;</td><td width="58%"><b>16</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">Packets received</td><td width="2%">&nbsp;</td><td width="58%"><b>104485</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">Packets sent</td><td width="2%">&nbsp;</td><td width="58%"><b>122628</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">IN_QUEUE processed messages</td><td width="2%">&nbsp;</td><td width="58%"><b>270</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">IN_QUEUE processed presences</td><td width="2%">&nbsp;</td><td width="58%"><b>20</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">IN_QUEUE processed other</td><td width="2%">&nbsp;</td><td width="58%"><b>104105</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">IN_QUEUE processed IQ jabber:iq:version</td><td width="2%">&nbsp;</td><td width="58%"><b>40</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">IN_QUEUE processed IQ bind</td><td width="2%">&nbsp;</td><td width="58%"><b>7416</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">IN_QUEUE processed IQ jabber:iq:roster</td><td width="2%">&nbsp;</td><td width="58%"><b>4</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">IN_QUEUE processed IQ jabber:iq:privacy</td><td width="2%">&nbsp;</td><td width="58%"><b>42</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">IN_QUEUE processed IQ session</td><td width="2%">&nbsp;</td><td width="58%"><b>3594</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">IN_QUEUE processed IQ jabber:iq:register</td><td width="2%">&nbsp;</td><td width="58%"><b>45995</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">IN_QUEUE processed IQ vCard</td><td width="2%">&nbsp;</td><td width="58%"><b>4</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">IN_QUEUE processed IQ error</td><td width="2%">&nbsp;</td><td width="58%"><b>3</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">IN_QUEUE processed IQ command</td><td width="2%">&nbsp;</td><td width="58%"><b>39568</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">IN_QUEUE processed IQ http://jabber.org/protocol/disco#info</td><td width="2%">&nbsp;</td><td width="58%"><b>12</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">IN_QUEUE processed IQ jabber:iq:private</td><td width="2%">&nbsp;</td><td width="58%"><b>5</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">IN_QUEUE processed total IQ</td><td width="2%">&nbsp;</td><td width="58%"><b>96683</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">OUT_QUEUE processed messages</td><td width="2%">&nbsp;</td><td width="58%"><b>104</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">OUT_QUEUE processed presences</td><td width="2%">&nbsp;</td><td width="58%"><b>20</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">OUT_QUEUE processed other</td><td width="2%">&nbsp;</td><td width="58%"><b>122504</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">OUT_QUEUE processed IQ no XMLNS</td><td width="2%">&nbsp;</td><td width="58%"><b>47369</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">OUT_QUEUE processed IQ jabber:iq:version</td><td width="2%">&nbsp;</td><td width="58%"><b>40</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">OUT_QUEUE processed IQ bind</td><td width="2%">&nbsp;</td><td width="58%"><b>7364</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">OUT_QUEUE processed IQ jabber:iq:roster</td><td width="2%">&nbsp;</td><td width="58%"><b>4</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">OUT_QUEUE processed IQ jabber:iq:register</td><td width="2%">&nbsp;</td><td width="58%"><b>21277</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">OUT_QUEUE processed IQ vCard</td><td width="2%">&nbsp;</td><td width="58%"><b>4</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">OUT_QUEUE processed IQ error</td><td width="2%">&nbsp;</td><td width="58%"><b>52</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">OUT_QUEUE processed IQ command</td><td width="2%">&nbsp;</td><td width="58%"><b>38961</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">OUT_QUEUE processed IQ http://jabber.org/protocol/disco#info</td><td width="2%">&nbsp;</td><td width="58%"><b>12</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">OUT_QUEUE processed IQ jabber:iq:private</td><td width="2%">&nbsp;</td><td width="58%"><b>4</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">OUT_QUEUE processed total IQ</td><td width="2%">&nbsp;</td><td width="58%"><b>115087</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">Open user connections</td><td width="2%">&nbsp;</td><td width="58%"><b>2</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">Maximum user connections</td><td width="2%">&nbsp;</td><td width="58%"><b>18</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">Total user connections</td><td width="2%">&nbsp;</td><td width="58%"><b>9508</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">Closed user connections</td><td width="2%">&nbsp;</td><td width="58%"><b>5917</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">Open user sessions</td><td width="2%">&nbsp;</td><td width="58%"><b>2</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">Maximum user sessions</td><td width="2%">&nbsp;</td><td width="58%"><b>14</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">Total user sessions</td><td width="2%">&nbsp;</td><td width="58%"><b>7275</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">Authentication timouts</td><td width="2%">&nbsp;</td><td width="58%"><b>3</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">Maximum user sessions today</td><td width="2%">&nbsp;</td><td width="58%"><b>3</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">Maximum user sessions yesterday</td><td width="2%">&nbsp;</td><td width="58%"><b>14</b></td></tr>
+    <tr valign="top"><td width="20%">default-handler:</td><td width="20%">Invalid registrations</td><td width="2%">&nbsp;</td><td width="58%"><b>22</b></td></tr>
+    <tr valign="top"><td width="20%">presence:</td><td width="20%">Users status changes</td><td width="2%">&nbsp;</td><td width="58%"><b>12</b></td></tr>
+    <tr valign="top"><td width="20%">ws2s:</td><td width="20%">Processing threads</td><td width="2%">&nbsp;</td><td width="58%"><b>4</b></td></tr>
+    <tr valign="top"><td width="20%">ws2s:</td><td width="20%">Watchdog runs</td><td width="2%">&nbsp;</td><td width="58%"><b>41</b></td></tr>
+    <tr valign="top"><td width="20%">unknown:</td><td width="20%">Stats level</td><td width="2%">&nbsp;</td><td width="58%"><b>FINER</b></td></tr>
+   </table>
+  </p>
+ </body>
+</html>

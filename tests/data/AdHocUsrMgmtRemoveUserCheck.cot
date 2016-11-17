@@ -1,0 +1,14 @@
+send: {
+<iq type="get" id="1aac3a" >
+  <query xmlns="jabber:iq:roster"/>
+</iq>
+}
+
+expect: {
+<iq type="result" id="1aac3a" >
+  <query xmlns="jabber:iq:roster"/>
+</iq>
+}
+
+
+

@@ -1,0 +1,363 @@
+<test-history test='Test 5'>
+<OUTPUT test='Test 5'>
+<![CDATA[<stream:stream xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' to='192.168.72.130' version='1.0'/>
+]]></OUTPUT>
+<INPUT test='Test 5'>
+<![CDATA[<stream:stream id="f0d0637e-a61a-4ad2-9e11-51f0f0e25aaf" xmlns:stream="http://etherx.jabber.org/streams" xmlns="jabber:client" from="192.168.72.130" xml:lang="en" version="1.0"/>
+]]></INPUT>
+<INPUT test='Test 5'>
+<![CDATA[<stream:features><auth xmlns="http://jabber.org/features/iq-auth"/><register xmlns="http://jabber.org/features/iq-register"/><mechanisms xmlns="urn:ietf:params:xml:ns:xmpp-sasl"><mechanism>PLAIN</mechanism><mechanism>ANONYMOUS</mechanism></mechanisms><ver xmlns="urn:xmpp:features:rosterver"/><starttls xmlns="urn:ietf:params:xml:ns:xmpp-tls"/></stream:features>
+]]></INPUT>
+<OUTPUT test='Test 5'>
+<![CDATA[<auth xmlns='urn:ietf:params:xml:ns:xmpp-sasl' mechanism='PLAIN'>AGFkbWluAHN0YXRz</auth>
+]]></OUTPUT>
+<INPUT test='Test 5'>
+<![CDATA[<success xmlns="urn:ietf:params:xml:ns:xmpp-sasl"/>
+]]></INPUT>
+<OUTPUT test='Test 5'>
+<![CDATA[<stream:stream xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' to='192.168.72.130' version='1.0'>
+]]></OUTPUT>
+<INPUT test='Test 5'>
+<![CDATA[<stream:stream id="f0d0637e-a61a-4ad2-9e11-51f0f0e25aaf" xmlns:stream="http://etherx.jabber.org/streams" xmlns="jabber:client" from="192.168.72.130" xml:lang="en" version="1.0"/>
+]]></INPUT>
+<INPUT test='Test 5'>
+<![CDATA[<stream:features><register xmlns="http://jabber.org/features/iq-register"/><ver xmlns="urn:xmpp:features:rosterver"/><starttls xmlns="urn:ietf:params:xml:ns:xmpp-tls"/><bind xmlns="urn:ietf:params:xml:ns:xmpp-bind"/><session xmlns="urn:ietf:params:xml:ns:xmpp-session"/></stream:features>
+]]></INPUT>
+<OUTPUT test='Test 5'>
+<![CDATA[<iq type='set' id='bind1'><bind xmlns='urn:ietf:params:xml:ns:xmpp-bind'><resource>def-user-resource</resource></bind></iq>
+]]></OUTPUT>
+<INPUT test='Test 5'>
+<![CDATA[<iq type="result" id="bind1" to="admin@192.168.72.130/def-user-resource" xmlns="jabber:client"><bind xmlns="urn:ietf:params:xml:ns:xmpp-bind"><jid>admin@192.168.72.130/def-user-resource</jid></bind></iq>
+]]></INPUT>
+<OUTPUT test='Test 5'>
+<![CDATA[<message type='chat' from='admin@192.168.72.130/def-user-resource' to='${daemon-user}@192.168.72.130/xmpp-test'>Test message no. 1, from: admin@192.168.72.130/def-user-resource.</message>
+]]></OUTPUT>
+<INPUT test='Test 5'>
+<![CDATA[tigase.test.impl.TestSendMessage, admin@192.168.72.130/def-user-resource(stats), Read timed out
+]]></INPUT>
+<OUTPUT test='Test 5'>
+<![CDATA[<stream:stream xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' to='192.168.72.130' version='1.0'/>
+]]></OUTPUT>
+<INPUT test='Test 5'>
+<![CDATA[<stream:stream id="f8066587-6724-4cc9-97d8-b9bede1c8850" xmlns:stream="http://etherx.jabber.org/streams" xmlns="jabber:client" from="192.168.72.130" xml:lang="en" version="1.0"/>
+]]></INPUT>
+<INPUT test='Test 5'>
+<![CDATA[<stream:features><auth xmlns="http://jabber.org/features/iq-auth"/><register xmlns="http://jabber.org/features/iq-register"/><mechanisms xmlns="urn:ietf:params:xml:ns:xmpp-sasl"><mechanism>PLAIN</mechanism><mechanism>ANONYMOUS</mechanism></mechanisms><ver xmlns="urn:xmpp:features:rosterver"/><starttls xmlns="urn:ietf:params:xml:ns:xmpp-tls"/></stream:features>
+]]></INPUT>
+<OUTPUT test='Test 5'>
+<![CDATA[<auth xmlns='urn:ietf:params:xml:ns:xmpp-sasl' mechanism='PLAIN'>AGFkbWluAHN0YXRz</auth>
+]]></OUTPUT>
+<INPUT test='Test 5'>
+<![CDATA[<success xmlns="urn:ietf:params:xml:ns:xmpp-sasl"/>
+]]></INPUT>
+<OUTPUT test='Test 5'>
+<![CDATA[<stream:stream xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' to='192.168.72.130' version='1.0'>
+]]></OUTPUT>
+<INPUT test='Test 5'>
+<![CDATA[<stream:stream id="f8066587-6724-4cc9-97d8-b9bede1c8850" xmlns:stream="http://etherx.jabber.org/streams" xmlns="jabber:client" from="192.168.72.130" xml:lang="en" version="1.0"/>
+]]></INPUT>
+<INPUT test='Test 5'>
+<![CDATA[<stream:features><register xmlns="http://jabber.org/features/iq-register"/><ver xmlns="urn:xmpp:features:rosterver"/><starttls xmlns="urn:ietf:params:xml:ns:xmpp-tls"/><bind xmlns="urn:ietf:params:xml:ns:xmpp-bind"/><session xmlns="urn:ietf:params:xml:ns:xmpp-session"/></stream:features>
+]]></INPUT>
+<OUTPUT test='Test 5'>
+<![CDATA[<iq type='set' id='bind1'><bind xmlns='urn:ietf:params:xml:ns:xmpp-bind'><resource>def-user-resource</resource></bind></iq>
+]]></OUTPUT>
+<INPUT test='Test 5'>
+<![CDATA[<iq type="result" id="bind1" to="admin@192.168.72.130/def-user-resource" xmlns="jabber:client"><bind xmlns="urn:ietf:params:xml:ns:xmpp-bind"><jid>admin@192.168.72.130/def-user-resource</jid></bind></iq>
+]]></INPUT>
+<OUTPUT test='Test 5'>
+<![CDATA[<message type='chat' from='admin@192.168.72.130/def-user-resource' to='${daemon-user}@192.168.72.130/xmpp-test'>Test message no. 1, from: admin@192.168.72.130/def-user-resource.</message>
+]]></OUTPUT>
+<INPUT test='Test 5'>
+<![CDATA[tigase.test.impl.TestSendMessage, admin@192.168.72.130/def-user-resource(stats), Read timed out
+]]></INPUT>
+<OUTPUT test='Test 5'>
+<![CDATA[<stream:stream xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' to='192.168.72.130' version='1.0'/>
+]]></OUTPUT>
+<INPUT test='Test 5'>
+<![CDATA[<stream:stream id="33e9d71f-3612-4f52-9cf6-301509319553" xmlns:stream="http://etherx.jabber.org/streams" xmlns="jabber:client" from="192.168.72.130" xml:lang="en" version="1.0"/>
+]]></INPUT>
+<INPUT test='Test 5'>
+<![CDATA[<stream:features><auth xmlns="http://jabber.org/features/iq-auth"/><register xmlns="http://jabber.org/features/iq-register"/><mechanisms xmlns="urn:ietf:params:xml:ns:xmpp-sasl"><mechanism>PLAIN</mechanism><mechanism>ANONYMOUS</mechanism></mechanisms><ver xmlns="urn:xmpp:features:rosterver"/><starttls xmlns="urn:ietf:params:xml:ns:xmpp-tls"/></stream:features>
+]]></INPUT>
+<OUTPUT test='Test 5'>
+<![CDATA[<auth xmlns='urn:ietf:params:xml:ns:xmpp-sasl' mechanism='PLAIN'>AGFkbWluAHN0YXRz</auth>
+]]></OUTPUT>
+<INPUT test='Test 5'>
+<![CDATA[<success xmlns="urn:ietf:params:xml:ns:xmpp-sasl"/>
+]]></INPUT>
+<OUTPUT test='Test 5'>
+<![CDATA[<stream:stream xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' to='192.168.72.130' version='1.0'>
+]]></OUTPUT>
+<INPUT test='Test 5'>
+<![CDATA[<stream:stream id="33e9d71f-3612-4f52-9cf6-301509319553" xmlns:stream="http://etherx.jabber.org/streams" xmlns="jabber:client" from="192.168.72.130" xml:lang="en" version="1.0"/>
+]]></INPUT>
+<INPUT test='Test 5'>
+<![CDATA[<stream:features><register xmlns="http://jabber.org/features/iq-register"/><ver xmlns="urn:xmpp:features:rosterver"/><starttls xmlns="urn:ietf:params:xml:ns:xmpp-tls"/><bind xmlns="urn:ietf:params:xml:ns:xmpp-bind"/><session xmlns="urn:ietf:params:xml:ns:xmpp-session"/></stream:features>
+]]></INPUT>
+<OUTPUT test='Test 5'>
+<![CDATA[<iq type='set' id='bind1'><bind xmlns='urn:ietf:params:xml:ns:xmpp-bind'><resource>def-user-resource</resource></bind></iq>
+]]></OUTPUT>
+<INPUT test='Test 5'>
+<![CDATA[<iq type="result" id="bind1" to="admin@192.168.72.130/def-user-resource" xmlns="jabber:client"><bind xmlns="urn:ietf:params:xml:ns:xmpp-bind"><jid>admin@192.168.72.130/def-user-resource</jid></bind></iq>
+]]></INPUT>
+<OUTPUT test='Test 5'>
+<![CDATA[<message type='chat' from='admin@192.168.72.130/def-user-resource' to='${daemon-user}@192.168.72.130/xmpp-test'>Test message no. 1, from: admin@192.168.72.130/def-user-resource.</message>
+]]></OUTPUT>
+<INPUT test='Test 5'>
+<![CDATA[tigase.test.impl.TestSendMessage, admin@192.168.72.130/def-user-resource(stats), Read timed out
+]]></INPUT>
+<OUTPUT test='Test 5'>
+<![CDATA[<stream:stream xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' to='192.168.72.130' version='1.0'/>
+]]></OUTPUT>
+<INPUT test='Test 5'>
+<![CDATA[<stream:stream id="e596bdf9-5580-4fc4-a224-7cb26b851238" xmlns:stream="http://etherx.jabber.org/streams" xmlns="jabber:client" from="192.168.72.130" xml:lang="en" version="1.0"/>
+]]></INPUT>
+<INPUT test='Test 5'>
+<![CDATA[<stream:features><auth xmlns="http://jabber.org/features/iq-auth"/><register xmlns="http://jabber.org/features/iq-register"/><mechanisms xmlns="urn:ietf:params:xml:ns:xmpp-sasl"><mechanism>PLAIN</mechanism><mechanism>ANONYMOUS</mechanism></mechanisms><ver xmlns="urn:xmpp:features:rosterver"/><starttls xmlns="urn:ietf:params:xml:ns:xmpp-tls"/></stream:features>
+]]></INPUT>
+<OUTPUT test='Test 5'>
+<![CDATA[<auth xmlns='urn:ietf:params:xml:ns:xmpp-sasl' mechanism='PLAIN'>AGFkbWluAHN0YXRz</auth>
+]]></OUTPUT>
+<INPUT test='Test 5'>
+<![CDATA[<success xmlns="urn:ietf:params:xml:ns:xmpp-sasl"/>
+]]></INPUT>
+<OUTPUT test='Test 5'>
+<![CDATA[<stream:stream xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' to='192.168.72.130' version='1.0'>
+]]></OUTPUT>
+<INPUT test='Test 5'>
+<![CDATA[<stream:stream id="e596bdf9-5580-4fc4-a224-7cb26b851238" xmlns:stream="http://etherx.jabber.org/streams" xmlns="jabber:client" from="192.168.72.130" xml:lang="en" version="1.0"/>
+]]></INPUT>
+<INPUT test='Test 5'>
+<![CDATA[<stream:features><register xmlns="http://jabber.org/features/iq-register"/><ver xmlns="urn:xmpp:features:rosterver"/><starttls xmlns="urn:ietf:params:xml:ns:xmpp-tls"/><bind xmlns="urn:ietf:params:xml:ns:xmpp-bind"/><session xmlns="urn:ietf:params:xml:ns:xmpp-session"/></stream:features>
+]]></INPUT>
+<OUTPUT test='Test 5'>
+<![CDATA[<iq type='set' id='bind1'><bind xmlns='urn:ietf:params:xml:ns:xmpp-bind'><resource>def-user-resource</resource></bind></iq>
+]]></OUTPUT>
+<INPUT test='Test 5'>
+<![CDATA[<iq type="result" id="bind1" to="admin@192.168.72.130/def-user-resource" xmlns="jabber:client"><bind xmlns="urn:ietf:params:xml:ns:xmpp-bind"><jid>admin@192.168.72.130/def-user-resource</jid></bind></iq>
+]]></INPUT>
+<OUTPUT test='Test 5'>
+<![CDATA[<message type='chat' from='admin@192.168.72.130/def-user-resource' to='${daemon-user}@192.168.72.130/xmpp-test'>Test message no. 1, from: admin@192.168.72.130/def-user-resource.</message>
+]]></OUTPUT>
+<INPUT test='Test 5'>
+<![CDATA[tigase.test.impl.TestSendMessage, admin@192.168.72.130/def-user-resource(stats), Read timed out
+]]></INPUT>
+<OUTPUT test='Test 5'>
+<![CDATA[<stream:stream xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' to='192.168.72.130' version='1.0'/>
+]]></OUTPUT>
+<INPUT test='Test 5'>
+<![CDATA[<stream:stream id="ffff34a5-b2ff-4a3d-b6ee-5dd936f7cfae" xmlns:stream="http://etherx.jabber.org/streams" xmlns="jabber:client" from="192.168.72.130" xml:lang="en" version="1.0"/>
+]]></INPUT>
+<INPUT test='Test 5'>
+<![CDATA[<stream:features><auth xmlns="http://jabber.org/features/iq-auth"/><register xmlns="http://jabber.org/features/iq-register"/><mechanisms xmlns="urn:ietf:params:xml:ns:xmpp-sasl"><mechanism>PLAIN</mechanism><mechanism>ANONYMOUS</mechanism></mechanisms><ver xmlns="urn:xmpp:features:rosterver"/><starttls xmlns="urn:ietf:params:xml:ns:xmpp-tls"/></stream:features>
+]]></INPUT>
+<OUTPUT test='Test 5'>
+<![CDATA[<auth xmlns='urn:ietf:params:xml:ns:xmpp-sasl' mechanism='PLAIN'>AGFkbWluAHN0YXRz</auth>
+]]></OUTPUT>
+<INPUT test='Test 5'>
+<![CDATA[<success xmlns="urn:ietf:params:xml:ns:xmpp-sasl"/>
+]]></INPUT>
+<OUTPUT test='Test 5'>
+<![CDATA[<stream:stream xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' to='192.168.72.130' version='1.0'>
+]]></OUTPUT>
+<INPUT test='Test 5'>
+<![CDATA[<stream:stream id="ffff34a5-b2ff-4a3d-b6ee-5dd936f7cfae" xmlns:stream="http://etherx.jabber.org/streams" xmlns="jabber:client" from="192.168.72.130" xml:lang="en" version="1.0"/>
+]]></INPUT>
+<INPUT test='Test 5'>
+<![CDATA[<stream:features><register xmlns="http://jabber.org/features/iq-register"/><ver xmlns="urn:xmpp:features:rosterver"/><starttls xmlns="urn:ietf:params:xml:ns:xmpp-tls"/><bind xmlns="urn:ietf:params:xml:ns:xmpp-bind"/><session xmlns="urn:ietf:params:xml:ns:xmpp-session"/></stream:features>
+]]></INPUT>
+<OUTPUT test='Test 5'>
+<![CDATA[<iq type='set' id='bind1'><bind xmlns='urn:ietf:params:xml:ns:xmpp-bind'><resource>def-user-resource</resource></bind></iq>
+]]></OUTPUT>
+<INPUT test='Test 5'>
+<![CDATA[<iq type="result" id="bind1" to="admin@192.168.72.130/def-user-resource" xmlns="jabber:client"><bind xmlns="urn:ietf:params:xml:ns:xmpp-bind"><jid>admin@192.168.72.130/def-user-resource</jid></bind></iq>
+]]></INPUT>
+<OUTPUT test='Test 5'>
+<![CDATA[<message type='chat' from='admin@192.168.72.130/def-user-resource' to='${daemon-user}@192.168.72.130/xmpp-test'>Test message no. 1, from: admin@192.168.72.130/def-user-resource.</message>
+]]></OUTPUT>
+<INPUT test='Test 5'>
+<![CDATA[tigase.test.impl.TestSendMessage, admin@192.168.72.130/def-user-resource(stats), Read timed out
+]]></INPUT>
+<OUTPUT test='Test 5'>
+<![CDATA[<stream:stream xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' to='192.168.72.130' version='1.0'/>
+]]></OUTPUT>
+<INPUT test='Test 5'>
+<![CDATA[<stream:stream id="a4a9bdac-3162-4ef3-b195-34492ec02b51" xmlns:stream="http://etherx.jabber.org/streams" xmlns="jabber:client" from="192.168.72.130" xml:lang="en" version="1.0"/>
+]]></INPUT>
+<INPUT test='Test 5'>
+<![CDATA[<stream:features><auth xmlns="http://jabber.org/features/iq-auth"/><register xmlns="http://jabber.org/features/iq-register"/><mechanisms xmlns="urn:ietf:params:xml:ns:xmpp-sasl"><mechanism>PLAIN</mechanism><mechanism>ANONYMOUS</mechanism></mechanisms><ver xmlns="urn:xmpp:features:rosterver"/><starttls xmlns="urn:ietf:params:xml:ns:xmpp-tls"/></stream:features>
+]]></INPUT>
+<OUTPUT test='Test 5'>
+<![CDATA[<auth xmlns='urn:ietf:params:xml:ns:xmpp-sasl' mechanism='PLAIN'>AGFkbWluAHN0YXRz</auth>
+]]></OUTPUT>
+<INPUT test='Test 5'>
+<![CDATA[<success xmlns="urn:ietf:params:xml:ns:xmpp-sasl"/>
+]]></INPUT>
+<OUTPUT test='Test 5'>
+<![CDATA[<stream:stream xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' to='192.168.72.130' version='1.0'>
+]]></OUTPUT>
+<INPUT test='Test 5'>
+<![CDATA[<stream:stream id="a4a9bdac-3162-4ef3-b195-34492ec02b51" xmlns:stream="http://etherx.jabber.org/streams" xmlns="jabber:client" from="192.168.72.130" xml:lang="en" version="1.0"/>
+]]></INPUT>
+<INPUT test='Test 5'>
+<![CDATA[<stream:features><register xmlns="http://jabber.org/features/iq-register"/><ver xmlns="urn:xmpp:features:rosterver"/><starttls xmlns="urn:ietf:params:xml:ns:xmpp-tls"/><bind xmlns="urn:ietf:params:xml:ns:xmpp-bind"/><session xmlns="urn:ietf:params:xml:ns:xmpp-session"/></stream:features>
+]]></INPUT>
+<OUTPUT test='Test 5'>
+<![CDATA[<iq type='set' id='bind1'><bind xmlns='urn:ietf:params:xml:ns:xmpp-bind'><resource>def-user-resource</resource></bind></iq>
+]]></OUTPUT>
+<INPUT test='Test 5'>
+<![CDATA[<iq type="result" id="bind1" to="admin@192.168.72.130/def-user-resource" xmlns="jabber:client"><bind xmlns="urn:ietf:params:xml:ns:xmpp-bind"><jid>admin@192.168.72.130/def-user-resource</jid></bind></iq>
+]]></INPUT>
+<OUTPUT test='Test 5'>
+<![CDATA[<message type='chat' from='admin@192.168.72.130/def-user-resource' to='${daemon-user}@192.168.72.130/xmpp-test'>Test message no. 1, from: admin@192.168.72.130/def-user-resource.</message>
+]]></OUTPUT>
+<INPUT test='Test 5'>
+<![CDATA[tigase.test.impl.TestSendMessage, admin@192.168.72.130/def-user-resource(stats), Read timed out
+]]></INPUT>
+<OUTPUT test='Test 5'>
+<![CDATA[<stream:stream xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' to='192.168.72.130' version='1.0'/>
+]]></OUTPUT>
+<INPUT test='Test 5'>
+<![CDATA[<stream:stream id="277ccc06-9b15-420a-aaba-445cbe98d1c7" xmlns:stream="http://etherx.jabber.org/streams" xmlns="jabber:client" from="192.168.72.130" xml:lang="en" version="1.0"/>
+]]></INPUT>
+<INPUT test='Test 5'>
+<![CDATA[<stream:features><auth xmlns="http://jabber.org/features/iq-auth"/><register xmlns="http://jabber.org/features/iq-register"/><mechanisms xmlns="urn:ietf:params:xml:ns:xmpp-sasl"><mechanism>PLAIN</mechanism><mechanism>ANONYMOUS</mechanism></mechanisms><ver xmlns="urn:xmpp:features:rosterver"/><starttls xmlns="urn:ietf:params:xml:ns:xmpp-tls"/></stream:features>
+]]></INPUT>
+<OUTPUT test='Test 5'>
+<![CDATA[<auth xmlns='urn:ietf:params:xml:ns:xmpp-sasl' mechanism='PLAIN'>AGFkbWluAHN0YXRz</auth>
+]]></OUTPUT>
+<INPUT test='Test 5'>
+<![CDATA[<success xmlns="urn:ietf:params:xml:ns:xmpp-sasl"/>
+]]></INPUT>
+<OUTPUT test='Test 5'>
+<![CDATA[<stream:stream xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' to='192.168.72.130' version='1.0'>
+]]></OUTPUT>
+<INPUT test='Test 5'>
+<![CDATA[<stream:stream id="277ccc06-9b15-420a-aaba-445cbe98d1c7" xmlns:stream="http://etherx.jabber.org/streams" xmlns="jabber:client" from="192.168.72.130" xml:lang="en" version="1.0"/>
+]]></INPUT>
+<INPUT test='Test 5'>
+<![CDATA[<stream:features><register xmlns="http://jabber.org/features/iq-register"/><ver xmlns="urn:xmpp:features:rosterver"/><starttls xmlns="urn:ietf:params:xml:ns:xmpp-tls"/><bind xmlns="urn:ietf:params:xml:ns:xmpp-bind"/><session xmlns="urn:ietf:params:xml:ns:xmpp-session"/></stream:features>
+]]></INPUT>
+<OUTPUT test='Test 5'>
+<![CDATA[<iq type='set' id='bind1'><bind xmlns='urn:ietf:params:xml:ns:xmpp-bind'><resource>def-user-resource</resource></bind></iq>
+]]></OUTPUT>
+<INPUT test='Test 5'>
+<![CDATA[<iq type="result" id="bind1" to="admin@192.168.72.130/def-user-resource" xmlns="jabber:client"><bind xmlns="urn:ietf:params:xml:ns:xmpp-bind"><jid>admin@192.168.72.130/def-user-resource</jid></bind></iq>
+]]></INPUT>
+<OUTPUT test='Test 5'>
+<![CDATA[<message type='chat' from='admin@192.168.72.130/def-user-resource' to='${daemon-user}@192.168.72.130/xmpp-test'>Test message no. 1, from: admin@192.168.72.130/def-user-resource.</message>
+]]></OUTPUT>
+<INPUT test='Test 5'>
+<![CDATA[tigase.test.impl.TestSendMessage, admin@192.168.72.130/def-user-resource(stats), Read timed out
+]]></INPUT>
+<OUTPUT test='Test 5'>
+<![CDATA[<stream:stream xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' to='192.168.72.130' version='1.0'/>
+]]></OUTPUT>
+<INPUT test='Test 5'>
+<![CDATA[<stream:stream id="cf453cab-e567-4206-99f5-4f8d4f4e9af1" xmlns:stream="http://etherx.jabber.org/streams" xmlns="jabber:client" from="192.168.72.130" xml:lang="en" version="1.0"/>
+]]></INPUT>
+<INPUT test='Test 5'>
+<![CDATA[<stream:features><auth xmlns="http://jabber.org/features/iq-auth"/><register xmlns="http://jabber.org/features/iq-register"/><mechanisms xmlns="urn:ietf:params:xml:ns:xmpp-sasl"><mechanism>PLAIN</mechanism><mechanism>ANONYMOUS</mechanism></mechanisms><ver xmlns="urn:xmpp:features:rosterver"/><starttls xmlns="urn:ietf:params:xml:ns:xmpp-tls"/></stream:features>
+]]></INPUT>
+<OUTPUT test='Test 5'>
+<![CDATA[<auth xmlns='urn:ietf:params:xml:ns:xmpp-sasl' mechanism='PLAIN'>AGFkbWluAHN0YXRz</auth>
+]]></OUTPUT>
+<INPUT test='Test 5'>
+<![CDATA[<success xmlns="urn:ietf:params:xml:ns:xmpp-sasl"/>
+]]></INPUT>
+<OUTPUT test='Test 5'>
+<![CDATA[<stream:stream xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' to='192.168.72.130' version='1.0'>
+]]></OUTPUT>
+<INPUT test='Test 5'>
+<![CDATA[<stream:stream id="cf453cab-e567-4206-99f5-4f8d4f4e9af1" xmlns:stream="http://etherx.jabber.org/streams" xmlns="jabber:client" from="192.168.72.130" xml:lang="en" version="1.0"/>
+]]></INPUT>
+<INPUT test='Test 5'>
+<![CDATA[<stream:features><register xmlns="http://jabber.org/features/iq-register"/><ver xmlns="urn:xmpp:features:rosterver"/><starttls xmlns="urn:ietf:params:xml:ns:xmpp-tls"/><bind xmlns="urn:ietf:params:xml:ns:xmpp-bind"/><session xmlns="urn:ietf:params:xml:ns:xmpp-session"/></stream:features>
+]]></INPUT>
+<OUTPUT test='Test 5'>
+<![CDATA[<iq type='set' id='bind1'><bind xmlns='urn:ietf:params:xml:ns:xmpp-bind'><resource>def-user-resource</resource></bind></iq>
+]]></OUTPUT>
+<INPUT test='Test 5'>
+<![CDATA[<iq type="result" id="bind1" to="admin@192.168.72.130/def-user-resource" xmlns="jabber:client"><bind xmlns="urn:ietf:params:xml:ns:xmpp-bind"><jid>admin@192.168.72.130/def-user-resource</jid></bind></iq>
+]]></INPUT>
+<OUTPUT test='Test 5'>
+<![CDATA[<message type='chat' from='admin@192.168.72.130/def-user-resource' to='${daemon-user}@192.168.72.130/xmpp-test'>Test message no. 1, from: admin@192.168.72.130/def-user-resource.</message>
+]]></OUTPUT>
+<INPUT test='Test 5'>
+<![CDATA[tigase.test.impl.TestSendMessage, admin@192.168.72.130/def-user-resource(stats), Read timed out
+]]></INPUT>
+<OUTPUT test='Test 5'>
+<![CDATA[<stream:stream xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' to='192.168.72.130' version='1.0'/>
+]]></OUTPUT>
+<INPUT test='Test 5'>
+<![CDATA[<stream:stream id="2c81266e-0198-48c7-80e3-ab7c613a35fc" xmlns:stream="http://etherx.jabber.org/streams" xmlns="jabber:client" from="192.168.72.130" xml:lang="en" version="1.0"/>
+]]></INPUT>
+<INPUT test='Test 5'>
+<![CDATA[<stream:features><auth xmlns="http://jabber.org/features/iq-auth"/><register xmlns="http://jabber.org/features/iq-register"/><mechanisms xmlns="urn:ietf:params:xml:ns:xmpp-sasl"><mechanism>PLAIN</mechanism><mechanism>ANONYMOUS</mechanism></mechanisms><ver xmlns="urn:xmpp:features:rosterver"/><starttls xmlns="urn:ietf:params:xml:ns:xmpp-tls"/></stream:features>
+]]></INPUT>
+<OUTPUT test='Test 5'>
+<![CDATA[<auth xmlns='urn:ietf:params:xml:ns:xmpp-sasl' mechanism='PLAIN'>AGFkbWluAHN0YXRz</auth>
+]]></OUTPUT>
+<INPUT test='Test 5'>
+<![CDATA[<success xmlns="urn:ietf:params:xml:ns:xmpp-sasl"/>
+]]></INPUT>
+<OUTPUT test='Test 5'>
+<![CDATA[<stream:stream xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' to='192.168.72.130' version='1.0'>
+]]></OUTPUT>
+<INPUT test='Test 5'>
+<![CDATA[<stream:stream id="2c81266e-0198-48c7-80e3-ab7c613a35fc" xmlns:stream="http://etherx.jabber.org/streams" xmlns="jabber:client" from="192.168.72.130" xml:lang="en" version="1.0"/>
+]]></INPUT>
+<INPUT test='Test 5'>
+<![CDATA[<stream:features><register xmlns="http://jabber.org/features/iq-register"/><ver xmlns="urn:xmpp:features:rosterver"/><starttls xmlns="urn:ietf:params:xml:ns:xmpp-tls"/><bind xmlns="urn:ietf:params:xml:ns:xmpp-bind"/><session xmlns="urn:ietf:params:xml:ns:xmpp-session"/></stream:features>
+]]></INPUT>
+<OUTPUT test='Test 5'>
+<![CDATA[<iq type='set' id='bind1'><bind xmlns='urn:ietf:params:xml:ns:xmpp-bind'><resource>def-user-resource</resource></bind></iq>
+]]></OUTPUT>
+<INPUT test='Test 5'>
+<![CDATA[<iq type="result" id="bind1" to="admin@192.168.72.130/def-user-resource" xmlns="jabber:client"><bind xmlns="urn:ietf:params:xml:ns:xmpp-bind"><jid>admin@192.168.72.130/def-user-resource</jid></bind></iq>
+]]></INPUT>
+<OUTPUT test='Test 5'>
+<![CDATA[<message type='chat' from='admin@192.168.72.130/def-user-resource' to='${daemon-user}@192.168.72.130/xmpp-test'>Test message no. 1, from: admin@192.168.72.130/def-user-resource.</message>
+]]></OUTPUT>
+<INPUT test='Test 5'>
+<![CDATA[tigase.test.impl.TestSendMessage, admin@192.168.72.130/def-user-resource(stats), Read timed out
+]]></INPUT>
+<OUTPUT test='Test 5'>
+<![CDATA[<stream:stream xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' to='192.168.72.130' version='1.0'/>
+]]></OUTPUT>
+<INPUT test='Test 5'>
+<![CDATA[<stream:stream id="fdd786c4-bd45-42a3-b426-75747016e4e6" xmlns:stream="http://etherx.jabber.org/streams" xmlns="jabber:client" from="192.168.72.130" xml:lang="en" version="1.0"/>
+]]></INPUT>
+<INPUT test='Test 5'>
+<![CDATA[<stream:features><auth xmlns="http://jabber.org/features/iq-auth"/><register xmlns="http://jabber.org/features/iq-register"/><mechanisms xmlns="urn:ietf:params:xml:ns:xmpp-sasl"><mechanism>PLAIN</mechanism><mechanism>ANONYMOUS</mechanism></mechanisms><ver xmlns="urn:xmpp:features:rosterver"/><starttls xmlns="urn:ietf:params:xml:ns:xmpp-tls"/></stream:features>
+]]></INPUT>
+<OUTPUT test='Test 5'>
+<![CDATA[<auth xmlns='urn:ietf:params:xml:ns:xmpp-sasl' mechanism='PLAIN'>AGFkbWluAHN0YXRz</auth>
+]]></OUTPUT>
+<INPUT test='Test 5'>
+<![CDATA[<success xmlns="urn:ietf:params:xml:ns:xmpp-sasl"/>
+]]></INPUT>
+<OUTPUT test='Test 5'>
+<![CDATA[<stream:stream xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' to='192.168.72.130' version='1.0'>
+]]></OUTPUT>
+<INPUT test='Test 5'>
+<![CDATA[<stream:stream id="fdd786c4-bd45-42a3-b426-75747016e4e6" xmlns:stream="http://etherx.jabber.org/streams" xmlns="jabber:client" from="192.168.72.130" xml:lang="en" version="1.0"/>
+]]></INPUT>
+<INPUT test='Test 5'>
+<![CDATA[<stream:features><register xmlns="http://jabber.org/features/iq-register"/><ver xmlns="urn:xmpp:features:rosterver"/><starttls xmlns="urn:ietf:params:xml:ns:xmpp-tls"/><bind xmlns="urn:ietf:params:xml:ns:xmpp-bind"/><session xmlns="urn:ietf:params:xml:ns:xmpp-session"/></stream:features>
+]]></INPUT>
+<OUTPUT test='Test 5'>
+<![CDATA[<iq type='set' id='bind1'><bind xmlns='urn:ietf:params:xml:ns:xmpp-bind'><resource>def-user-resource</resource></bind></iq>
+]]></OUTPUT>
+<INPUT test='Test 5'>
+<![CDATA[<iq type="result" id="bind1" to="admin@192.168.72.130/def-user-resource" xmlns="jabber:client"><bind xmlns="urn:ietf:params:xml:ns:xmpp-bind"><jid>admin@192.168.72.130/def-user-resource</jid></bind></iq>
+]]></INPUT>
+<OUTPUT test='Test 5'>
+<![CDATA[<message type='chat' from='admin@192.168.72.130/def-user-resource' to='${daemon-user}@192.168.72.130/xmpp-test'>Test message no. 1, from: admin@192.168.72.130/def-user-resource.</message>
+]]></OUTPUT>
+<INPUT test='Test 5'>
+<![CDATA[tigase.test.impl.TestSendMessage, admin@192.168.72.130/def-user-resource(stats), Read timed out
+]]></INPUT>
+
+</test-history>

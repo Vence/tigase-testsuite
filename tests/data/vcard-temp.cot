@@ -1,0 +1,155 @@
+##
+##  Tigase XMPP/Jabber Test Suite
+##  Copyright (C) 2004-2009 "Artur Hefczyc" <artur.hefczyc@tigase.org>
+##
+##  This program is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License.
+##
+##  This program is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with this program. Look for COPYING file in the top folder.
+##  If not, see http://www.gnu.org/licenses/.
+##
+##  $Rev: $
+##  Last modified by $Author: $
+##  $Date: $
+##
+
+# Test for vcard-temp - XEP-0054: vCard-XML format currently in use within
+# the Jabber community
+# http://www.xmpp.org/extensions/xep-0054.html
+# @author <a href="mailto:artur.hefczyc@tigase.org">Artur Hefczyc</a>
+# @version $Rev: $
+
+### 1. Repository is empty so asking for vCard should return empty vCard
+send: {
+<iq type="get" id="1">
+  <vCard xmlns='vcard-temp'/>
+</iq>
+}
+expect: {
+<iq type="result" id="1">
+  <vCard xmlns='vcard-temp'/>
+</iq>
+}
+
+### 2. Set user vCard info... (taken from XEP)
+send: {
+<iq type="set" id="2">
+  <vCard xmlns='vcard-temp'>
+<FN>Peter Saint-Andre</FN>
+    <N>
+      <FAMILY>Saint-Andre</FAMILY>
+      <GIVEN>Peter</GIVEN>
+      <MIDDLE/>
+    </N>
+    <NICKNAME>stpeter</NICKNAME>
+    <URL>http://www.xmpp.org/xsf/people/stpeter.shtml</URL>
+    <BDAY>1966-08-06</BDAY>
+    <ORG>
+      <ORGNAME>XMPP Standards Foundation</ORGNAME>
+      <ORGUNIT/>
+    </ORG>
+    <TITLE>Executive Director</TITLE>
+    <ROLE>Patron Saint</ROLE>
+    <TEL><WORK/><VOICE/><NUMBER>303-308-3282</NUMBER></TEL>
+    <TEL><WORK/><FAX/><NUMBER/></TEL>
+    <TEL><WORK/><MSG/><NUMBER/></TEL>
+    <ADR>
+      <WORK/>
+      <EXTADD>Suite 600</EXTADD>
+      <STREET>1899 Wynkoop Street</STREET>
+      <LOCALITY>Denver</LOCALITY>
+      <REGION>CO</REGION>
+      <PCODE>80202</PCODE>
+      <CTRY>USA</CTRY>
+    </ADR>
+    <TEL><HOME/><VOICE/><NUMBER>303-555-1212</NUMBER></TEL>
+    <TEL><HOME/><FAX/><NUMBER/></TEL>
+    <TEL><HOME/><MSG/><NUMBER/></TEL>
+    <ADR>
+      <HOME/>
+      <EXTADD/>
+      <STREET/>
+      <LOCALITY>Denver</LOCALITY>
+      <REGION>CO</REGION>
+      <PCODE>80209</PCODE>
+      <CTRY>USA</CTRY>
+    </ADR>
+    <EMAIL><INTERNET/><PREF/><USERID>stpeter@jabber.org</USERID></EMAIL>
+    <JABBERID>stpeter@jabber.org</JABBERID>
+    <DESC>
+      More information about me is located on my
+      personal website: http://www.saint-andre.com/
+    </DESC>
+	</vCard>
+</iq>
+}
+expect:
+{
+<iq type="result" id="2"/>
+}
+
+### 3. Save more data in different namespace...
+send: {
+<iq type="get" id="3">
+  <vCard xmlns='vcard-temp'/>
+</iq>
+}
+expect:
+{
+<iq type="result" id="3">
+  <vCard xmlns='vcard-temp'>
+<FN>Peter Saint-Andre</FN>
+    <N>
+      <FAMILY>Saint-Andre</FAMILY>
+      <GIVEN>Peter</GIVEN>
+      <MIDDLE/>
+    </N>
+    <NICKNAME>stpeter</NICKNAME>
+    <URL>http://www.xmpp.org/xsf/people/stpeter.shtml</URL>
+    <BDAY>1966-08-06</BDAY>
+    <ORG>
+      <ORGNAME>XMPP Standards Foundation</ORGNAME>
+      <ORGUNIT/>
+    </ORG>
+    <TITLE>Executive Director</TITLE>
+    <ROLE>Patron Saint</ROLE>
+    <TEL><WORK/><VOICE/><NUMBER>303-308-3282</NUMBER></TEL>
+    <TEL><WORK/><FAX/><NUMBER/></TEL>
+    <TEL><WORK/><MSG/><NUMBER/></TEL>
+    <ADR>
+      <WORK/>
+      <EXTADD>Suite 600</EXTADD>
+      <STREET>1899 Wynkoop Street</STREET>
+      <LOCALITY>Denver</LOCALITY>
+      <REGION>CO</REGION>
+      <PCODE>80202</PCODE>
+      <CTRY>USA</CTRY>
+    </ADR>
+    <TEL><HOME/><VOICE/><NUMBER>303-555-1212</NUMBER></TEL>
+    <TEL><HOME/><FAX/><NUMBER/></TEL>
+    <TEL><HOME/><MSG/><NUMBER/></TEL>
+    <ADR>
+      <HOME/>
+      <EXTADD/>
+      <STREET/>
+      <LOCALITY>Denver</LOCALITY>
+      <REGION>CO</REGION>
+      <PCODE>80209</PCODE>
+      <CTRY>USA</CTRY>
+    </ADR>
+    <EMAIL><INTERNET/><PREF/><USERID>stpeter@jabber.org</USERID></EMAIL>
+    <JABBERID>stpeter@jabber.org</JABBERID>
+    <DESC>
+      More information about me is located on my
+      personal website: http://www.saint-andre.com/
+    </DESC>
+	</vCard>
+</iq>
+}

@@ -1,0 +1,24 @@
+<test-history test='Basic 5 (c2s)'>
+<OUTPUT test='Basic 5 (c2s)'>
+<![CDATA[<stream:stream xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' to='192.168.72.130' version='1.0'/>
+]]></OUTPUT>
+<INPUT test='Basic 5 (c2s)'>
+<![CDATA[<stream:stream xmlns="jabber:client" id="ecb33bcc-5cbe-42ff-89b0-eb56995bf050" version="1.0" xmlns:stream="http://etherx.jabber.org/streams" from="192.168.72.130" xml:lang="en"/>
+]]></INPUT>
+<INPUT test='Basic 5 (c2s)'>
+<![CDATA[<stream:features><auth xmlns="http://jabber.org/features/iq-auth"/><register xmlns="http://jabber.org/features/iq-register"/><mechanisms xmlns="urn:ietf:params:xml:ns:xmpp-sasl"><mechanism>PLAIN</mechanism><mechanism>ANONYMOUS</mechanism></mechanisms><ver xmlns="urn:xmpp:features:rosterver"/><starttls xmlns="urn:ietf:params:xml:ns:xmpp-tls"/><compression xmlns="http://jabber.org/features/compress"><method>zlib</method></compression></stream:features>
+]]></INPUT>
+<OUTPUT test='Basic 5 (c2s)'>
+<![CDATA[<iq type='get' id='all-xmpp-test_1' to='192.168.72.130'><query xmlns='jabber:iq:auth'><username>all-xmpp-test</username></query></iq>
+]]></OUTPUT>
+<INPUT test='Basic 5 (c2s)'>
+<![CDATA[<iq xmlns="jabber:client" id="all-xmpp-test_1" from="192.168.72.130" type="result"><query xmlns="jabber:iq:auth"><username/><password/><resource/></query></iq>
+]]></INPUT>
+<OUTPUT test='Basic 5 (c2s)'>
+<![CDATA[<iq type='set' id='all-xmpp-test_2'><query xmlns='jabber:iq:auth'><username>all-xmpp-test</username><password>all-xmpp-test-password</password><resource>def-user-resource</resource></query></iq>
+]]></OUTPUT>
+<INPUT test='Basic 5 (c2s)'>
+<![CDATA[<iq xmlns="jabber:client" id="all-xmpp-test_2" type="result">Authentication successful.</iq>
+]]></INPUT>
+
+</test-history>

@@ -1,0 +1,111 @@
+<test-history test='Basic 14 (c2s)'>
+<OUTPUT test='Basic 14 (c2s)'>
+<![CDATA[<stream:stream xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' to='192.168.72.130' version='1.0'/>
+]]></OUTPUT>
+<INPUT test='Basic 14 (c2s)'>
+<![CDATA[<stream:stream xmlns="jabber:client" id="f1317ffb-f268-416c-be95-54df1ff1a799" version="1.0" xmlns:stream="http://etherx.jabber.org/streams" from="192.168.72.130" xml:lang="en"/>
+]]></INPUT>
+<INPUT test='Basic 14 (c2s)'>
+<![CDATA[<stream:features><auth xmlns="http://jabber.org/features/iq-auth"/><register xmlns="http://jabber.org/features/iq-register"/><mechanisms xmlns="urn:ietf:params:xml:ns:xmpp-sasl"><mechanism>PLAIN</mechanism><mechanism>ANONYMOUS</mechanism></mechanisms><ver xmlns="urn:xmpp:features:rosterver"/><starttls xmlns="urn:ietf:params:xml:ns:xmpp-tls"/><compression xmlns="http://jabber.org/features/compress"><method>zlib</method></compression></stream:features>
+]]></INPUT>
+<OUTPUT test='Basic 14 (c2s)'>
+<![CDATA[<auth xmlns='urn:ietf:params:xml:ns:xmpp-sasl' mechanism='PLAIN'>AGFsbC14bXBwLXRlc3QAYWxsLXhtcHAtdGVzdC1wYXNzd29yZA==</auth>
+]]></OUTPUT>
+<INPUT test='Basic 14 (c2s)'>
+<![CDATA[<success xmlns="urn:ietf:params:xml:ns:xmpp-sasl"/>
+]]></INPUT>
+<OUTPUT test='Basic 14 (c2s)'>
+<![CDATA[<stream:stream xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' to='192.168.72.130' version='1.0'>
+]]></OUTPUT>
+<INPUT test='Basic 14 (c2s)'>
+<![CDATA[<stream:stream xmlns="jabber:client" id="f1317ffb-f268-416c-be95-54df1ff1a799" version="1.0" xmlns:stream="http://etherx.jabber.org/streams" from="192.168.72.130" xml:lang="en"/>
+]]></INPUT>
+<INPUT test='Basic 14 (c2s)'>
+<![CDATA[<stream:features><register xmlns="http://jabber.org/features/iq-register"/><ver xmlns="urn:xmpp:features:rosterver"/><starttls xmlns="urn:ietf:params:xml:ns:xmpp-tls"/><compression xmlns="http://jabber.org/features/compress"><method>zlib</method></compression><bind xmlns="urn:ietf:params:xml:ns:xmpp-bind"/><session xmlns="urn:ietf:params:xml:ns:xmpp-session"/></stream:features>
+]]></INPUT>
+<OUTPUT test='Basic 14 (c2s)'>
+<![CDATA[<iq type='set' id='bind1'><bind xmlns='urn:ietf:params:xml:ns:xmpp-bind'><resource>def-user-resource</resource></bind></iq>
+]]></OUTPUT>
+<INPUT test='Basic 14 (c2s)'>
+<![CDATA[<iq xmlns="jabber:client" id="bind1" to="all-xmpp-test@192.168.72.130/def-user-resource" type="result"><bind xmlns="urn:ietf:params:xml:ns:xmpp-bind"><jid>all-xmpp-test@192.168.72.130/def-user-resource</jid></bind></iq>
+]]></INPUT>
+<OUTPUT test='Basic 14 (c2s)'>
+<![CDATA[<iq id="1" type="get">
+<query xmlns="jabber:iq:private">
+<exodus xmlns="exodus:prefs"/>
+</query>
+</iq>
+]]></OUTPUT>
+<INPUT test='Basic 14 (c2s)'>
+<![CDATA[<iq xmlns="jabber:client" id="1" to="all-xmpp-test@192.168.72.130/def-user-resource" type="result"><query xmlns="jabber:iq:private"><exodus xmlns="exodus:prefs"/></query></iq>
+]]></INPUT>
+<OUTPUT test='Basic 14 (c2s)'>
+<![CDATA[<iq id="2" type="set">
+<query xmlns="jabber:iq:private">
+<exodus xmlns="exodus:prefs">
+<defaultnick>Hamlet</defaultnick>
+</exodus>
+</query>
+</iq>
+]]></OUTPUT>
+<INPUT test='Basic 14 (c2s)'>
+<![CDATA[<iq xmlns="jabber:client" id="2" to="all-xmpp-test@192.168.72.130/def-user-resource" type="result"/>
+]]></INPUT>
+<OUTPUT test='Basic 14 (c2s)'>
+<![CDATA[<iq id="3" type="set">
+<query xmlns="jabber:iq:private">
+<test-data xmlns="tigase:test">
+<data-element>and the content</data-element>
+</test-data>
+</query>
+</iq>
+]]></OUTPUT>
+<INPUT test='Basic 14 (c2s)'>
+<![CDATA[<iq xmlns="jabber:client" id="3" to="all-xmpp-test@192.168.72.130/def-user-resource" type="result"/>
+]]></INPUT>
+<OUTPUT test='Basic 14 (c2s)'>
+<![CDATA[<iq id="4" type="get">
+<query xmlns="jabber:iq:private">
+<exodus xmlns="exodus:prefs"/>
+</query>
+</iq>
+]]></OUTPUT>
+<INPUT test='Basic 14 (c2s)'>
+<![CDATA[<iq xmlns="jabber:client" id="4" to="all-xmpp-test@192.168.72.130/def-user-resource" type="result"><query xmlns="jabber:iq:private"><exodus xmlns="exodus:prefs">
+<defaultnick>Hamlet</defaultnick></exodus></query></iq>
+]]></INPUT>
+<OUTPUT test='Basic 14 (c2s)'>
+<![CDATA[<iq id="5" type="get">
+<query xmlns="jabber:iq:private">
+<test-data xmlns="tigase:test"/>
+</query>
+</iq>
+]]></OUTPUT>
+<INPUT test='Basic 14 (c2s)'>
+<![CDATA[<iq xmlns="jabber:client" id="5" to="all-xmpp-test@192.168.72.130/def-user-resource" type="result"><query xmlns="jabber:iq:private"><test-data xmlns="tigase:test">
+<data-element>and the content</data-element></test-data></query></iq>
+]]></INPUT>
+<OUTPUT test='Basic 14 (c2s)'>
+<![CDATA[<iq id="1003" to="hamlet@shakespeare.lit" type="set">
+<query xmlns="jabber:iq:private">
+<exodus xmlns="exodus:prefs">
+<defaultnick>Macbeth</defaultnick>
+</exodus>
+</query>
+</iq>
+]]></OUTPUT>
+<INPUT test='Basic 14 (c2s)'>
+<![CDATA[<iq xmlns="jabber:client" id="1003" to="all-xmpp-test@192.168.72.130/def-user-resource" from="hamlet@shakespeare.lit" type="error"><query xmlns="jabber:iq:private">
+<exodus xmlns="exodus:prefs">
+<defaultnick>Macbeth</defaultnick></exodus></query><error code="503" type="cancel"><service-unavailable xmlns="urn:ietf:params:xml:ns:xmpp-stanzas"/><text xmlns="urn:ietf:params:xml:ns:xmpp-stanzas" xml:lang="en">You are not authorized to access this private storage.</text></error></iq>
+]]></INPUT>
+<OUTPUT test='Basic 14 (c2s)'>
+<![CDATA[<iq id="1004" type="get">
+<query xmlns="jabber:iq:private"/>
+</iq>
+]]></OUTPUT>
+<INPUT test='Basic 14 (c2s)'>
+<![CDATA[<iq xmlns="jabber:client" id="1004" to="all-xmpp-test@192.168.72.130/def-user-resource" type="error"><query xmlns="jabber:iq:private"/><error code="406" type="modify"><not-acceptable xmlns="urn:ietf:params:xml:ns:xmpp-stanzas"/><text xmlns="urn:ietf:params:xml:ns:xmpp-stanzas" xml:lang="en">Missing query child element</text></error></iq>
+]]></INPUT>
+
+</test-history>

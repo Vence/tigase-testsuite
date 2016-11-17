@@ -1,0 +1,2 @@
+<h2 id="func">Functional tests</h2>
+<p>Basic tests to check all the functionality of the server</p>

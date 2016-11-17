@@ -1,0 +1,35 @@
+<test-history test='Basic 20 (c2s)'>
+<OUTPUT test='Basic 20 (c2s)'>
+<![CDATA[<stream:stream xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' to='192.168.72.130' version='1.0'/>
+]]></OUTPUT>
+<INPUT test='Basic 20 (c2s)'>
+<![CDATA[<stream:stream xmlns="jabber:client" id="3dec3cc4-0d85-4c1b-b9c3-2eeac3778a08" version="1.0" xmlns:stream="http://etherx.jabber.org/streams" from="192.168.72.130" xml:lang="en"/>
+]]></INPUT>
+<INPUT test='Basic 20 (c2s)'>
+<![CDATA[<stream:features><auth xmlns="http://jabber.org/features/iq-auth"/><register xmlns="http://jabber.org/features/iq-register"/><mechanisms xmlns="urn:ietf:params:xml:ns:xmpp-sasl"><mechanism>PLAIN</mechanism><mechanism>ANONYMOUS</mechanism></mechanisms><ver xmlns="urn:xmpp:features:rosterver"/><starttls xmlns="urn:ietf:params:xml:ns:xmpp-tls"/><compression xmlns="http://jabber.org/features/compress"><method>zlib</method></compression></stream:features>
+]]></INPUT>
+<OUTPUT test='Basic 20 (c2s)'>
+<![CDATA[<auth xmlns='urn:ietf:params:xml:ns:xmpp-sasl' mechanism='PLAIN'>AGFsbC14bXBwLXRlc3QAYWxsLXhtcHAtdGVzdC1wYXNzd29yZA==</auth>
+]]></OUTPUT>
+<INPUT test='Basic 20 (c2s)'>
+<![CDATA[<success xmlns="urn:ietf:params:xml:ns:xmpp-sasl"/>
+]]></INPUT>
+<OUTPUT test='Basic 20 (c2s)'>
+<![CDATA[<stream:stream xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' to='192.168.72.130' version='1.0'>
+]]></OUTPUT>
+<INPUT test='Basic 20 (c2s)'>
+<![CDATA[<stream:stream xmlns="jabber:client" id="3dec3cc4-0d85-4c1b-b9c3-2eeac3778a08" version="1.0" xmlns:stream="http://etherx.jabber.org/streams" from="192.168.72.130" xml:lang="en"/>
+]]></INPUT>
+<INPUT test='Basic 20 (c2s)'>
+<![CDATA[<stream:features><register xmlns="http://jabber.org/features/iq-register"/><ver xmlns="urn:xmpp:features:rosterver"/><starttls xmlns="urn:ietf:params:xml:ns:xmpp-tls"/><compression xmlns="http://jabber.org/features/compress"><method>zlib</method></compression><bind xmlns="urn:ietf:params:xml:ns:xmpp-bind"/><session xmlns="urn:ietf:params:xml:ns:xmpp-session"/></stream:features>
+]]></INPUT>
+<OUTPUT test='Basic 20 (c2s)'>
+<![CDATA[<message id="1" to="admin@192.168.72.130/def-user-resource" type="chat">
+<body>Test message no without resource bind.</body>
+</message>
+]]></OUTPUT>
+<INPUT test='Basic 20 (c2s)'>
+<![CDATA[<message xmlns="jabber:client" id="1" from="admin@192.168.72.130/def-user-resource" type="error"><body>Test message no without resource bind.</body><error code="401" type="auth"><not-authorized xmlns="urn:ietf:params:xml:ns:xmpp-stanzas"/><text xmlns="urn:ietf:params:xml:ns:xmpp-stanzas" xml:lang="en">You must bind the resource first: http://www.xmpp.org/rfcs/rfc3920.html#bind</text></error></message>
+]]></INPUT>
+
+</test-history>

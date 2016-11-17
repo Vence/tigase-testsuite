@@ -1,0 +1,51 @@
+<test-history test='Common test'>
+<OUTPUT test='Common test'>
+<![CDATA[<stream:stream xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' to='$(server-host)' version='1.0'/>
+]]></OUTPUT>
+<INPUT test='Common test'>
+<![CDATA[<stream:stream xmlns="jabber:client" from="127.0.0.1" version="1.0" xmlns:stream="http://etherx.jabber.org/streams" id="tigase-error-tigase" xml:lang="en"/>
+]]></INPUT>
+<OUTPUT test='Common test'>
+<![CDATA[<auth xmlns='urn:ietf:params:xml:ns:xmpp-sasl' mechanism='CRAP-NO-MECHS-IN-FEATURES'/>
+]]></OUTPUT>
+<INPUT test='Common test'>
+<![CDATA[tigase.test.impl.TestSASL, admin@$(server-host)(stats), Software caused connection abort: recv failed
+]]></INPUT>
+<OUTPUT test='Common test'>
+<![CDATA[<iq type='set' id='bind1'><bind xmlns='urn:ietf:params:xml:ns:xmpp-bind'><resource>xmpp-test</resource></bind></iq>
+]]></OUTPUT>
+<INPUT test='Common test'>
+<![CDATA[tigase.test.impl.TestXMPPBind, admin@$(server-host)(stats), Software caused connection abort: socket write error
+]]></INPUT>
+<OUTPUT test='Common test'>
+<![CDATA[<iq type="set" id="1001">
+<query xmlns="jabber:iq:private">
+<exodus xmlns="exodus:prefs">
+<defaultnick>Hamlet</defaultnick>
+</exodus>
+</query>
+</iq>
+]]></OUTPUT>
+<INPUT test='Common test'>
+<![CDATA[1: tigase.test.impl.TestCommon, java.net.SocketException: Software caused connection abort: socket write error
+java.net.SocketOutputStream.socketWrite0(Native Method)
+java.net.SocketOutputStream.socketWrite(SocketOutputStream.java:109)
+java.net.SocketOutputStream.write(SocketOutputStream.java:141)
+tigase.test.util.SocketXMLIO.write(SocketXMLIO.java:173)
+tigase.test.impl.TestCommon.run(TestCommon.java:307)
+tigase.test.Test$DaemonTest.run(Test.java:501)
+tigase.test.Test.runTest(Test.java:270)
+tigase.test.Test.runTest(Test.java:218)
+tigase.test.TestScriptLoader.runTest(TestScriptLoader.java:152)
+tigase.test.TestScriptLoader.runTests(TestScriptLoader.java:95)
+tigase.test.TestSuite.main(TestSuite.java:75)
+
+]]></INPUT>
+<OUTPUT test='Common test'>
+<![CDATA[<iq type='set' id='session1'><session xmlns='urn:ietf:params:xml:ns:xmpp-session'/></iq>
+]]></OUTPUT>
+<INPUT test='Common test'>
+<![CDATA[tigase.test.impl.TestIQSession, admin@$(server-host)(stats), Software caused connection abort: socket write error
+]]></INPUT>
+
+</test-history>

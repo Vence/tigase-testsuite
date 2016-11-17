@@ -1,0 +1,39 @@
+<test-history test='Privacy 2 (c2s)'>
+<OUTPUT test='Privacy 2 (c2s)'>
+<![CDATA[<stream:stream xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' to='192.168.72.130' version='1.0'/>
+]]></OUTPUT>
+<INPUT test='Privacy 2 (c2s)'>
+<![CDATA[<stream:stream xmlns="jabber:client" id="4b7eef3b-4a4c-48b3-9be4-85f5bade5e36" version="1.0" xmlns:stream="http://etherx.jabber.org/streams" from="192.168.72.130" xml:lang="en"/>
+]]></INPUT>
+<INPUT test='Privacy 2 (c2s)'>
+<![CDATA[<stream:features><auth xmlns="http://jabber.org/features/iq-auth"/><register xmlns="http://jabber.org/features/iq-register"/><mechanisms xmlns="urn:ietf:params:xml:ns:xmpp-sasl"><mechanism>PLAIN</mechanism><mechanism>ANONYMOUS</mechanism></mechanisms><ver xmlns="urn:xmpp:features:rosterver"/><starttls xmlns="urn:ietf:params:xml:ns:xmpp-tls"/><compression xmlns="http://jabber.org/features/compress"><method>zlib</method></compression></stream:features>
+]]></INPUT>
+<OUTPUT test='Privacy 2 (c2s)'>
+<![CDATA[<auth xmlns='urn:ietf:params:xml:ns:xmpp-sasl' mechanism='PLAIN'>AGFsbC14bXBwLXRlc3QAYWxsLXhtcHAtdGVzdC1wYXNzd29yZA==</auth>
+]]></OUTPUT>
+<INPUT test='Privacy 2 (c2s)'>
+<![CDATA[<success xmlns="urn:ietf:params:xml:ns:xmpp-sasl"/>
+]]></INPUT>
+<OUTPUT test='Privacy 2 (c2s)'>
+<![CDATA[<stream:stream xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' to='192.168.72.130' version='1.0'>
+]]></OUTPUT>
+<INPUT test='Privacy 2 (c2s)'>
+<![CDATA[<stream:stream xmlns="jabber:client" id="4b7eef3b-4a4c-48b3-9be4-85f5bade5e36" version="1.0" xmlns:stream="http://etherx.jabber.org/streams" from="192.168.72.130" xml:lang="en"/>
+]]></INPUT>
+<INPUT test='Privacy 2 (c2s)'>
+<![CDATA[<stream:features><register xmlns="http://jabber.org/features/iq-register"/><ver xmlns="urn:xmpp:features:rosterver"/><starttls xmlns="urn:ietf:params:xml:ns:xmpp-tls"/><compression xmlns="http://jabber.org/features/compress"><method>zlib</method></compression><bind xmlns="urn:ietf:params:xml:ns:xmpp-bind"/><session xmlns="urn:ietf:params:xml:ns:xmpp-session"/></stream:features>
+]]></INPUT>
+<OUTPUT test='Privacy 2 (c2s)'>
+<![CDATA[<iq type='set' id='bind1'><bind xmlns='urn:ietf:params:xml:ns:xmpp-bind'><resource>def-user-resource</resource></bind></iq>
+]]></OUTPUT>
+<INPUT test='Privacy 2 (c2s)'>
+<![CDATA[<iq xmlns="jabber:client" id="bind1" to="all-xmpp-test@192.168.72.130/def-user-resource" type="result"><bind xmlns="urn:ietf:params:xml:ns:xmpp-bind"><jid>all-xmpp-test@192.168.72.130/def-user-resource</jid></bind></iq>
+]]></INPUT>
+<OUTPUT test='Privacy 2 (c2s)'>
+<![CDATA[<message type='chat' from='all-xmpp-test@192.168.72.130/def-user-resource' to='blocking-test-user_1@192.168.72.130/def-user-resource'>Test message no. 1, from: all-xmpp-test@192.168.72.130/def-user-resource.</message>
+]]></OUTPUT>
+<INPUT test='Privacy 2 (c2s)'>
+<![CDATA[tigase.test.impl.TestSendMessage, all-xmpp-test@192.168.72.130/def-user-resource(all-xmpp-test-password), Read timed out
+]]></INPUT>
+
+</test-history>

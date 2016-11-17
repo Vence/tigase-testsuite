@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+ <head>
+  <title>XMPP Server functional tests.</title>
+ </head>
+ <body>
+  <h2>XMPP Server functional tests.</h2>
+  <b>
+   <ol>
+    <li> Get server version </li>
+    <li> Server configuration </li>
+    <li> Server statistics </li>
+    <li> Script with functional tests for all basic XMPP/Jabber features </li>
+    <li> Testing bosh component </li>
+    <li> Testing bosh component in keep-alive mode </li>
+    <li> Multi-threaded tests for various XMPP functions </li>
+    <li> Script with functional tests for Administrator ad-hoc commands </li>
+   </ol>
+  </b>
+
+  <p>Test start time: <b>2016-11-15 17:00:54</b></p>
+   <h3>Server version info:</h3>
+   <table>
+    <tr valign="top"><td width="15%">Name:</td><td width="3%">&nbsp;</td><td width="2%">&nbsp;</td><td width="80%"><b>Tigase</b></td></tr>
+    <tr valign="top"><td width="15%">Version:</td><td width="3%">&nbsp;</td><td width="2%">&nbsp;</td><td width="80%"><b>7.0.4-b3844/014490ac (2016-04-28/09:01:54)</b></td></tr>
+    <tr valign="top"><td width="15%">OS:</td><td width="3%">&nbsp;</td><td width="2%">&nbsp;</td><td width="80%"><b>Linux-amd64-3.19.0-26-generic, Java HotSpot(TM) 64-Bit Server VM-25.111-b14-Oracle Corporation</b></td></tr>
+    <tr valign="top"><td width="15%">&nbsp;</td><td width="3%">&nbsp;</td><td width="2%">&nbsp;</td><td width="80%">&nbsp;</td></tr>
+    <tr valign="top"><td width="15%">Local IP:</td><td width="3%">&nbsp;</td><td width="2%">&nbsp;</td><td width="80%"><b>192.168.72.1</b></td></tr>
+    <tr valign="top"><td width="15%">Remote IP:</td><td width="3%">&nbsp;</td><td width="2%">&nbsp;</td><td width="80%"><b>192.168.72.130</b></td></tr>
+   </table>
+      <h3>Server basic configuration parameters:</h3>
+   <table>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/component-id</td><td width="2%">&nbsp;</td><td width="58%"><b>sess-man@ubuntu</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/def-hostname</td><td width="2%">&nbsp;</td><td width="58%"><b>ubuntu</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/admins</td><td width="2%">&nbsp;</td><td width="58%"><b>admin@192.168.72.130</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/scripts-dir</td><td width="2%">&nbsp;</td><td width="58%"><b>scripts/admin</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/command/ALL</td><td width="2%">&nbsp;</td><td width="58%"><b>ADMIN</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/max-queue-size</td><td width="2%">&nbsp;</td><td width="58%"><b>5060</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/scheduler-threads</td><td width="2%">&nbsp;</td><td width="58%"><b>1</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/incoming-filters</td><td width="2%">&nbsp;</td><td width="58%"><b>tigase.server.filters.PacketCounter</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/outgoing-filters</td><td width="2%">&nbsp;</td><td width="58%"><b>tigase.server.filters.PacketCounter</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/admin-scripts-dir</td><td width="2%">&nbsp;</td><td width="58%"><b>scripts/admin/</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/plugins</td><td width="2%">&nbsp;</td><td width="58%"><b>session-close, session-open, default-handler, jabber:iq:register, jabber:iq:auth, urn:ietf:params:xml:ns:xmpp-sasl, urn:ietf:params:xml:ns:xmpp-bind, urn:ietf:params:xml:ns:xmpp-session, jabber:iq:roster, jabber:iq:privacy, jabber:iq:version, http://jabber.org/protocol/stats, starttls, vcard-temp, http://jabber.org/protocol/commands, jabber:iq:private, urn:xmpp:ping, presence, disco, domain-filter, zlib, message-carbons, message-archive-xep-0136, kunlun-pep, kunlun-amp, message-apns</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/plugins-concurrency</td><td width="2%">&nbsp;</td><td width="58%"><b></b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/skip-privacy</td><td width="2%">&nbsp;</td><td width="58%"><b>false</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/trusted</td><td width="2%">&nbsp;</td><td width="58%"><b>admin@192.168.72.130</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/offline-user-autocreate</td><td width="2%">&nbsp;</td><td width="58%"><b>false</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/sm-threads-pool</td><td width="2%">&nbsp;</td><td width="58%"><b>default</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/force-detail-stale-connection-check</td><td width="2%">&nbsp;</td><td width="58%"><b>true</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/stale-connection-closer-queue-size</td><td width="2%">&nbsp;</td><td width="58%"><b>1000</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/auth-timeout</td><td width="2%">&nbsp;</td><td width="58%"><b>120</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/sm-cluster-strategy-class</td><td width="2%">&nbsp;</td><td width="58%"><b>tigase.cluster.strategy.DefaultClusteringStrategy</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/error-forwarding</td><td width="2%">&nbsp;</td><td width="58%"><b>drop</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/domain-name</td><td width="2%">&nbsp;</td><td width="58%"><b>192.168.72.130</b></td></tr>
+   </table>
+  </p>
+   <h3>Tests results:</h3>
+  <p>
+  <table border='1' style='min-width: 800px;'>
+   <thead valign='middle'>
+    <tr>
+     <th width='225px'>Test name</th>
+     <th>Result</th>
+     <th>Total time</th>
+     <th>OK</th>
+     <th>Average</th>
+     <th>Description</th>
+     <th width='225px'>History</th>
+    </tr>
+   </thead>
+   <tr valign="top">    <td>Version</td>    <td bgcolor="#90FF90"><b>success</b></td>    <td>0 sec</td>    <td>1</td>    <td><b>137</b> ms</td>    <td> Get server version </td>    <td><a href='Version.xml'>Version</a></td>   </tr>
+   <tr valign="top">    <td>Configuration</td>    <td bgcolor="#90FF90"><b>success</b></td>    <td>0 sec</td>    <td>1</td>    <td><b>212</b> ms</td>    <td> Server configuration </td>    <td><a href='Configuration.xml'>Configuration</a></td>   </tr>
+   <tr valign="top">    <td>Statistics</td>    <td bgcolor="#90FF90"><b>success</b></td>    <td>0 sec</td>    <td>1</td>    <td><b>236</b> ms</td>    <td> Server statistics </td>    <td><a href='Statistics.xml'>Statistics</a></td>   </tr>
+   <tr valign="top">    <td>Basic 1 (c2s)</td>    <td bgcolor="#90FF90"><b>success</b></td>    <td>0 sec</td>    <td>1</td>    <td><b>56</b> ms</td>    <td> Stream open to server. </td>    <td><a href='Basic_1_(c2s).xml'>Basic 1 (c2s)</a></td>   </tr>
+   <tr valign="top">    <td>Basic 2 (c2s)</td>    <td bgcolor="#90FF90"><b>success</b></td>    <td>0 sec</td>    <td>1</td>    <td><b>92</b> ms</td>    <td> XEP-0077 - In-Band Registration, register </td>    <td><a href='Basic_2_(c2s).xml'>Basic 2 (c2s)</a></td>   </tr>
+   <tr valign="top">    <td>Basic 3 (c2s)</td>    <td bgcolor="#90FF90"><b>success</b></td>    <td>0 sec</td>    <td>1</td>    <td><b>146</b> ms</td>    <td> XEP-0077 - In-Band Registration - user unregister </td>    <td><a href='Basic_3_(c2s).xml'>Basic 3 (c2s)</a></td>   </tr>
+   <tr valign="top">    <td>Basic 4 (c2s)</td>    <td bgcolor="#90FF90"><b>success</b></td>    <td>0 sec</td>    <td>1</td>    <td><b>74</b> ms</td>    <td> XEP-0078 Non-SASL authorization with plain password. </td>    <td><a href='Basic_4_(c2s).xml'>Basic 4 (c2s)</a></td>   </tr>
+   <tr valign="top">    <td>Basic 5 (c2s)</td>    <td bgcolor="#90FF90"><b>success</b></td>    <td>0 sec</td>    <td>1</td>    <td><b>85</b> ms</td>    <td> XEP-0078 Non-SASL authorization with digest password. </td>    <td><a href='Basic_5_(c2s).xml'>Basic 5 (c2s)</a></td>   </tr>
+   <tr valign="top">    <td>Basic 6 (c2s)</td>    <td bgcolor="#90FF90"><b>success</b></td>    <td>15 sec</td>    <td>1</td>    <td><b>15135</b> ms</td>    <td> Send a message to self user and don't wait for response </td>    <td><a href='Basic_6_(c2s).xml'>Basic 6 (c2s)</a></td>   </tr>
+   <tr valign="top">    <td>Basic 7 (c2s)</td>    <td bgcolor="#FF9090"><b>FAILURE</b></td>    <td>15 sec</td>    <td>0</td>    <td><b>0</b> ms</td>    <td> Message send to correct/available full JID: all-xmpp-test_1@192.168.72.130/def-user-resource, expecting response </td>    <td><a href='Basic_7_(c2s).xml'>Basic 7 (c2s)</a></td>   </tr>
+   <tr valign="top">    <td>Basic 8 (c2s)</td>    <td bgcolor="#FF9090"><b>FAILURE</b></td>    <td>15 sec</td>    <td>0</td>    <td><b>0</b> ms</td>    <td> Message send to correct/available bare JID: all-xmpp-test_1@192.168.72.130, expecting response </td>    <td><a href='Basic_8_(c2s).xml'>Basic 8 (c2s)</a></td>   </tr>
+   <tr valign="top">    <td>Basic 9 (c2s)</td>    <td bgcolor="#90FF90"><b>success</b></td>    <td>0 sec</td>    <td>1</td>    <td><b>146</b> ms</td>    <td> IQ stanza send to incorrect/unavailable full JID: all-xmpp-test_1@192.168.72.130/wrong-resource, expecting error response </td>    <td><a href='Basic_9_(c2s).xml'>Basic 9 (c2s)</a></td>   </tr>
+   <tr valign="top">    <td>Basic 10 (c2s)</td>    <td bgcolor="#90FF90"><b>success</b></td>    <td>0 sec</td>    <td>1</td>    <td><b>111</b> ms</td>    <td> XEP-0092 - get entity version </td>    <td><a href='Basic_10_(c2s).xml'>Basic 10 (c2s)</a></td>   </tr>
+   <tr valign="top">    <td>Basic 11 (c2s)</td>    <td bgcolor="#90FF90"><b>success</b></td>    <td>0 sec</td>    <td>1</td>    <td><b>232</b> ms</td>    <td> XEP-0039 Statistics Gathering    </td>    <td><a href='Basic_11_(c2s).xml'>Basic 11 (c2s)</a></td>   </tr>

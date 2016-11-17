@@ -1,0 +1,265 @@
+##
+##  Tigase XMPP/Jabber Test Suite
+##  Copyright (C) 2004-2009 "Artur Hefczyc" <artur.hefczyc@tigase.org>
+##
+##  This program is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License.
+##
+##  This program is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with this program. Look for COPYING file in the top folder.
+##  If not, see http://www.gnu.org/licenses/.
+##
+##  $Rev$
+##  Last modified by $Author$
+##  $Date$
+##
+-version = "2.0.0"
+
+-output-format  = html
+-output-file    = "../www/functional-tests.html"
+-output-history = yes
+-history-format = separate-file
+-output-cols    = 7
+-title          = "XMPP Server functional tests."
+
+$(server-host) = test-d
+$(virtual-host) = test-domain
+$(def-user)    = all-xmpp-test
+$(def-user-pass) = all-xmpp-test-password
+$(def-user-resr) = def-user-resource
+$(daemon-user) = all-xmpp-test_1
+$(blocking-user) = blocking-test-user_1
+$(long-list-user) = long-list-user_1
+$(ssl-tls-wait) = 15000
+$(stats-user) = admin
+$(stats-pass) = stats
+$(tester-user) = tester_1
+$(number) = 1
+
+
+-serverip    = "127.0.0.1"
+-host        = $(server-host)
+-user-name   = $(def-user)
+-user-pass   = $(def-user-pass)
+-user-resr   = $(def-user-resr)
+-number      = $(number)
+-socket-wait = 15000
+-base-ns     = "jabber:client"
+-def-auth    = auth-sasl
+-def-stream  = stream-client
+-keys-file-password   = keystore
+-trusts-file-password = truststore
+-keys-file            = "certs/keystore"
+-trusts-file          = "certs/client_truststore"
+
+#-debug
+-debug-on-error
+-stop-on-fail = true
+
+Global settings:
+{
+
+  Prepare: {
+    Prep 1@user-register: {
+      -no-record
+      -user-name = $(daemon-user)
+    } >> Create a daemon user account <<
+
+    Prep 2@msg-listen: {
+      -no-record
+      -daemon
+
+      -socket-wait = 0
+      -user-name   = $(daemon-user)
+      -delay       = 500
+    } >> Setup a user daemon wating for messages <<
+
+    Prep 3@user-register: {
+      -no-record
+      -user-name = $(long-list-user)
+    } >> Create a daemon user account with very long privacy list <<
+
+    Prep 4@privacy-long-list;msg-listen: {
+      -no-record
+      -daemon
+
+      -socket-wait = 0
+      -user-name   = $(long-list-user)
+      -delay       = 1000
+    } >> Setup a user daemon with very long privacy list <<
+  } >> Prepare environment for tests <<
+
+  Multi 1: {
+    -multi-thread
+    -loop = 5
+
+    Register@user-register: { -user-name = "multi-reg_1_$(loop)" }
+    >> XEP-0077 <<
+    Register@user-register: { -user-name = "multi-reg_2_$(loop)" }
+    >> XEP-0077 <<
+    Register@user-register: { -user-name = "multi-reg_3_$(loop)" }
+    >> XEP-0077 <<
+    Register@user-register: { -user-name = "multi-reg_4_$(loop)" }
+    >> XEP-0077 <<
+    Register@user-register: { -user-name = "multi-reg_5_$(loop)" }
+    >> XEP-0077 <<
+  } >> Multi-thread test of XEP-0077 - In-Band Registration, user register <<
+
+  Multi 2: {
+    -multi-thread
+    -loop = 5
+
+    Version@iq-version: { -user-name = "multi-reg_1_$(loop)" }
+        >> Get server version <<
+    Version@iq-version: { -user-name = "multi-reg_2_$(loop)" }
+        >> Get server version <<
+    Version@iq-version: { -user-name = "multi-reg_3_$(loop)" }
+        >> Get server version <<
+    Version@iq-version: { -user-name = "multi-reg_4_$(loop)" }
+        >> Get server version <<
+    Version@iq-version: { -user-name = "multi-reg_5_$(loop)" }
+        >> Get server version <<
+  } >> Multi-thread test of server Version info <<
+
+  Multi 3: {
+    -multi-thread
+    -loop = 5
+
+    Statistics@iq-stats: { -user-name = "multi-reg_1_$(loop)" }
+    >> Server statistics <<
+    Statistics@iq-stats: { -user-name = "multi-reg_2_$(loop)" }
+    >> Server statistics <<
+    Statistics@iq-stats: { -user-name = "multi-reg_3_$(loop)" }
+    >> Server statistics <<
+    Statistics@iq-stats: { -user-name = "multi-reg_4_$(loop)" }
+    >> Server statistics <<
+    Statistics@iq-stats: { -user-name = "multi-reg_5_$(loop)" }
+    >> Server statistics <<
+  } >> Multi-thread test of server Statistics info <<
+
+  Multi 4: {
+    -multi-thread
+    -loop = 5
+    -source-file = "tests/data/RosterTest.cot"
+
+    Roster@common: {
+      -user-name = "multi-reg_1_$(loop)"
+      -reset-stanza-vars = "@{roster-test-id},@{roster-test-group},@{roster-test-id1},@{roster-test-id2},@{roster-test-id3}"
+    }
+    >> Roster management test <<
+    Roster@common: {
+      -user-name = "multi-reg_2_$(loop)"
+      -reset-stanza-vars = "@{roster-test-id},@{roster-test-group},@{roster-test-id1},@{roster-test-id2},@{roster-test-id3}"
+    }
+    >> Roster management test <<
+    Roster@common: {
+      -user-name = "multi-reg_3_$(loop)"
+      -reset-stanza-vars = "@{roster-test-id},@{roster-test-group},@{roster-test-id1},@{roster-test-id2},@{roster-test-id3}"
+    }
+    >> Roster management test <<
+    Roster@common: {
+      -user-name = "multi-reg_4_$(loop)"
+      -reset-stanza-vars = "@{roster-test-id},@{roster-test-group},@{roster-test-id1},@{roster-test-id2},@{roster-test-id3}"
+    }
+    >> Roster management test <<
+    Roster@common: {
+      -user-name = "multi-reg_5_$(loop)"
+      -reset-stanza-vars = "@{roster-test-id},@{roster-test-group},@{roster-test-id1},@{roster-test-id2},@{roster-test-id3}"
+    }
+    >> Roster management test <<
+  } >> Multi-thread test Roster management functions <<
+
+  Multi 5: {
+    -multi-thread
+    -loop   = 5
+    -to-jid = "$(daemon-user)@$(server-host)/def-user-resource"
+
+    Message send@msg-send: { -user-name = "multi-reg_1_$(loop)" }
+    >> Send a message to daemon user <<
+    Message send@msg-send: { -user-name = "multi-reg_2_$(loop)" }
+    >> Send a message to daemon user <<
+    Message send@msg-send: { -user-name = "multi-reg_3_$(loop)" }
+    >> Send a message to daemon user <<
+    Message send@msg-send: { -user-name = "multi-reg_4_$(loop)" }
+    >> Send a message to daemon user <<
+    Message send@msg-send: { -user-name = "multi-reg_5_$(loop)" }
+    >> Send a message to daemon user <<
+  } >> Multi-thread test of message send to daemon user <<
+
+  Multi 6: {
+    -multi-thread
+    -loop = 5
+
+    Roster@privacy-lists: { -user-name = "multi-reg_1_$(loop)" }
+    >> Privacy lists management test <<
+    Roster@privacy-lists: { -user-name = "multi-reg_2_$(loop)" }
+    >> Privacy lists management test <<
+    Roster@privacy-lists: { -user-name = "multi-reg_3_$(loop)" }
+    >> Privacy lists management test <<
+    Roster@privacy-lists: { -user-name = "multi-reg_4_$(loop)" }
+    >> Privacy lists management test <<
+    Roster@privacy-lists: { -user-name = "multi-reg_5_$(loop)" }
+    >> Privacy lists management test <<
+  } >> Multi-thread test privacy lists management <<
+
+  Multi 7: {
+    -multi-thread
+    -loop   = 5
+    -to-jid = "$(blocking-user)@$(server-host)/def-user-resource"
+    -socket-wait = 1000
+    -expect-type = error
+#    -time-out-ok
+
+    Message send@msg-send: { -user-name = "multi-reg_1_$(loop)" }
+    >> Send a message to daemon user <<
+    Message send@msg-send: { -user-name = "multi-reg_2_$(loop)" }
+    >> Send a message to daemon user <<
+    Message send@msg-send: { -user-name = "multi-reg_3_$(loop)" }
+    >> Send a message to daemon user <<
+    Message send@msg-send: { -user-name = "multi-reg_4_$(loop)" }
+    >> Send a message to daemon user <<
+    Message send@msg-send: { -user-name = "multi-reg_5_$(loop)" }
+    >> Send a message to daemon user <<
+  } >> Multi-thread test privacy lists - send a message to daemon user who blocks all messages <<
+
+  Multi 8: {
+    -multi-thread
+    -loop   = 5
+    -to-jid = "$(long-list-user)@$(server-host)/def-user-resource"
+
+    Message send@msg-send: { -user-name = "multi-reg_1_$(loop)" }
+    >> Send a message to daemon user <<
+    Message send@msg-send: { -user-name = "multi-reg_2_$(loop)" }
+    >> Send a message to daemon user <<
+    Message send@msg-send: { -user-name = "multi-reg_3_$(loop)" }
+    >> Send a message to daemon user <<
+    Message send@msg-send: { -user-name = "multi-reg_4_$(loop)" }
+    >> Send a message to daemon user <<
+    Message send@msg-send: { -user-name = "multi-reg_5_$(loop)" }
+    >> Send a message to daemon user <<
+  } >> Multi-thread test privacy lists - send a message to daemon user with very long privacy list <<
+
+#  Multi-test end: {
+#    -multi-thread
+#    -loop = 5
+
+#    Register@user-unregister: { -user-name = "multi-reg_1_$(loop)" }
+#    !! Remove user@user-unregister: { -loop = 1 } >> XEP-0077 <<
+#    Register@user-unregister: { -user-name = "multi-reg_2_$(loop)" }
+#    !! Remove user@user-unregister: { -loop = 1 } >> XEP-0077 <<
+#    Register@user-unregister: { -user-name = "multi-reg_3_$(loop)" }
+#    !! Remove user@user-unregister: { -loop = 1 } >> XEP-0077 <<
+#    Register@user-unregister: { -user-name = "multi-reg_4_$(loop)" }
+#    !! Remove user@user-unregister: { -loop = 1 } >> XEP-0077 <<
+#    Register@user-unregister: { -user-name = "multi-reg_5_$(loop)" }
+#    !! Remove user@user-unregister: { -loop = 1 } >> XEP-0077 <<
+#  } >> Multi-thread test of XEP-0077 - In-Band Registration, user unregister <<
+
+}
+>> Script generating large queues and network I/O traffic <<

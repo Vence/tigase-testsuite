@@ -1,0 +1,111 @@
+##
+##  Tigase XMPP/Jabber Test Suite
+##  Copyright (C) 2004-2009 "Artur Hefczyc" <artur.hefczyc@tigase.org>
+##
+##  This program is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License.
+##
+##  This program is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with this program. Look for COPYING file in the top folder.
+##  If not, see http://www.gnu.org/licenses/.
+##
+##  $Rev$
+##  Last modified by $Author$
+##  $Date$
+##
+send: {
+<iq type="get" id="rem-sub-send-1">
+  <query xmlns="jabber:iq:roster"/>
+</iq>
+}
+expect: {
+<iq type="result" id="rem-sub-send-1">
+  <query xmlns="jabber:iq:roster">
+    <item jid="$(to-id)" subscription="both"/>
+  </query>
+</iq>
+<iq id="@{subscr-test-id13}" type="set">
+  <query xmlns="jabber:iq:roster">
+    <item name="dynrost" subscription="both" jid="dynrost@test-d">
+      <group>test group</group>
+    </item>
+  </query>
+</iq>
+}
+expect: {
+<iq type="result" id="rem-sub-send-1">
+  <query xmlns="jabber:iq:roster">
+    <item jid="$(to-id)" subscription="both"/>
+  </query>
+</iq>
+<iq id="@{subscr-test-id13}" type="set">
+  <query xmlns="jabber:iq:roster">
+    <item name="dynrost" subscription="both" jid="dynrost@test-d">
+      <group>test group</group>
+    </item>
+  </query>
+</iq>
+}
+
+send: {
+<presence id="rem-sub-send-2" type="available"/>
+}
+
+expect: {
+<presence id="rem-sub-send-2" from="$(from-jid)" to="$(from-id)" type="available"/>
+}
+
+expect: {
+<presence id="rem-sub-rec-2" from="$(to-jid)" type="available"/>
+}
+
+send: {
+<iq type="set" id="rem-sub-send-3">
+  <query xmlns="jabber:iq:roster">
+    <item jid="$(to-id)" subscription="remove"/>
+  </query>
+</iq>
+}
+expect: {
+<iq type="result" id="rem-sub-send-3"/>
+<iq type="set">
+  <query xmlns="jabber:iq:roster">
+    <item jid="$(to-id)" subscription="remove"/>
+  </query>
+</iq>
+}
+expect: {
+<iq type="result" id="rem-sub-send-3"/>
+<iq type="set">
+  <query xmlns="jabber:iq:roster">
+    <item jid="$(to-id)" subscription="remove"/>
+  </query>
+</iq>
+}
+
+send: {
+<iq type="get" id="rem-sub-send-4">
+  <query xmlns="jabber:iq:roster"/>
+</iq>
+}
+expect: {
+<iq type="result" id="rem-sub-send-4">
+  <query xmlns="jabber:iq:roster"/>
+</iq>
+}
+expect: {
+<iq id="@{subscr-test-id14}" type="set">
+  <query xmlns="jabber:iq:roster">
+    <item name="dynrost" subscription="both" jid="dynrost@test-d">
+      <group>test group</group>
+    </item>
+  </query>
+</iq>
+}
+

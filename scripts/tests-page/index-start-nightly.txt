@@ -1,0 +1,14 @@
+<html>
+	<head>
+		<title>Tigase XMPP Server automated tests reports - Nightlies</title>
+	</head>
+
+<body>
+
+<h1>Tigase XMPP Server automated tests reports - Nightlies</h1>
+
+<p>This is a page with reports for the automatic tests we run for each nightly release</p>
+<ul>
+<li><a href="#func">Functional tests</a></li>
+<li><a href="#lmem">Low memory tests</a></li>
+</ul>

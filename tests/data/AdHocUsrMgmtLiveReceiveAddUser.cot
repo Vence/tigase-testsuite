@@ -1,0 +1,33 @@
+# Standard roster request...
+send: {
+<iq type="get" id="roster_1" >
+  <query xmlns="jabber:iq:roster"/>
+</iq>
+}
+# Standard roster response
+expect: {
+<iq type="result" id="roster_1" >
+  <query xmlns="jabber:iq:roster"/>
+</iq>
+}
+# Extra, dynamic roster response from the test system
+expect: {
+ <iq id="dr-1" type="set">
+   <query xmlns="jabber:iq:roster">
+     <item name="dynrost" subscription="both" jid="dynrost@test-d">
+       <group>test group</group>
+     </item>
+   </query>
+ </iq>
+}
+# Another roster push after the user roster modification by admin
+expect: {
+<iq type="set">
+  <query xmlns="jabber:iq:roster">
+    <item subscription="both" jid="admin@test-d" name="admin@test-d">
+      <group>group1</group>
+      <group>group2</group>
+    </item>
+  </query>
+</iq>
+}

@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+ <head>
+  <title>XMPP Server functional tests.</title>
+ </head>
+ <body>
+  <h2>XMPP Server functional tests.</h2>
+  <b>
+   <ol>
+    <li> Get server version </li>
+    <li> Server configuration </li>
+    <li> Server statistics </li>
+    <li> Script with functional tests for all basic XMPP/Jabber features </li>
+    <li> Testing bosh component </li>
+    <li> Testing bosh component in keep-alive mode </li>
+    <li> Multi-threaded tests for various XMPP functions </li>
+    <li> Script with functional tests for Administrator ad-hoc commands </li>
+   </ol>
+  </b>
+
+  <p>Test start time: <b>2016-11-11 10:53:51</b></p>
+   <h3>Tests results:</h3>
+  <p>
+  <table border='1' style='min-width: 800px;'>
+   <thead valign='middle'>
+    <tr>
+     <th width='225px'>Test name</th>
+     <th>Result</th>
+     <th>Total time</th>
+     <th>OK</th>
+     <th>Average</th>
+     <th>Description</th>
+     <th width='225px'>History</th>
+    </tr>
+   </thead>
+   <tr valign="top">    <td>Version</td>    <td bgcolor="#FF9090"><b>FAILURE</b></td>    <td>0 sec</td>    <td>0</td>    <td><b>0</b> ms</td>    <td> Get server version </td>    <td><a href='Version.xml'>Version</a></td>   </tr>
+   <tr valign="top">    <td>Configuration</td>    <td bgcolor="#FF9090"><b>FAILURE</b></td>    <td>0 sec</td>    <td>0</td>    <td><b>0</b> ms</td>    <td> Server configuration </td>    <td><a href='Configuration.xml'>Configuration</a></td>   </tr>
+   <tr valign="top">    <td>Statistics</td>    <td bgcolor="#FF9090"><b>FAILURE</b></td>    <td>0 sec</td>    <td>0</td>    <td><b>0</b> ms</td>    <td> Server statistics </td>    <td><a href='Statistics.xml'>Statistics</a></td>   </tr>
+   <tr valign="top">    <td>Basic 1 (c2s)</td>    <td bgcolor="#FF9090"><b>FAILURE</b></td>    <td>0 sec</td>    <td>0</td>    <td><b>0</b> ms</td>    <td> Stream open to server. </td>    <td><a href='Basic_1_(c2s).xml'>Basic 1 (c2s)</a></td>   </tr>
+   <tr valign="top">    <td>Basic 2 (c2s)</td>    <td bgcolor="#FF9090"><b>FAILURE</b></td>    <td>0 sec</td>    <td>0</td>    <td><b>0</b> ms</td>    <td> XEP-0077 - In-Band Registration, register </td>    <td><a href='Basic_2_(c2s).xml'>Basic 2 (c2s)</a></td>   </tr>
+   <tr valign="top">    <td>Basic 3 (c2s)</td>    <td bgcolor="#FF9090"><b>FAILURE</b></td>    <td>0 sec</td>    <td>0</td>    <td><b>0</b> ms</td>    <td> XEP-0077 - In-Band Registration - user unregister </td>    <td><a href='Basic_3_(c2s).xml'>Basic 3 (c2s)</a></td>   </tr>
+   <tr valign="top">    <td>Basic 4 (c2s)</td>    <td bgcolor="#FF9090"><b>FAILURE</b></td>    <td>0 sec</td>    <td>0</td>    <td><b>0</b> ms</td>    <td> XEP-0078 Non-SASL authorization with plain password. </td>    <td><a href='Basic_4_(c2s).xml'>Basic 4 (c2s)</a></td>   </tr>
+   <tr valign="top">    <td>Basic 5 (c2s)</td>    <td bgcolor="#FF9090"><b>FAILURE</b></td>    <td>0 sec</td>    <td>0</td>    <td><b>0</b> ms</td>    <td> XEP-0078 Non-SASL authorization with digest password. </td>    <td><a href='Basic_5_(c2s).xml'>Basic 5 (c2s)</a></td>   </tr>
+   <tr valign="top">    <td>Basic 6 (c2s)</td>    <td bgcolor="#FF9090"><b>FAILURE</b></td>    <td>0 sec</td>    <td>0</td>    <td><b>0</b> ms</td>    <td> Send a message to self user and don't wait for response </td>    <td><a href='Basic_6_(c2s).xml'>Basic 6 (c2s)</a></td>   </tr>
+   <tr valign="top">    <td>Basic 7 (c2s)</td>    <td bgcolor="#FF9090"><b>FAILURE</b></td>    <td>0 sec</td>    <td>0</td>    <td><b>0</b> ms</td>    <td> Message send to correct/available full JID: all-xmpp-test_1@test-d/def-user-resource, expecting response </td>    <td><a href='Basic_7_(c2s).xml'>Basic 7 (c2s)</a></td>   </tr>
+   <tr valign="top">    <td>Basic 8 (c2s)</td>    <td bgcolor="#FF9090"><b>FAILURE</b></td>    <td>0 sec</td>    <td>0</td>    <td><b>0</b> ms</td>    <td> Message send to correct/available bare JID: all-xmpp-test_1@test-d, expecting response </td>    <td><a href='Basic_8_(c2s).xml'>Basic 8 (c2s)</a></td>   </tr>
+   <tr valign="top">    <td>Basic 9 (c2s)</td>    <td bgcolor="#FF9090"><b>FAILURE</b></td>    <td>0 sec</td>    <td>0</td>    <td><b>0</b> ms</td>    <td> IQ stanza send to incorrect/unavailable full JID: all-xmpp-test_1@test-d/wrong-resource, expecting error response </td>    <td><a href='Basic_9_(c2s).xml'>Basic 9 (c2s)</a></td>   </tr>
+   <tr valign="top">    <td>Basic 10 (c2s)</td>    <td bgcolor="#FF9090"><b>FAILURE</b></td>    <td>0 sec</td>    <td>0</td>    <td><b>0</b> ms</td>    <td> XEP-0092 - get entity version </td>    <td><a href='Basic_10_(c2s).xml'>Basic 10 (c2s)</a></td>   </tr>
+   <tr valign="top">    <td>Basic 11 (c2s)</td>    <td bgcolor="#FF9090"><b>FAILURE</b></td>    <td>0 sec</td>    <td>0</td>    <td><b>0</b> ms</td>    <td> XEP-0039 Statistics Gathering    </td>    <td><a href='Basic_11_(c2s).xml'>Basic 11 (c2s)</a></td>   </tr>
+   <tr valign="top">    <td>Basic 12 (c2s)</td>    <td bgcolor="#FF9090"><b>FAILURE</b></td>    <td>0 sec</td>    <td>0</td>    <td><b>0</b> ms</td>    <td> Roster management test </td>    <td><a href='Basic_12_(c2s).xml'>Basic 12 (c2s)</a></td>   </tr>
+   <tr valign="top">    <td>Basic 13 (c2s)</td>    <td bgcolor="#FF9090"><b>FAILURE</b></td>    <td>0 sec</td>    <td>0</td>    <td><b>0</b> ms</td>    <td> Roster with uppercase characters test, this tests verifies if the roster item removed in previous test is really removed from DB and empty on user relogin. </td>    <td><a href='Basic_13_(c2s).xml'>Basic 13 (c2s)</a></td>   </tr>
+   <tr valign="top">    <td>Basic 14 (c2s)</td>    <td bgcolor="#FF9090"><b>FAILURE</b></td>    <td>0 sec</td>    <td>0</td>    <td><b>0</b> ms</td>    <td> XEP-0049: Private XML Storage </td>    <td><a href='Basic_14_(c2s).xml'>Basic 14 (c2s)</a></td>   </tr>
+   <tr valign="top">    <td>Basic 15 (c2s)</td>    <td bgcolor="#FF9090"><b>FAILURE</b></td>    <td>0 sec</td>    <td>0</td>    <td><b>0</b> ms</td>    <td> Test for feature-not-implemented error which should be returned when client sends unsupported stanza </td>    <td><a href='Basic_15_(c2s).xml'>Basic 15 (c2s)</a></td>   </tr>
+   <tr valign="top">    <td>Basic 16 (c2s)</td>    <td bgcolor="#FF9090"><b>FAILURE</b></td>    <td>0 sec</td>    <td>0</td>    <td><b>0</b> ms</td>    <td> XEP-0054: vcard-temp </td>    <td><a href='Basic_16_(c2s).xml'>Basic 16 (c2s)</a></td>   </tr>
+   <tr valign="top">    <td>Basic 17 (c2s)</td>    <td bgcolor="#FF9090"><b>FAILURE</b></td>    <td>0 sec</td>    <td>0</td>    <td><b>0</b> ms</td>    <td> XEP-0199: XMPP Ping to domain 'test-d' the user is logged in </td>    <td><a href='Basic_17_(c2s).xml'>Basic 17 (c2s)</a></td>   </tr>
+   <tr valign="top">    <td>Basic 18 (c2s)</td>    <td bgcolor="#FF9090"><b>FAILURE</b></td>    <td>0 sec</td>    <td>0</td>    <td><b>0</b> ms</td>    <td> XEP-0199: XMPP Ping to another, vrtual domain 'test-domain' on the server </td>    <td><a href='Basic_18_(c2s).xml'>Basic 18 (c2s)</a></td>   </tr>
+   <tr valign="top">    <td>Basic 19 (c2s)</td>    <td bgcolor="#FF9090"><b>FAILURE</b></td>    <td>0 sec</td>    <td>0</td>    <td><b>0</b> ms</td>    <td> XEP-0030: XMPP Service Discovery </td>    <td><a href='Basic_19_(c2s).xml'>Basic 19 (c2s)</a></td>   </tr>
+   <tr valign="top">    <td>Basic 20 (c2s)</td>    <td bgcolor="#FF9090"><b>FAILURE</b></td>    <td>0 sec</td>    <td>0</td>    <td><b>0</b> ms</td>    <td> Send a message without resource binding and expect an error response. </td>    <td><a href='Basic_20_(c2s).xml'>Basic 20 (c2s)</a></td>   </tr>
+   <tr valign="top">    <td>Basic 21 (c2s)</td>    <td bgcolor="#FF9090"><b>FAILURE</b></td>    <td>0 sec</td>    <td>0</td>    <td><b>0</b> ms</td>    <td> Bug #431 - XMLUtil encoding problem: https://projects.tigase.org/issues/431 </td>    <td><a href='Basic_21_(c2s).xml'>Basic 21 (c2s)</a></td>   </tr>
+   <tr valign="top">    <td>SSL 1 (c2s)</td>    <td bgcolor="#FF9090"><b>FAILURE</b></td>    <td>0 sec</td>    <td>0</td>    <td><b>0</b> ms</td>    <td> SSL socket connect. </td>    <td><a href='SSL_1_(c2s).xml'>SSL 1 (c2s)</a></td>   </tr>
+   <tr valign="top">    <td>TLS 1 (c2s)</td>    <td bgcolor="#FF9090"><b>FAILURE</b></td>    <td>0 sec</td>    <td>0</td>    <td><b>0</b> ms</td>    <td> TLS connection open </td>    <td><a href='TLS_1_(c2s).xml'>TLS 1 (c2s)</a></td>   </tr>
+   <tr valign="top">    <td>TLS 2 (c2s)</td>    <td bgcolor="#FF9090"><b>FAILURE</b></td>    <td>0 sec</td>    <td>0</td>    <td><b>0</b> ms</td>    <td> SASL authorization </td>    <td><a href='TLS_2_(c2s).xml'>TLS 2 (c2s)</a></td>   </tr>
+   <tr valign="top">    <td>TLS 3 (c2s)</td>    <td bgcolor="#FF9090"><b>FAILURE</b></td>    <td>0 sec</td>    <td>0</td>    <td><b>0</b> ms</td>    <td> XMPP resource bind </td>    <td><a href='TLS_3_(c2s).xml'>TLS 3 (c2s)</a></td>   </tr>
+   <tr valign="top">    <td>TLS 4 (c2s)</td>    <td bgcolor="#FF9090"><b>FAILURE</b></td>    <td>0 sec</td>    <td>0</td>    <td><b>0</b> ms</td>    <td> Establish XMPP session </td>    <td><a href='TLS_4_(c2s).xml'>TLS 4 (c2s)</a></td>   </tr>
+   <tr valign="top">    <td>TLS Required 1 (c2s)</td>    <td bgcolor="#FF9090"><b>FAILURE</b></td>    <td>0 sec</td>    <td>0</td>    <td><b>0</b> ms</td>    <td> XEP-0077 - In-Band Registration, for domain requiring TLS but without TLS activation, expecting error. </td>    <td><a href='TLS_Required_1_(c2s).xml'>TLS Required 1 (c2s)</a></td>   </tr>
+   <tr valign="top">    <td>TLS Required 2 (c2s)</td>    <td bgcolor="#FF9090"><b>FAILURE</b></td>    <td>0 sec</td>    <td>0</td>    <td><b>0</b> ms</td>    <td> XEP-0077 - In-Band Registration, for domain requiring TLS with TLS activation, expecting success. </td>    <td><a href='TLS_Required_2_(c2s).xml'>TLS Required 2 (c2s)</a></td>   </tr>
+   <tr valign="top">    <td>Packet Order 1 (c2s)</td>    <td bgcolor="#FF9090"><b>FAILURE</b></td>    <td>0 sec</td>    <td>0</td>    <td><b>0</b> ms</td>    <td> Packet order test </td>    <td><a href='Packet_Order_1_(c2s).xml'>Packet Order 1 (c2s)</a></td>   </tr>
+   <tr valign="top">    <td>Packet Order 2 (c2s)</td>    <td bgcolor="#FF9090"><b>FAILURE</b></td>    <td>0 sec</td>    <td>0</td>    <td><b>0</b> ms</td>    <td> Packet order test </td>    <td><a href='Packet_Order_2_(c2s).xml'>Packet Order 2 (c2s)</a></td>   </tr>

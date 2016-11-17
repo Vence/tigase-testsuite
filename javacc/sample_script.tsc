@@ -1,0 +1,97 @@
+# Script version number - mandatory parameter
+-version = "2.0.0"
+
+# Additional global settings
+
+-output-format = html
+-output-file   = "functional-tests.html"
+-title         = "Test Script parser test."
+
+# Now tell TestLoader how to obtain server version and
+# get server statistics.
+# It can detect test with names: Version and Statistics
+Version@iq-version: >><<
+Statistics@iq-stats: >><<
+
+# Format:
+#
+# Test name[@test-to-run]: [ Short description ]
+# [ {
+# $(variable)=val_m
+# -test-parameter=val_n
+# Sub test name@test-to-run: Short descr { params } !!on error: {}  >> Long descr <<
+# } ]
+# [ !!Test on error@test-to-run: [ Descr ] [ { $(variable)=val_m -test-parameter=val_n } ] ]
+# >> Long description <<
+#
+# any string until ':' character is test name, doesn't need to be unique.
+#                      Test name needs to be first, next in need to be
+#                      test script: "{ }" and test long description: ">> <<".
+# Test name and long description are mandatory, they can be empty strings though.
+# '{' - marks a start of test script
+# '}' - marks end of test script
+# !!  - exception - tells what to do if test fails
+# '>>' - marks a start of test description
+# '<<' - marks end of test description
+
+Global settings: Short description
+{
+  $(repeats)      = 1000
+  $(daemon-users) = 1
+  $(user-name)    = "test user"
+
+# Test comment to see wether parser works correctly
+
+  -serverip             = "127.0.0.1"
+  -host                 = localhost
+  -socket-wait          = 5000
+  -loop                 = $(repeats)
+  -base-ns              = "jabber:client"
+  -user-name            = $(user-name)
+  -user-pass            = all-xmpp-test-password
+  -user_resr            = xmpp-test
+  -output-format        = html
+  -output-file          = "www/performance-tests.html"
+  -output-history       = no
+  -keys-file-password   = keystore
+  -trusts-file-password = truststore
+  -keys-file            = "certs/keystore"
+  -trusts-file          = "certs/client_truststore"
+  -def-auth             = auth-digest
+
+  Warm up prep@user-register: Create user acc for server warm up
+  { -no-record -loop = 1 } >><<
+
+  Server warm up@ssl-init;msg-send:
+  {
+    $(repeats) = 100
+
+    -no-record
+
+    -messages  = 1
+    -to-jid    = $(self)
+    -port      = 5223
+  }
+  >> Send $(repeats) messages to self user over SSL and don\'t wait for response <<
+
+  Init 1@user-unregister: Remove test account {
+    $(repeats)   = 1
+    $(user-name) = "another user"
+
+    -no-record
+  }
+  >> Remove test account - just in case if there is already such account <<
+
+# Real tests section
+
+  Test 1@user-register;user-unregister: Add and remove user account
+  !!Remove user@user-unregister: { $(repeats) = 1 }
+  >> Add and remove user account over plain socket $(repeats) times <<
+
+}
+>> Script with performance tests, selected tests are repeated
+$(repeats) times and processing time is measured for each XMPP/Jabber feature <<
+
+Finalization action@close-all: Closes all connections and finishes tests
+{ $(some-var) = some-val -just-par = another-val}
+>> Do nothing <<

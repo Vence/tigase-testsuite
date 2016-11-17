@@ -1,0 +1,129 @@
+##
+##  Tigase XMPP/Jabber Test Suite
+##  Copyright (C) 2004-2009 "Artur Hefczyc" <artur.hefczyc@tigase.org>
+##
+##  This program is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License.
+##
+##  This program is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with this program. Look for COPYING file in the top folder.
+##  If not, see http://www.gnu.org/licenses/.
+##
+##  $Rev: $
+##  Last modified by $Author: $
+##  $Date: $
+##
+
+send: {
+<iq id="get-idle-users"
+    from="$(from-jid)"
+    to="$(to-jid)"
+    type="set">
+    <command xmlns="http://jabber.org/protocol/commands"
+             node="http://jabber.org/protocol/admin#get-idle-users" />
+</iq>
+}
+
+expect: {
+<iq id="get-idle-users"
+    from="$(to-jid)"
+    to="$(from-jid)"
+	type="result">
+	<command status="executing"
+			xmlns="http://jabber.org/protocol/commands"
+            node="http://jabber.org/protocol/admin#get-idle-users">
+		<x xmlns="jabber:x:data" type="form">
+			<title>Requesting List of Idle Users</title>
+				<field type="hidden" var="FORM_TYPE">
+					<value>http://jabber.org/protocol/admin</value>
+				</field>
+				<field type="list-single" var="domainjid" label="The domain for the list of idle users">
+					<value/>
+				</field>
+				<field type="list-single" var="max_items" label="Maximum number of items to show">
+					<value/>
+					<option label="25">
+						<value>25</value>
+					</option>
+					<option label="50">
+						<value>50</value>
+					</option>
+					<option label="75">
+						<value>75</value>
+					</option>
+					<option label="100">
+						<value>100</value>
+					</option>
+					<option label="150">
+						<value>150</value>
+					</option>
+					<option label="200">
+						<value>200</value>
+					</option>
+					<option label="None">
+						<value>None</value>
+					</option>
+				</field>
+			</x>
+			<actions execute="complete">
+				<complete/>
+			</actions>
+		</command>
+	</iq>
+
+
+
+}
+
+
+send: {
+<iq id="get-idle-users"
+    from="$(from-jid)"
+    to="$(to-jid)"
+    type="set">
+    <command xmlns="http://jabber.org/protocol/commands"
+             node="http://jabber.org/protocol/admin#get-idle-users" >
+		<x xmlns="jabber:x:data" type="submit">
+			<field type="hidden" var="FORM_TYPE">
+				<value>http://jabber.org/protocol/admin</value>
+			</field>
+			<field type="list-single" var="domainjid">
+				<value>$(cdata)</value>
+			</field>
+			<field type="list-single" var="max_items">
+				<value>25</value>
+			</field>
+		</x>
+	</command>
+</iq>
+
+}
+
+
+
+
+
+expect: {
+<iq id="get-idle-users"
+    from="$(to-jid)"
+    to="$(from-jid)"
+    type="result">
+    <command
+        xmlns="http://jabber.org/protocol/commands"
+        node="http://jabber.org/protocol/admin#get-idle-users"
+        status="completed">
+        <x xmlns="jabber:x:data" type="result">
+            <field type="fixed" var="Error">
+				<value>You do not have enough permissions to list idle accounts for this domain.</value>
+			</field>
+        </x>
+    </command>
+</iq>
+
+}

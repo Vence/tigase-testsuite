@@ -1,0 +1,84 @@
+<test-history test='Presence 6 (c2s)'>
+<OUTPUT test='Subscription receive'>
+<![CDATA[<stream:stream xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' to='192.168.72.130' version='1.0'/>
+]]></OUTPUT>
+<INPUT test='Subscription receive'>
+<![CDATA[<stream:stream xmlns="jabber:client" id="3bc03dcf-717f-43ab-9f32-951a885a16ef" version="1.0" xmlns:stream="http://etherx.jabber.org/streams" from="192.168.72.130" xml:lang="en"/>
+]]></INPUT>
+<INPUT test='Subscription receive'>
+<![CDATA[<stream:features><auth xmlns="http://jabber.org/features/iq-auth"/><register xmlns="http://jabber.org/features/iq-register"/><mechanisms xmlns="urn:ietf:params:xml:ns:xmpp-sasl"><mechanism>PLAIN</mechanism><mechanism>ANONYMOUS</mechanism></mechanisms><ver xmlns="urn:xmpp:features:rosterver"/><starttls xmlns="urn:ietf:params:xml:ns:xmpp-tls"/><compression xmlns="http://jabber.org/features/compress"><method>zlib</method></compression></stream:features>
+]]></INPUT>
+<OUTPUT test='Subscription receive'>
+<![CDATA[<auth xmlns='urn:ietf:params:xml:ns:xmpp-sasl' mechanism='PLAIN'>AGFsbC14bXBwLXRlc3QAYWxsLXhtcHAtdGVzdC1wYXNzd29yZA==</auth>
+]]></OUTPUT>
+<INPUT test='Subscription receive'>
+<![CDATA[<success xmlns="urn:ietf:params:xml:ns:xmpp-sasl"/>
+]]></INPUT>
+<OUTPUT test='Subscription receive'>
+<![CDATA[<stream:stream xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' to='192.168.72.130' version='1.0'>
+]]></OUTPUT>
+<INPUT test='Subscription receive'>
+<![CDATA[<stream:stream xmlns="jabber:client" id="3bc03dcf-717f-43ab-9f32-951a885a16ef" version="1.0" xmlns:stream="http://etherx.jabber.org/streams" from="192.168.72.130" xml:lang="en"/>
+]]></INPUT>
+<INPUT test='Subscription receive'>
+<![CDATA[<stream:features><register xmlns="http://jabber.org/features/iq-register"/><ver xmlns="urn:xmpp:features:rosterver"/><starttls xmlns="urn:ietf:params:xml:ns:xmpp-tls"/><compression xmlns="http://jabber.org/features/compress"><method>zlib</method></compression><bind xmlns="urn:ietf:params:xml:ns:xmpp-bind"/><session xmlns="urn:ietf:params:xml:ns:xmpp-session"/></stream:features>
+]]></INPUT>
+<OUTPUT test='Subscription receive'>
+<![CDATA[<iq type='set' id='bind1'><bind xmlns='urn:ietf:params:xml:ns:xmpp-bind'><resource>res-1</resource></bind></iq>
+]]></OUTPUT>
+<INPUT test='Subscription receive'>
+<![CDATA[<iq xmlns="jabber:client" id="bind1" to="all-xmpp-test@192.168.72.130/res-1" type="result"><bind xmlns="urn:ietf:params:xml:ns:xmpp-bind"><jid>all-xmpp-test@192.168.72.130/res-1</jid></bind></iq>
+]]></INPUT>
+<OUTPUT test='Subscription receive'>
+<![CDATA[<presence id="pres-wait-1"/>
+]]></OUTPUT>
+<INPUT test='Subscription receive'>
+<![CDATA[<presence xmlns="jabber:client" id="pres-wait-1" to="all-xmpp-test@192.168.72.130" from="all-xmpp-test@192.168.72.130/res-1"/>
+]]></INPUT>
+<OUTPUT test='Subscription send'>
+<![CDATA[<stream:stream xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' to='192.168.72.130' version='1.0'/>
+]]></OUTPUT>
+<INPUT test='Subscription send'>
+<![CDATA[<stream:stream xmlns="jabber:client" id="75fd34eb-5c30-46e0-b454-915552d50096" version="1.0" xmlns:stream="http://etherx.jabber.org/streams" from="192.168.72.130" xml:lang="en"/>
+]]></INPUT>
+<INPUT test='Subscription send'>
+<![CDATA[<stream:features><auth xmlns="http://jabber.org/features/iq-auth"/><register xmlns="http://jabber.org/features/iq-register"/><mechanisms xmlns="urn:ietf:params:xml:ns:xmpp-sasl"><mechanism>PLAIN</mechanism><mechanism>ANONYMOUS</mechanism></mechanisms><ver xmlns="urn:xmpp:features:rosterver"/><starttls xmlns="urn:ietf:params:xml:ns:xmpp-tls"/><compression xmlns="http://jabber.org/features/compress"><method>zlib</method></compression></stream:features>
+]]></INPUT>
+<OUTPUT test='Subscription send'>
+<![CDATA[<auth xmlns='urn:ietf:params:xml:ns:xmpp-sasl' mechanism='PLAIN'>AGFsbC14bXBwLXRlc3QAYWxsLXhtcHAtdGVzdC1wYXNzd29yZA==</auth>
+]]></OUTPUT>
+<INPUT test='Subscription send'>
+<![CDATA[<success xmlns="urn:ietf:params:xml:ns:xmpp-sasl"/>
+]]></INPUT>
+<OUTPUT test='Subscription send'>
+<![CDATA[<stream:stream xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' to='192.168.72.130' version='1.0'>
+]]></OUTPUT>
+<INPUT test='Subscription send'>
+<![CDATA[<stream:stream xmlns="jabber:client" id="75fd34eb-5c30-46e0-b454-915552d50096" version="1.0" xmlns:stream="http://etherx.jabber.org/streams" from="192.168.72.130" xml:lang="en"/>
+]]></INPUT>
+<INPUT test='Subscription send'>
+<![CDATA[<stream:features><register xmlns="http://jabber.org/features/iq-register"/><ver xmlns="urn:xmpp:features:rosterver"/><starttls xmlns="urn:ietf:params:xml:ns:xmpp-tls"/><compression xmlns="http://jabber.org/features/compress"><method>zlib</method></compression><bind xmlns="urn:ietf:params:xml:ns:xmpp-bind"/><session xmlns="urn:ietf:params:xml:ns:xmpp-session"/></stream:features>
+]]></INPUT>
+<OUTPUT test='Subscription send'>
+<![CDATA[<iq type='set' id='bind1'><bind xmlns='urn:ietf:params:xml:ns:xmpp-bind'><resource>res-2</resource></bind></iq>
+]]></OUTPUT>
+<INPUT test='Subscription send'>
+<![CDATA[<iq xmlns="jabber:client" id="bind1" to="all-xmpp-test@192.168.72.130/res-2" type="result"><bind xmlns="urn:ietf:params:xml:ns:xmpp-bind"><jid>all-xmpp-test@192.168.72.130/res-2</jid></bind></iq>
+]]></INPUT>
+<OUTPUT test='Subscription send'>
+<![CDATA[<presence id="pres-wait-1"/>
+]]></OUTPUT>
+<INPUT test='Subscription receive'>
+<![CDATA[<presence xmlns="jabber:client" id="pres-wait-1" to="all-xmpp-test@192.168.72.130" from="all-xmpp-test@192.168.72.130/res-2"/>
+]]></INPUT>
+<INPUT test='Subscription send'>
+<![CDATA[<presence xmlns="jabber:client" id="pres-wait-1" to="all-xmpp-test@192.168.72.130" from="all-xmpp-test@192.168.72.130/res-1"/>
+]]></INPUT>
+<INPUT test='Subscription send'>
+<![CDATA[<presence xmlns="jabber:client" id="pres-wait-1" to="all-xmpp-test@192.168.72.130" from="all-xmpp-test@192.168.72.130/res-2"/>
+]]></INPUT>
+<INPUT test='Subscription send'>
+<![CDATA[<presence xmlns="jabber:client" to="all-xmpp-test@192.168.72.130" from="all-xmpp-test@192.168.72.130/res-1" type="unavailable"/>
+]]></INPUT>
+
+</test-history>

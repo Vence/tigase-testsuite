@@ -1,0 +1,90 @@
+##  Tigase XMPP/Jabber Test Suite
+##  Copyright (C) 2004-2013 "Tigase, Inc." <office@tigase.com>
+##
+##  This program is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License.
+##
+##  This program is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with this program. Look for COPYING file in the top folder.
+##  If not, see http://www.gnu.org/licenses/.
+
+
+send: {
+<iq id="manage-components-remove-1"
+    from="$(from-jid)"
+    to="$(to-jid)"
+    type="set">
+	<command xmlns="http://jabber.org/protocol/commands" node="comp-manager">
+		<x xmlns="jabber:x:data" type="submit">
+			<field type="list-single" var="action">
+				<value>Remove</value>
+			</field>
+		</x>
+	</command>
+</iq>
+}
+
+
+expect: {
+<iq id="manage-components-remove-1"
+    from="$(to-jid)"
+    to="$(from-jid)"
+    type="result">
+	<command xmlns="http://jabber.org/protocol/commands" status="executing" node="comp-manager">
+		<x xmlns="jabber:x:data" type="form">
+			<field type="list-single" label="Components" var="comp-name">
+				<option label="s2s">
+					<value>s2s</value>
+				</option>
+			</field>
+			<field type="hidden" var="action">
+				<value>Remove</value>
+			</field>
+		</x>
+		<actions execute="complete">
+			<complete/>
+		</actions>
+	</command>
+</iq>
+}
+
+
+send: {
+<iq id="manage-components-remove-2"
+    from="$(from-jid)"
+    to="$(to-jid)"
+    type="set">
+	<command xmlns="http://jabber.org/protocol/commands" node="comp-manager">
+		<x xmlns="jabber:x:data" type="submit">
+			<field type="list-single" var="comp-name">
+				<value>s2s</value>
+			</field>
+			<field type="hidden" var="action">
+				<value>Remove</value>
+			</field>
+		</x>
+	</command>
+</iq>
+}
+
+
+expect: {
+<iq id="manage-components-remove-2"
+    from="$(to-jid)"
+    to="$(from-jid)"
+    type="result">
+	<command xmlns="http://jabber.org/protocol/commands" status="completed" node="comp-manager">
+		<x xmlns="jabber:x:data" type="result">
+			<field type="fixed" var="Note">
+				<value>Operation successful.</value>
+			</field>
+		</x>
+	</command>
+</iq>
+}

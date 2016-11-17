@@ -1,0 +1,418 @@
+##
+##  Tigase XMPP/Jabber Test Suite
+##  Copyright (C) 2004-2009 "Artur Hefczyc" <artur.hefczyc@tigase.org>
+##
+##  This program is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License.
+##
+##  This program is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with this program. Look for COPYING file in the top folder.
+##  If not, see http://www.gnu.org/licenses/.
+##
+##  $Rev$
+##  Last modified by $Author$
+##  $Date$
+##
+
+# Creates TesterTask task on the server for later tests.
+# @author <a href="mailto:artur.hefczyc@tigase.org">Artur Hefczyc</a>
+# @version $Rev$
+
+# send: {
+# <iq type="set" to="$(hostname)" id="ab20a" >
+# <command xmlns="http://jabber.org/protocol/commands" node="commands/new-task" />
+# </iq>
+# }
+
+# expect: {
+# <iq from="$(hostname)" type="result" id="ab20a" to="$(from-jid)" >
+# <command xmlns="http://jabber.org/protocol/commands" status="executing" node="commands/new-task" >
+# <x xmlns="jabber:x:data" type="result" >
+# <field type="hidden" var="step" >
+# <value>step1</value>
+# </field>
+# <field type="fixed" var="Info" >
+# <value>Press:</value>
+# </field>
+# <field type="fixed" var="Info" >
+# <value>'Next' to set all parameters for the new task.</value>
+# </field>
+# <field type="text-single" label="Task name" var="Task name" >
+# <value/>
+# </field>
+# <field type="list-single" label="Task type" var="Task type" >
+# <value>News Distribution</value>
+# <option label="News Distribution" >
+# <value>News Distribution</value>
+# </option>
+# <option label="Short news publisher" >
+# <value>Short news publisher</value>
+# </option>
+# <option label="Tester Task" >
+# <value>Tester Task</value>
+# </option>
+# </field>
+# </x>
+# <actions execute="next" >
+# <next/>
+# </actions>
+# </command>
+# </iq>
+# }
+
+# send: {
+# <iq type="set" to="$(hostname)" id="ab21a" >
+# <command xmlns="http://jabber.org/protocol/commands" node="commands/new-task" >
+# <x xmlns="jabber:x:data" type="submit" >
+# <field type="hidden" var="step" >
+# <value>step1</value>
+# </field>
+# <field type="fixed" var="Info" >
+# <value>Press:</value>
+# </field>
+# <field type="fixed" var="Info" >
+# <value>'Next' to set all parameters for the new task.</value>
+# </field>
+# <field type="text-single" var="Task name" >
+# <value>tester_1</value>
+# </field>
+# <field type="list-single" var="Task type" >
+# <value>Tester Task</value>
+# </field>
+# </x>
+# </command>
+# </iq>
+# }
+
+# expect: {
+# <iq from="$(hostname)" type="result" id="ab21a" to="$(from-jid)" >
+# <command xmlns="http://jabber.org/protocol/commands" status="executing" node="commands/new-task" >
+# <x xmlns="jabber:x:data" type="result" >
+# <field type="hidden" var="Task name" >
+# <value>tester_1</value>
+# </field>
+# <field type="hidden" var="Task type" >
+# <value>Tester Task</value>
+# </field>
+# <field type="hidden" var="step" >
+# <value>step2</value>
+# </field>
+# <field type="fixed" var="task0" >
+# <value>This task pretends to be a user. Allows you to [un]subscribe</value>
+# </field>
+# <field type="fixed" var="task60" >
+# <value> to its roster, send a message and perform some other actions.</value>
+# </field>
+# <field type="fixed" var="task122" >
+# <value> Roster of this task is stored in memory only and is cleared</value>
+# </field>
+# <field type="fixed" var="task182" >
+# <value> on server restart. Full list of supported actions will be sent</value>
+# </field>
+# <field type="fixed" var="task245" >
+# <value> to you as a response to //help message. The purpose of this</value>
+# </field>
+# <field type="fixed" var="task305" >
+# <value> task is testing of the Tigase server and the task should not</value>
+# </field>
+# <field type="fixed" var="task366" >
+# <value> be normally loaded on to live system.</value>
+# </field>
+# <field type="fixed" var="Info2" >
+# <value>1. 'Finish' to create component with this parameters.</value>
+# </field>
+# <field type="fixed" var="Info3" >
+# <value>2. 'Previous' to go back and select different component.</value>
+# </field>
+# <field type="list-single" label="Allowed senders" var="allowed-senders" >
+# <value>SUBSCRIBED</value>
+# <option label="ALL" >
+# <value>ALL</value>
+# </option>
+# <option label="SUBSCRIBED" >
+# <value>SUBSCRIBED</value>
+# </option>
+# <option label="OWNER" >
+# <value>OWNER</value>
+# </option>
+# <option label="LIST" >
+# <value>LIST</value>
+# </option>
+# </field>
+# <field type="text-single" label="List of users allowed to post" var="allowed-senders-list" >
+# <value/>
+# </field>
+# <field type="text-single" label="Description" var="description" >
+# <value>News distribution task</value>
+# </field>
+# <field type="list-single" label="Message type" var="message-type" >
+# <value>CHAT</value>
+# <option label="CHAT" >
+# <value>CHAT</value>
+# </option>
+# <option label="HEADLINE" >
+# <value>HEADLINE</value>
+# </option>
+# <option label="NORMAL" >
+# <value>NORMAL</value>
+# </option>
+# </field>
+# <field type="list-single" label="Send to online users only" var="online-users-only" >
+# <value>false</value>
+# <option label="true" >
+# <value>true</value>
+# </option>
+# <option label="false" >
+# <value>false</value>
+# </option>
+# </field>
+# <field type="list-single" label="Replace sender address" var="replace-sender" >
+# <value>REPLACE</value>
+# <option label="REPLACE" >
+# <value>REPLACE</value>
+# </option>
+# <option label="LEAVE" >
+# <value>LEAVE</value>
+# </option>
+# <option label="REMOVE" >
+# <value>REMOVE</value>
+# </option>
+# </field>
+# <field type="list-single" label="Subscription restrictions" var="subscription-restr" >
+# <value>PUBLIC</value>
+# <option label="PUBLIC" >
+# <value>PUBLIC</value>
+# </option>
+# <option label="LOCAL" >
+# <value>LOCAL</value>
+# </option>
+# <option label="REGEX" >
+# <value>REGEX</value>
+# </option>
+# <option label="MODERATED" >
+# <value>MODERATED</value>
+# </option>
+# </field>
+# <field type="text-single" label="Subscription restrictions regex" var="subscription-restr-regex" >
+# <value>.*</value>
+# </field>
+# <field type="text-single" label="Administrators" var="task-admins" >
+# <value/>
+# </field>
+# <field type="text-single" label="Owner" var="task-owner" >
+# <value>$(from-id)</value>
+# </field>
+# </x>
+# <actions execute="complete" >
+# <complete/>
+# <prev/>
+# </actions>
+# </command>
+# </iq>
+# }
+
+send: {
+<iq type="set" to="$(hostname)" id="ab22a" >
+<command xmlns="http://jabber.org/protocol/commands" node="commands/new-task" >
+<x xmlns="jabber:x:data" type="submit" >
+<field type="hidden" var="Task name" >
+<value>tester_1</value>
+</field>
+<field type="hidden" var="Task type" >
+<value>Tester Task</value>
+</field>
+<field type="hidden" var="step" >
+<value>step2</value>
+</field>
+<field type="fixed" var="task0" >
+<value>This task pretends to be a user. Allows you to [un]subscribe</value>
+</field>
+<field type="fixed" var="task60" >
+<value> to its roster, send a message and perform some other actions.</value>
+</field>
+<field type="fixed" var="task122" >
+<value> Roster of this task is stored in memory only and is cleared</value>
+</field>
+<field type="fixed" var="task182" >
+<value> on server restart. Full list of supported actions will be sent</value>
+</field>
+<field type="fixed" var="task245" >
+<value> to you as a response to //help message. The purpose of this</value>
+</field>
+<field type="fixed" var="task305" >
+<value> task is testing of the Tigase server and the task should not</value>
+</field>
+<field type="fixed" var="task366" >
+<value> be normally loaded on to live system.</value>
+</field>
+<field type="fixed" var="Info2" >
+<value>1. 'Finish' to create component with this parameters.</value>
+</field>
+<field type="fixed" var="Info3" >
+<value>2. 'Previous' to go back and select different component.</value>
+</field>
+<field type="list-single" var="allowed-senders" >
+<value>ALL</value>
+</field>
+<field type="text-single" var="allowed-senders-list" >
+<value></value>
+</field>
+<field type="text-single" var="description" >
+<value>Tester task</value>
+</field>
+<field type="list-single" var="message-type" >
+<value>NORMAL</value>
+</field>
+<field type="list-single" var="online-users-only" >
+<value>true</value>
+</field>
+<field type="list-single" var="replace-sender" >
+<value>REPLACE</value>
+</field>
+<field type="list-single" var="subscription-restr" >
+<value>PUBLIC</value>
+</field>
+<field type="text-single" var="subscription-restr-regex" >
+<value>.*</value>
+</field>
+<field type="text-single" var="task-admins" >
+<value></value>
+</field>
+<field type="text-single" var="task-owner" >
+<value>$(from-jid)</value>
+</field>
+</x>
+</command>
+</iq>
+}
+
+expect: {
+<presence from="tester_1@$(hostname)" type="subscribe" to="$(from-jid)" >
+<nick xmlns="http://jabber.org/protocol/nick">tester_1</nick>
+</presence>
+<iq from="$(hostname)" type="result" id="ab22a" to="$(from-jid)" >
+<command xmlns="http://jabber.org/protocol/commands" status="completed" node="commands/new-task" >
+<x xmlns="jabber:x:data" type="result" >
+<field type="hidden" var="Task name" >
+<value>tester_1</value>
+</field>
+<field type="hidden" var="Task type" >
+<value>Tester Task</value>
+</field>
+<field type="fixed" var="Info" >
+<value>Created task: tester_1</value>
+</field>
+</x>
+</command>
+</iq>
+}
+
+expect: {
+<presence from="tester_1@$(hostname)" type="subscribe" to="$(from-jid)" >
+<nick xmlns="http://jabber.org/protocol/nick">tester_1</nick>
+</presence>
+<iq from="$(hostname)" type="result" id="ab22a" to="$(from-jid)" >
+<command xmlns="http://jabber.org/protocol/commands" status="completed" node="commands/new-task" >
+<x xmlns="jabber:x:data" type="result" >
+<field type="hidden" var="Task name" >
+<value>tester_1</value>
+</field>
+<field type="hidden" var="Task type" >
+<value>Tester Task</value>
+</field>
+<field type="fixed" var="Info" >
+<value>Created task: tester_1</value>
+</field>
+</x>
+</command>
+</iq>
+}
+
+send: {
+<iq type="set" id="ab23a" >
+<query xmlns="jabber:iq:roster">
+<item name="tester_1" jid="tester_1@$(hostname)" />
+</query>
+</iq>
+<presence type="subscribe" to="tester_1@$(hostname)"/>
+<presence type="subscribed" to="tester_1@$(hostname)" />
+}
+
+expect: {
+<iq type="result" id="ab23a" to="$(from-jid)" />
+}
+
+expect: {
+<iq type="set" to="$(from-jid)">
+<query xmlns="jabber:iq:roster">
+<item jid="tester_1@$(hostname)" name="tester_1" subscription="none"/>
+</query>
+</iq>
+<iq type="set" to="$(from-jid)">
+<query xmlns="jabber:iq:roster">
+<item jid="tester_1@$(hostname)" name="tester_1" subscription="from"/>
+</query>
+</iq>
+<iq type="set" to="$(from-jid)">
+<query xmlns="jabber:iq:roster">
+<item jid="tester_1@$(hostname)" name="tester_1" subscription="both"/>
+</query>
+</iq>
+<presence from="tester_1@$(hostname)" to="$(from-jid)" type="available">
+<status>Tester task</status>
+</presence>
+<presence from="tester_1@$(hostname)" to="$(from-jid)" type="subscribed"/>
+<presence from="tester_1@$(hostname)" to="$(from-jid)" type="unavailable"/>
+}
+
+expect: {
+<iq type="set" to="$(from-jid)">
+<query xmlns="jabber:iq:roster">
+<item jid="tester_1@$(hostname)" name="tester_1" subscription="none"/>
+</query>
+</iq>
+<iq type="set" to="$(from-jid)">
+<query xmlns="jabber:iq:roster">
+<item jid="tester_1@$(hostname)" name="tester_1" subscription="from"/>
+</query>
+</iq>
+<iq type="set" to="$(from-jid)">
+<query xmlns="jabber:iq:roster">
+<item jid="tester_1@$(hostname)" name="tester_1" subscription="both"/>
+</query>
+</iq>
+<presence from="tester_1@$(hostname)" to="$(from-jid)" type="available">
+<status>Tester task</status>
+</presence>
+<presence from="tester_1@$(hostname)" to="$(from-jid)" type="subscribed"/>
+<presence from="tester_1@$(hostname)" to="$(from-jid)" type="unavailable"/>
+}
+
+expect: {
+<iq type="set" to="$(from-jid)">
+<query xmlns="jabber:iq:roster">
+<item jid="tester_1@$(hostname)" name="tester_1" subscription="none"/>
+</query>
+</iq>
+<iq type="set" to="$(from-jid)">
+<query xmlns="jabber:iq:roster">
+<item jid="tester_1@$(hostname)" name="tester_1" subscription="from"/>
+</query>
+</iq>
+<iq type="set" to="$(from-jid)">
+<query xmlns="jabber:iq:roster">
+<item jid="tester_1@$(hostname)" name="tester_1" subscription="both"/>
+</query>
+</iq>
+<presence from="tester_1@$(hostname)" to="$(from-jid)" type="available">
+<status>Tester task</status>
+</presence>
+<presence from="tester_1@$(hostname)" to="$(from-jid)" type="subscribed"/>
+<presence from="tester_1@$(hostname)" to="$(from-jid)" type="unavailable"/>
+}

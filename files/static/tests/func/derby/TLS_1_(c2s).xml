@@ -1,0 +1,15 @@
+<test-history test='TLS 1 (c2s)'>
+<OUTPUT test='TLS 1 (c2s)'>
+<![CDATA[<stream:stream xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' to='test-d' version='1.0'/>
+]]></OUTPUT>
+<INPUT test='TLS 1 (c2s)'>
+<![CDATA[<stream:stream xmlns="jabber:client" from="127.0.0.1" version="1.0" xmlns:stream="http://etherx.jabber.org/streams" id="tigase-error-tigase" xml:lang="en"/>
+]]></INPUT>
+<OUTPUT test='TLS 1 (c2s)'>
+<![CDATA[<starttls xmlns='urn:ietf:params:xml:ns:xmpp-tls'/>
+]]></OUTPUT>
+<INPUT test='TLS 1 (c2s)'>
+<![CDATA[tigase.test.impl.TestTLS, all-xmpp-test@test-d/def-user-resource(all-xmpp-test-password), Software caused connection abort: recv failed
+]]></INPUT>
+
+</test-history>

@@ -1,0 +1,49 @@
+<test-history test='Basic 19 (c2s)'>
+<OUTPUT test='Basic 19 (c2s)'>
+<![CDATA[<stream:stream xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' to='192.168.72.130' version='1.0'/>
+]]></OUTPUT>
+<INPUT test='Basic 19 (c2s)'>
+<![CDATA[<stream:stream xmlns="jabber:client" id="929cbd52-47bb-4312-99bd-9208eea6e25d" version="1.0" xmlns:stream="http://etherx.jabber.org/streams" from="192.168.72.130" xml:lang="en"/>
+]]></INPUT>
+<INPUT test='Basic 19 (c2s)'>
+<![CDATA[<stream:features><auth xmlns="http://jabber.org/features/iq-auth"/><register xmlns="http://jabber.org/features/iq-register"/><mechanisms xmlns="urn:ietf:params:xml:ns:xmpp-sasl"><mechanism>PLAIN</mechanism><mechanism>ANONYMOUS</mechanism></mechanisms><ver xmlns="urn:xmpp:features:rosterver"/><starttls xmlns="urn:ietf:params:xml:ns:xmpp-tls"/><compression xmlns="http://jabber.org/features/compress"><method>zlib</method></compression></stream:features>
+]]></INPUT>
+<OUTPUT test='Basic 19 (c2s)'>
+<![CDATA[<auth xmlns='urn:ietf:params:xml:ns:xmpp-sasl' mechanism='PLAIN'>AGFkbWluAHN0YXRz</auth>
+]]></OUTPUT>
+<INPUT test='Basic 19 (c2s)'>
+<![CDATA[<success xmlns="urn:ietf:params:xml:ns:xmpp-sasl"/>
+]]></INPUT>
+<OUTPUT test='Basic 19 (c2s)'>
+<![CDATA[<stream:stream xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' to='192.168.72.130' version='1.0'>
+]]></OUTPUT>
+<INPUT test='Basic 19 (c2s)'>
+<![CDATA[<stream:stream xmlns="jabber:client" id="929cbd52-47bb-4312-99bd-9208eea6e25d" version="1.0" xmlns:stream="http://etherx.jabber.org/streams" from="192.168.72.130" xml:lang="en"/>
+]]></INPUT>
+<INPUT test='Basic 19 (c2s)'>
+<![CDATA[<stream:features><register xmlns="http://jabber.org/features/iq-register"/><ver xmlns="urn:xmpp:features:rosterver"/><starttls xmlns="urn:ietf:params:xml:ns:xmpp-tls"/><compression xmlns="http://jabber.org/features/compress"><method>zlib</method></compression><bind xmlns="urn:ietf:params:xml:ns:xmpp-bind"/><session xmlns="urn:ietf:params:xml:ns:xmpp-session"/></stream:features>
+]]></INPUT>
+<OUTPUT test='Basic 19 (c2s)'>
+<![CDATA[<iq type='set' id='bind1'><bind xmlns='urn:ietf:params:xml:ns:xmpp-bind'><resource>def-user-resource</resource></bind></iq>
+]]></OUTPUT>
+<INPUT test='Basic 19 (c2s)'>
+<![CDATA[<iq xmlns="jabber:client" id="bind1" to="admin@192.168.72.130/def-user-resource" type="result"><bind xmlns="urn:ietf:params:xml:ns:xmpp-bind"><jid>admin@192.168.72.130/def-user-resource</jid></bind></iq>
+]]></INPUT>
+<OUTPUT test='Basic 19 (c2s)'>
+<![CDATA[<iq id="disco_1" to="192.168.72.130" type="get">
+<query xmlns="http://jabber.org/protocol/disco#info"/>
+</iq>
+]]></OUTPUT>
+<INPUT test='Basic 19 (c2s)'>
+<![CDATA[<iq xmlns="jabber:client" id="disco_1" to="admin@192.168.72.130/def-user-resource" from="192.168.72.130" type="result"><query xmlns="http://jabber.org/protocol/disco#info"><identity type="im" name="Tigase ver. 7.0.4-b3844/014490ac (2016-04-28/09:01:54)" category="component"/><identity type="im" name="Tigase ver. 7.0.4-b3844/014490ac (2016-04-28/09:01:54)" category="server"/><feature var="http://jabber.org/protocol/commands"/><feature var="urn:xmpp:carbons:2"/><feature var="http://jabber.org/protocol/stats"/><feature var="jabber:iq:auth"/><feature var="vcard-temp"/><feature var="http://jabber.org/protocol/disco#info"/><feature var="http://jabber.org/protocol/disco#items"/><feature var="urn:xmpp:ping"/><feature var="urn:ietf:params:xml:ns:xmpp-sasl"/><feature var="jabber:iq:roster"/><feature var="jabber:iq:roster-dynamic"/><feature var="jabber:iq:version"/><feature var="jabber:iq:privacy"/><feature var="urn:ietf:params:xml:ns:xmpp-bind"/><feature var="http://jabber.org/protocol/commands"/><feature var="urn:ietf:params:xml:ns:xmpp-session"/><feature var="jabber:iq:private"/></query></iq>
+]]></INPUT>
+<OUTPUT test='Basic 19 (c2s)'>
+<![CDATA[<iq id="disco_2" to="192.168.72.130" type="get">
+<query xmlns="http://jabber.org/protocol/disco#items"/>
+</iq>
+]]></OUTPUT>
+<INPUT test='Basic 19 (c2s)'>
+<![CDATA[<iq xmlns="jabber:client" id="disco_2" to="admin@192.168.72.130/def-user-resource" from="192.168.72.130" type="result"><query xmlns="http://jabber.org/protocol/disco#items"><item name="VHost Manager" jid="vhost-man@192.168.72.130"/><item name="Client connection manager clustered" jid="c2s@192.168.72.130"/><item name="IM AMP Support" jid="amp@192.168.72.130"/><item name="Monitor" jid="monitor@192.168.72.130"/><item name="Websocket connection manager clustered" jid="ws2s@192.168.72.130"/><item name="Bosh connection manager clustered" jid="bosh@192.168.72.130"/><item name="Cluster connection manager" jid="cl-comp@192.168.72.130"/><item name="Server statistics" node="stats" jid="stats@192.168.72.130"/><item name="S2S connection manager clustered" jid="s2s@192.168.72.130"/><item name="Configuration management" jid="basic-conf@192.168.72.130"/><item name="Session manager clustered, basic strategy" jid="sess-man@192.168.72.130"/><item name="Cluster controller" jid="cluster-contr@192.168.72.130"/></query></iq>
+]]></INPUT>
+
+</test-history>

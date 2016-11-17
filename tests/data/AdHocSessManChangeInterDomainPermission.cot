@@ -1,0 +1,120 @@
+##
+##  Tigase XMPP/Jabber Test Suite
+##  Copyright (C) 2004-2009 "Artur Hefczyc" <artur.hefczyc@tigase.org>
+##
+##  This program is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License.
+##
+##  This program is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with this program. Look for COPYING file in the top folder.
+##  If not, see http://www.gnu.org/licenses/.
+##
+##  $Rev: $
+##  Last modified by $Author: $
+##  $Date: $
+##
+
+send: {
+<iq id="user-domain-perm-1"
+    from="$(from-jid)"
+    to="$(to-jid)"
+    type="set">
+    <command xmlns="http://jabber.org/protocol/commands"
+             node="user-domain-perm" />
+</iq>
+}
+
+expect: {
+<iq id="user-domain-perm-1"
+    from="$(to-jid)"
+    to="$(from-jid)"
+    type="result">
+    <command
+        xmlns="http://jabber.org/protocol/commands"
+        node="user-domain-perm"
+        status="executing">
+        <x xmlns="jabber:x:data" type="form">
+            <field type="jid-single" label="User JID" var="jid">
+                <value/>
+            </field>
+            <field type="list-single" label="List of domains" var="fiteringPolicy">
+                <value>ALL</value>
+            <option label="ALL">
+                <value>ALL</value>
+            </option>
+            <option label="LOCAL">
+                <value>LOCAL</value>
+            </option>
+            <option label="OWN">
+                <value>OWN</value>
+            </option>
+            <option label="LIST">
+                <value>LIST</value>
+            </option>
+            <option label="BLACKLIST">
+                <value>BLACKLIST</value>
+            </option>
+            <option label="CUSTOM">
+                <value>CUSTOM</value>
+            </option>
+            <option label="BLOCK">
+                <value>BLOCK</value>
+            </option>
+            </field>
+                <field type="text-single" label="Domains List" var="filteringList">
+            <value/>
+          </field>
+        </x>
+        <actions execute="complete">
+            <complete/>
+        </actions>
+    </command>
+</iq>
+}
+
+
+send: {
+<iq id="user-domain-perm-2"
+    from="$(from-jid)"
+    to="$(to-jid)"
+    type="set">
+    <command
+        xmlns="http://jabber.org/protocol/commands"
+        node="user-domain-perm">
+        <x xmlns="jabber:x:data" type="submit">
+            <field type="jid-single" var="jid">
+                <value>$(cdata)</value>
+            </field>
+            <field type="list-single" var="fiteringPolicy">
+                <value>BLOCK</value>
+            </field>
+            <field type="text-single" var="domainList">
+                <value></value>
+            </field>
+        </x>
+    </command>
+</iq>
+}
+
+expect: {
+<iq id="user-domain-perm-2"
+    from="$(to-jid)"
+    to="$(from-jid)"
+    type="result">
+    <command xmlns="http://jabber.org/protocol/commands"
+        status="completed"
+        node="user-domain-perm">
+        <x xmlns="jabber:x:data" type="result">
+            <field type="text-multi" var="Script result">
+                #<value>Changed an old value: LOCAL to a new value: BLOCK for user: $(cdata)</value> #potential regexp candidate
+            </field>
+        </x>
+    </command>
+</iq>
+}

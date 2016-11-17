@@ -1,0 +1,572 @@
+##
+##  Tigase Jabber/XMPP Test Suite
+##  Copyright (C) 2004-2007 "Artur Hefczyc" <artur.hefczyc@tigase.org>
+##
+##  This program is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License.
+##
+##  This program is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with this program. Look for COPYING file in the top folder.
+##  If not, see http://www.gnu.org/licenses/.
+##
+##  $Rev$
+##  Last modified by $Author$
+##  $Date$
+##
+-version = "2.0.0"
+
+-output-format  = html
+-output-file    = "../www/load-test.html"
+-output-history = no
+-history-format = separate-file
+-output-cols    = 7
+-title          = "XMPP Server high load server test. Attempt to make 25k connections"
+
+$(server-host) = "nktalk.pl"
+$(def-user)    = load-tester
+$(daemon-user) = tester_1
+$(ssl-tls-wait) = 5000
+$(stats-user) = admin
+$(stats-pass) = stats
+
+-serverip    = "127.0.0.1"
+-host        = $(server-host)
+-user-name   = $(stats-user)
+-user-pass   = $(stats-pass)
+-socket-wait = 10000
+-base-ns     = "jabber:client"
+-def-auth    = auth-sasl
+-def-stream  = stream-client
+-keys-file-password   = keystore
+-trusts-file-password = truststore
+-keys-file            = "certs/keystore"
+-trusts-file          = "certs/client_truststore"
+
+-debug-on-error
+
+Version@auth-sasl;iq-version: >> Get server version <<
+Configuration@command-get-config: >> Server configuration <<
+Statistics@iq-stats: >> Server statistics <<
+
+Load tests:
+{
+#  -def-stream  = stream-bosh
+  -multi-thread
+  -loop = 19
+  -loop-delay = 1000
+#  -on-one-socket
+  -repeat-script = 1000
+  -repeat-wait = 200000
+#  -initial-presence=yes
+#  -ignore-presence=yes
+
+  Test 1@common: Send a message to $(daemon-user) user
+  {
+#    -debug
+    -delay = 5000
+    -loop-start = 1
+    -background
+    -user-name = "load-tester_$(loop)"
+    -to-jid = "$(daemon-user)@srecv.$(server-host)"
+    -source-file = "tests/data/TesterMessage.cot"
+  } >> Send a message to $(daemon-user) user <<
+
+  Test 2@common: Send a message to $(daemon-user) user
+  {
+    -delay = 5000
+    -loop-start = 1001
+    -background
+    -user-name = "load-tester_$(loop)"
+    -to-jid = "$(daemon-user)@srecv.$(server-host)"
+    -source-file = "tests/data/TesterMessage.cot"
+  } >> Send a message to $(daemon-user) user <<
+
+  Test 3@common: Send a message to $(daemon-user) user
+  {
+    -delay = 5000
+    -loop-start = 2001
+    -background
+    -user-name = "load-tester_$(loop)"
+    -to-jid = "$(daemon-user)@srecv.$(server-host)"
+    -source-file = "tests/data/TesterMessage.cot"
+  } >> Send a message to $(daemon-user) user <<
+
+  Test 4@common: Send a message to $(daemon-user) user
+  {
+    -delay = 50000
+    -loop-start = 3001
+    -background
+    -user-name = "load-tester_$(loop)"
+    -to-jid = "$(daemon-user)@srecv.$(server-host)"
+    -source-file = "tests/data/TesterMessage.cot"
+  } >> Send a message to $(daemon-user) user <<
+
+  Test 5@common: Send a message to $(daemon-user) user
+  {
+    -delay = 5000
+    -loop-start = 4001
+    -background
+    -user-name = "load-tester_$(loop)"
+    -to-jid = "$(daemon-user)@srecv.$(server-host)"
+    -source-file = "tests/data/TesterMessage.cot"
+  } >> Send a message to $(daemon-user) user <<
+
+  Test 6@common: Send a message to $(daemon-user) user
+  {
+    -delay = 5000
+    -loop-start = 5001
+    -background
+    -user-name = "load-tester_$(loop)"
+    -to-jid = "$(daemon-user)@srecv.$(server-host)"
+    -source-file = "tests/data/TesterMessage.cot"
+  } >> Send a message to $(daemon-user) user <<
+
+  Test 7@common: Send a message to $(daemon-user) user
+  {
+    -delay = 5000
+    -loop-start = 6001
+    -background
+    -user-name = "load-tester_$(loop)"
+    -to-jid = "$(daemon-user)@srecv.$(server-host)"
+    -source-file = "tests/data/TesterMessage.cot"
+  } >> Send a message to $(daemon-user) user <<
+
+  Test 8@common: Send a message to $(daemon-user) user
+  {
+    -delay = 5000
+    -loop-start = 7001
+    -background
+    -user-name = "load-tester_$(loop)"
+    -to-jid = "$(daemon-user)@srecv.$(server-host)"
+    -source-file = "tests/data/TesterMessage.cot"
+  } >> Send a message to $(daemon-user) user <<
+
+  Test 9@common: Send a message to $(daemon-user) user
+  {
+    -delay = 5000
+    -loop-start = 8001
+    -background
+    -user-name = "load-tester_$(loop)"
+    -to-jid = "$(daemon-user)@srecv.$(server-host)"
+    -source-file = "tests/data/TesterMessage.cot"
+  } >> Send a message to $(daemon-user) user <<
+
+  Test 10@common: Send a message to $(daemon-user) user
+  {
+    -delay = 5000
+    -loop-start = 9001
+    -background
+    -user-name = "load-tester_$(loop)"
+    -to-jid = "$(daemon-user)@srecv.$(server-host)"
+    -source-file = "tests/data/TesterMessage.cot"
+  } >> Send a message to $(daemon-user) user <<
+
+  Test 11@common: Send a message to $(daemon-user) user
+  {
+    -delay = 5000
+    -loop-start = 10001
+    -background
+    -user-name = "load-tester_$(loop)"
+    -to-jid = "$(daemon-user)@srecv.$(server-host)"   
+    -source-file = "tests/data/TesterMessage.cot"
+  } >> Send a message to $(daemon-user) user <<
+    
+  Test 12@common: Send a message to $(daemon-user) user
+  {
+    -delay = 5000
+    -loop-start = 11001
+    -background
+    -user-name = "load-tester_$(loop)"
+    -to-jid = "$(daemon-user)@srecv.$(server-host)"   
+    -source-file = "tests/data/TesterMessage.cot"
+  } >> Send a message to $(daemon-user) user <<
+    
+  Test 13@common: Send a message to $(daemon-user) user
+  {
+    -delay = 5000
+    -loop-start = 12001
+    -background
+    -user-name = "load-tester_$(loop)"
+    -to-jid = "$(daemon-user)@srecv.$(server-host)"   
+    -source-file = "tests/data/TesterMessage.cot"
+  } >> Send a message to $(daemon-user) user <<
+    
+  Test 10@common: Send a message to $(daemon-user) user
+  {
+    -delay = 5000
+    -loop-start = 13001
+    -background
+    -user-name = "load-tester_$(loop)"
+    -to-jid = "$(daemon-user)@srecv.$(server-host)"   
+    -source-file = "tests/data/TesterMessage.cot"
+  } >> Send a message to $(daemon-user) user <<
+    
+  Test 10@common: Send a message to $(daemon-user) user
+  {
+    -delay = 5000
+    -loop-start = 14001
+    -background
+    -user-name = "load-tester_$(loop)"
+    -to-jid = "$(daemon-user)@srecv.$(server-host)"   
+    -source-file = "tests/data/TesterMessage.cot"
+  } >> Send a message to $(daemon-user) user <<
+    
+  Test 10@common: Send a message to $(daemon-user) user
+  {
+    -delay = 5000
+    -loop-start = 15001
+    -background
+    -user-name = "load-tester_$(loop)"
+    -to-jid = "$(daemon-user)@srecv.$(server-host)"   
+    -source-file = "tests/data/TesterMessage.cot"
+  } >> Send a message to $(daemon-user) user <<
+    
+  Test 10@common: Send a message to $(daemon-user) user
+  {
+    -delay = 5000
+    -loop-start = 16001
+    -background
+    -user-name = "load-tester_$(loop)"
+    -to-jid = "$(daemon-user)@srecv.$(server-host)"   
+    -source-file = "tests/data/TesterMessage.cot"
+  } >> Send a message to $(daemon-user) user <<
+    
+  Test 10@common: Send a message to $(daemon-user) user
+  {
+    -delay = 5000
+    -loop-start = 17001
+    -background
+    -user-name = "load-tester_$(loop)"
+    -to-jid = "$(daemon-user)@srecv.$(server-host)"   
+    -source-file = "tests/data/TesterMessage.cot"
+  } >> Send a message to $(daemon-user) user <<
+    
+  Test 10@common: Send a message to $(daemon-user) user
+  {
+    -delay = 5000
+    -loop-start = 18001
+    -background
+    -user-name = "load-tester_$(loop)"
+    -to-jid = "$(daemon-user)@srecv.$(server-host)"   
+    -source-file = "tests/data/TesterMessage.cot"
+  } >> Send a message to $(daemon-user) user <<
+    
+  Test 10@common: Send a message to $(daemon-user) user
+  {
+    -delay = 5000
+    -loop-start = 19001
+    -background
+    -user-name = "load-tester_$(loop)"
+    -to-jid = "$(daemon-user)@srecv.$(server-host)"   
+    -source-file = "tests/data/TesterMessage.cot"
+  } >> Send a message to $(daemon-user) user <<
+    
+  Test 10@common: Send a message to $(daemon-user) user
+  {
+    -delay = 5000
+    -loop-start = 20001
+    -background
+    -user-name = "load-tester_$(loop)"
+    -to-jid = "$(daemon-user)@srecv.$(server-host)"   
+    -source-file = "tests/data/TesterMessage.cot"
+  } >> Send a message to $(daemon-user) user <<
+    
+  Test 10@common: Send a message to $(daemon-user) user
+  {
+    -delay = 5000
+    -loop-start = 21001
+    -background
+    -user-name = "load-tester_$(loop)"
+    -to-jid = "$(daemon-user)@srecv.$(server-host)"   
+    -source-file = "tests/data/TesterMessage.cot"
+  } >> Send a message to $(daemon-user) user <<
+    
+  Test 10@common: Send a message to $(daemon-user) user
+  {
+    -delay = 5000
+    -loop-start = 22001
+    -background
+    -user-name = "load-tester_$(loop)"
+    -to-jid = "$(daemon-user)@srecv.$(server-host)"   
+    -source-file = "tests/data/TesterMessage.cot"
+  } >> Send a message to $(daemon-user) user <<
+    
+  Test 10@common: Send a message to $(daemon-user) user
+  {
+    -delay = 5000
+    -loop-start = 23001
+    -background
+    -user-name = "load-tester_$(loop)"
+    -to-jid = "$(daemon-user)@srecv.$(server-host)"   
+    -source-file = "tests/data/TesterMessage.cot"
+  } >> Send a message to $(daemon-user) user <<
+    
+  Test 10@common: Send a message to $(daemon-user) user
+  {
+    -delay = 5000
+    -loop-start = 24001
+    -background
+    -user-name = "load-tester_$(loop)"
+    -to-jid = "$(daemon-user)@srecv.$(server-host)"   
+    -source-file = "tests/data/TesterMessage.cot"
+  } >> Send a message to $(daemon-user) user <<
+    
+  Test 10@common: Send a message to $(daemon-user) user
+  {
+    -delay = 5000
+    -loop-start = 25001
+    -background
+    -user-name = "load-tester_$(loop)"
+    -to-jid = "$(daemon-user)@srecv.$(server-host)"   
+    -source-file = "tests/data/TesterMessage.cot"
+  } >> Send a message to $(daemon-user) user <<
+    
+  Test 10@common: Send a message to $(daemon-user) user
+  {
+    -delay = 5000
+    -loop-start = 26001
+    -background
+    -user-name = "load-tester_$(loop)"
+    -to-jid = "$(daemon-user)@srecv.$(server-host)"   
+    -source-file = "tests/data/TesterMessage.cot"
+  } >> Send a message to $(daemon-user) user <<
+    
+  Test 10@common: Send a message to $(daemon-user) user
+  {
+    -delay = 5000
+    -loop-start = 27001
+    -background
+    -user-name = "load-tester_$(loop)"
+    -to-jid = "$(daemon-user)@srecv.$(server-host)"   
+    -source-file = "tests/data/TesterMessage.cot"
+  } >> Send a message to $(daemon-user) user <<
+    
+  Test 10@common: Send a message to $(daemon-user) user
+  {
+    -delay = 5000
+    -loop-start = 28001
+    -background
+    -user-name = "load-tester_$(loop)"
+    -to-jid = "$(daemon-user)@srecv.$(server-host)"   
+    -source-file = "tests/data/TesterMessage.cot"
+  } >> Send a message to $(daemon-user) user <<
+    
+  Test 10@common: Send a message to $(daemon-user) user
+  {
+    -delay = 5000
+    -loop-start = 29001
+    -background
+    -user-name = "load-tester_$(loop)"
+    -to-jid = "$(daemon-user)@srecv.$(server-host)"   
+    -source-file = "tests/data/TesterMessage.cot"
+  } >> Send a message to $(daemon-user) user <<
+    
+  Test 10@common: Send a message to $(daemon-user) user
+  {
+    -delay = 5000
+    -loop-start = 30001
+    -background
+    -user-name = "load-tester_$(loop)"
+    -to-jid = "$(daemon-user)@srecv.$(server-host)"   
+    -source-file = "tests/data/TesterMessage.cot"
+  } >> Send a message to $(daemon-user) user <<
+    
+  Test 10@common: Send a message to $(daemon-user) user
+  {
+    -delay = 5000
+    -loop-start = 31001
+    -background
+    -user-name = "load-tester_$(loop)"
+    -to-jid = "$(daemon-user)@srecv.$(server-host)"   
+    -source-file = "tests/data/TesterMessage.cot"
+  } >> Send a message to $(daemon-user) user <<
+    
+  Test 10@common: Send a message to $(daemon-user) user
+  {
+    -delay = 5000
+    -loop-start = 32001
+    -background
+    -user-name = "load-tester_$(loop)"
+    -to-jid = "$(daemon-user)@srecv.$(server-host)"   
+    -source-file = "tests/data/TesterMessage.cot"
+  } >> Send a message to $(daemon-user) user <<
+    
+  Test 10@common: Send a message to $(daemon-user) user
+  {
+    -delay = 5000
+    -loop-start = 33001
+    -background
+    -user-name = "load-tester_$(loop)"
+    -to-jid = "$(daemon-user)@srecv.$(server-host)"   
+    -source-file = "tests/data/TesterMessage.cot"
+  } >> Send a message to $(daemon-user) user <<
+    
+  Test 10@common: Send a message to $(daemon-user) user
+  {
+    -delay = 5000
+    -loop-start = 34001
+    -background
+    -user-name = "load-tester_$(loop)"
+    -to-jid = "$(daemon-user)@srecv.$(server-host)"   
+    -source-file = "tests/data/TesterMessage.cot"
+  } >> Send a message to $(daemon-user) user <<
+    
+  Test 10@common: Send a message to $(daemon-user) user
+  {
+    -delay = 5000
+    -loop-start = 35001
+    -background
+    -user-name = "load-tester_$(loop)"
+    -to-jid = "$(daemon-user)@srecv.$(server-host)"   
+    -source-file = "tests/data/TesterMessage.cot"
+  } >> Send a message to $(daemon-user) user <<
+    
+  Test 10@common: Send a message to $(daemon-user) user
+  {
+    -delay = 5000
+    -loop-start = 36001
+    -background
+    -user-name = "load-tester_$(loop)"
+    -to-jid = "$(daemon-user)@srecv.$(server-host)"   
+    -source-file = "tests/data/TesterMessage.cot"
+  } >> Send a message to $(daemon-user) user <<
+    
+  Test 10@common: Send a message to $(daemon-user) user
+  {
+    -delay = 5000
+    -loop-start = 37001
+    -background
+    -user-name = "load-tester_$(loop)"
+    -to-jid = "$(daemon-user)@srecv.$(server-host)"   
+    -source-file = "tests/data/TesterMessage.cot"
+  } >> Send a message to $(daemon-user) user <<
+    
+  Test 10@common: Send a message to $(daemon-user) user
+  {
+    -delay = 5000
+    -loop-start = 38001
+    -background
+    -user-name = "load-tester_$(loop)"
+    -to-jid = "$(daemon-user)@srecv.$(server-host)"   
+    -source-file = "tests/data/TesterMessage.cot"
+  } >> Send a message to $(daemon-user) user <<
+    
+  Test 10@common: Send a message to $(daemon-user) user
+  {
+    -delay = 5000
+    -loop-start = 39001
+    -background
+    -user-name = "load-tester_$(loop)"
+    -to-jid = "$(daemon-user)@srecv.$(server-host)"   
+    -source-file = "tests/data/TesterMessage.cot"
+  } >> Send a message to $(daemon-user) user <<
+    
+  Test 10@common: Send a message to $(daemon-user) user
+  {
+    -delay = 5000
+    -loop-start = 40001
+    -background
+    -user-name = "load-tester_$(loop)"
+    -to-jid = "$(daemon-user)@srecv.$(server-host)"   
+    -source-file = "tests/data/TesterMessage.cot"
+  } >> Send a message to $(daemon-user) user <<
+    
+  Test 10@common: Send a message to $(daemon-user) user
+  {
+    -delay = 5000
+    -loop-start = 41001
+    -background
+    -user-name = "load-tester_$(loop)"
+    -to-jid = "$(daemon-user)@srecv.$(server-host)"   
+    -source-file = "tests/data/TesterMessage.cot"
+  } >> Send a message to $(daemon-user) user <<
+    
+  Test 10@common: Send a message to $(daemon-user) user
+  {
+    -delay = 5000
+    -loop-start = 42001
+    -background
+    -user-name = "load-tester_$(loop)"
+    -to-jid = "$(daemon-user)@srecv.$(server-host)"   
+    -source-file = "tests/data/TesterMessage.cot"
+  } >> Send a message to $(daemon-user) user <<
+    
+  Test 10@common: Send a message to $(daemon-user) user
+  {
+    -delay = 5000
+    -loop-start = 43001
+    -background
+    -user-name = "load-tester_$(loop)"
+    -to-jid = "$(daemon-user)@srecv.$(server-host)"   
+    -source-file = "tests/data/TesterMessage.cot"
+  } >> Send a message to $(daemon-user) user <<
+    
+  Test 10@common: Send a message to $(daemon-user) user
+  {
+    -delay = 5000
+    -loop-start = 44001
+    -background
+    -user-name = "load-tester_$(loop)"
+    -to-jid = "$(daemon-user)@srecv.$(server-host)"   
+    -source-file = "tests/data/TesterMessage.cot"
+  } >> Send a message to $(daemon-user) user <<
+    
+  Test 10@common: Send a message to $(daemon-user) user
+  {
+    -delay = 5000
+    -loop-start = 45001
+    -background
+    -user-name = "load-tester_$(loop)"
+    -to-jid = "$(daemon-user)@srecv.$(server-host)"   
+    -source-file = "tests/data/TesterMessage.cot"
+  } >> Send a message to $(daemon-user) user <<
+    
+  Test 10@common: Send a message to $(daemon-user) user
+  {
+    -delay = 5000
+    -loop-start = 46001
+    -background
+    -user-name = "load-tester_$(loop)"
+    -to-jid = "$(daemon-user)@srecv.$(server-host)"   
+    -source-file = "tests/data/TesterMessage.cot"
+  } >> Send a message to $(daemon-user) user <<
+    
+  Test 10@common: Send a message to $(daemon-user) user
+  {
+    -delay = 5000
+    -loop-start = 47001
+    -background
+    -user-name = "load-tester_$(loop)"
+    -to-jid = "$(daemon-user)@srecv.$(server-host)"   
+    -source-file = "tests/data/TesterMessage.cot"
+  } >> Send a message to $(daemon-user) user <<
+    
+  Test 10@common: Send a message to $(daemon-user) user
+  {
+    -delay = 5000
+    -loop-start = 48001
+    -background
+    -user-name = "load-tester_$(loop)"
+    -to-jid = "$(daemon-user)@srecv.$(server-host)"   
+    -source-file = "tests/data/TesterMessage.cot"
+  } >> Send a message to $(daemon-user) user <<
+    
+  Test 10@common: Send a message to $(daemon-user) user
+  {
+    -delay = 5000
+    -loop-start = 49001
+    -background
+    -user-name = "load-tester_$(loop)"
+    -to-jid = "$(daemon-user)@srecv.$(server-host)"   
+    -source-file = "tests/data/TesterMessage.cot"
+  } >> Send a message to $(daemon-user) user <<
+    
+
+}
+>> Load tests for the server, goal 25k client connections <<

@@ -1,0 +1,325 @@
+##
+##  Tigase XMPP/Jabber Test Suite
+##  Copyright (C) 2004-2009 "Artur Hefczyc" <artur.hefczyc@tigase.org>
+##
+##  This program is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License.
+##
+##  This program is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with this program. Look for COPYING file in the top folder.
+##  If not, see http://www.gnu.org/licenses/.
+##
+##  $Rev$
+##  Last modified by $Author$
+##  $Date$
+##
+
+# Creates StanzaReceiver component on the server for later tests.
+# @author <a href="mailto:artur.hefczyc@tigase.org">Artur Hefczyc</a>
+# @version $Rev$
+
+send: {
+<iq type="set" to="basic-conf.$(hostname)" id="aae4a" >
+<command xmlns="http://jabber.org/protocol/commands" node="config/set/--none--" />
+</iq>
+}
+expect: {
+<iq from="basic-conf.$(hostname)" type="result" id="aae4a" to="$(from-jid)" >
+<command xmlns="http://jabber.org/protocol/commands" status="executing" node="config/set/--none--" >
+<x xmlns="jabber:x:data" type="result" >
+<field type="fixed" var="Note" >
+<value>Please be careful, you are service admin and all changes you make are instantly applied to live system!</value>
+</field>
+<field type="fixed" var="Info" >
+<value>Press:</value>
+</field>
+<field type="fixed" var="Info" >
+<value>'Next' to set all parameters for the new component.</value>
+</field>
+<field type="text-single" label="Component name" var="Component name" >
+<value/>
+</field>
+<field type="list-single" label="Component class" var="Component class" >
+<value>tigase.server.xmppcomponent.ComponentConnectionManager</value>
+<option label="MUCService" >
+<value>tigase.muc.MUCService</value>
+</option>
+<option label="BoshConnectionManager" >
+<value>tigase.server.bosh.BoshConnectionManager</value>
+</option>
+<option label="StanzaReceiver" >
+<value>tigase.server.sreceiver.StanzaReceiver</value>
+</option>
+<option label="StanzaSender" >
+<value>tigase.server.ssender.StanzaSender</value>
+</option>
+<option label="ClientConnectionManager" >
+<value>tigase.server.xmppclient.ClientConnectionManager</value>
+</option>
+<option label="ComponentConnectionManager" >
+<value>tigase.server.xmppcomponent.ComponentConnectionManager</value>
+</option>
+<option label="ServerConnectionManager" >
+<value>tigase.server.xmppserver.ServerConnectionManager</value>
+</option>
+<option label="SessionManager" >
+<value>tigase.server.xmppsession.SessionManager</value>
+</option>
+</field>
+</x>
+<actions execute="next" >
+<next/>
+</actions>
+</command>
+</iq>
+}
+send: {
+<iq type="set" to="basic-conf.$(hostname)" id="aae5a" >
+<command xmlns="http://jabber.org/protocol/commands" node="config/set/--none--" >
+<x xmlns="jabber:x:data" type="submit" >
+<field type="fixed" var="Note" >
+<value>Please be careful, you are service admin and all changes you make are instantly applied to live system!</value>
+</field>
+<field type="fixed" var="Info" >
+<value>Press:</value>
+</field>
+<field type="fixed" var="Info" >
+<value>'Next' to set all parameters for the new component.</value>
+</field>
+<field type="text-single" var="Component name" >
+<value>srecv</value>
+</field>
+<field type="list-single" var="Component class" >
+<value>tigase.server.sreceiver.StanzaReceiver</value>
+</field>
+</x>
+</command>
+</iq>
+}
+expect: {
+<iq from="basic-conf.$(hostname)" type="result" id="aae5a" to="$(from-jid)" >
+<command xmlns="http://jabber.org/protocol/commands" status="executing" node="config/set/--none--" >
+<x xmlns="jabber:x:data" type="result" >
+<field type="fixed" var="Note" >
+<value>Please be careful, you are service admin and all changes you make are instantly applied to live system!</value>
+</field>
+<field type="hidden" var="Component name" >
+<value>srecv</value>
+</field>
+<field type="hidden" var="Component class" >
+<value>tigase.server.sreceiver.StanzaReceiver</value>
+</field>
+<field type="fixed" var="Info1" >
+<value>Press:</value>
+</field>
+<field type="fixed" var="Info4" >
+<value>Component name: srecv, class: StanzaReceiver</value>
+</field>
+<field type="fixed" var="Info2" >
+<value>1. 'Finish' to create component with this parameters.</value>
+</field>
+<field type="fixed" var="Info3" >
+<value>2. 'Previous' to go back and select different component.</value>
+</field>
+<field var="News Distribution/task-types/default-max-number" >
+<value>100</value>
+</field>
+<field var="News Distribution/task-types/default-policy" >
+<value>ALL</value>
+</field>
+<field var="admins" >
+<value>tus@ahefczyc</value>
+</field>
+<field var="def-hostname" >
+<value>ahefczyc</value>
+</field>
+<field var="development-news/active" >
+<value>true</value>
+</field>
+<field var="development-news/props/allowed-senders" >
+<value>SUBSCRIBED</value>
+</field>
+<field var="development-news/props/allowed-senders-list" >
+<value/>
+</field>
+<field var="development-news/props/description" >
+<value>News distribution task</value>
+</field>
+<field var="development-news/props/message-type" >
+<value>CHAT</value>
+</field>
+<field var="development-news/props/online-users-only" >
+<value>false</value>
+</field>
+<field var="development-news/props/replace-sender" >
+<value>REPLACE</value>
+</field>
+<field var="development-news/props/subscription-restr" >
+<value>PUBLIC</value>
+</field>
+<field var="development-news/props/subscription-restr-regex" >
+<value>.*</value>
+</field>
+<field var="development-news/props/task-admins" >
+<value/>
+</field>
+<field var="development-news/props/task-owner" >
+<value>admin@localhost</value>
+</field>
+<field var="development-news/task-type" >
+<value>News Distribution</value>
+</field>
+<field var="max-queue-size" >
+<value>1000</value>
+</field>
+<field var="srec-repo-class" >
+<value>tigase.db.jdbc.JDBCRepository</value>
+</field>
+<field var="srec-repo-url" >
+<value>jdbc:mysql://localhost/tigase?user=tigase&amp;password=mypass</value>
+</field>
+<field var="task-types/default-max-number" >
+<value>1</value>
+</field>
+<field var="task-types/default-policy" >
+<value>ADMIN</value>
+</field>
+<field var="task-types/list" >
+<value>News Distribution</value>
+</field>
+<field var="tasks-list" >
+<value>development-news</value>
+</field>
+<field type="hidden" var="Params set" >
+<value>true</value>
+</field>
+</x>
+<actions execute="complete" >
+<complete/>
+<prev/>
+</actions>
+</command>
+</iq>
+}
+send: {
+<iq type="set" to="basic-conf.$(hostname)" id="aae6a" >
+<command xmlns="http://jabber.org/protocol/commands" node="config/set/--none--" >
+<x xmlns="jabber:x:data" type="submit" >
+<field type="fixed" var="Note" >
+<value>Please be careful, you are service admin and all changes you make are instantly applied to live system!</value>
+</field>
+<field type="hidden" var="Component name" >
+<value>srecv</value>
+</field>
+<field type="hidden" var="Component class" >
+<value>tigase.server.sreceiver.StanzaReceiver</value>
+</field>
+<field type="fixed" var="Info1" >
+<value>Press:</value>
+</field>
+<field type="fixed" var="Info4" >
+<value>Component name: srecv, class: StanzaReceiver</value>
+</field>
+<field type="fixed" var="Info2" >
+<value>1. 'Finish' to create component with this parameters.</value>
+</field>
+<field type="fixed" var="Info3" >
+<value>2. 'Previous' to go back and select different component.</value>
+</field>
+<field type="text-single" var="News Distribution/task-types/default-max-number" >
+<value>100</value>
+</field>
+<field type="text-single" var="News Distribution/task-types/default-policy" >
+<value>ALL</value>
+</field>
+<field type="text-single" var="admins" >
+<value>$(from-jid)</value>
+</field>
+<field type="text-single" var="def-hostname" >
+<value>$(hostname)</value>
+</field>
+<field type="text-single" var="development-news/active" >
+<value>false</value>
+</field>
+<field type="text-single" var="development-news/props/allowed-senders" >
+<value>SUBSCRIBED</value>
+</field>
+<field type="text-single" var="development-news/props/allowed-senders-list" >
+<value></value>
+</field>
+<field type="text-single" var="development-news/props/description" >
+<value>News distribution task</value>
+</field>
+<field type="text-single" var="development-news/props/message-type" >
+<value>CHAT</value>
+</field>
+<field type="text-single" var="development-news/props/online-users-only" >
+<value>false</value>
+</field>
+<field type="text-single" var="development-news/props/replace-sender" >
+<value>REPLACE</value>
+</field>
+<field type="text-single" var="development-news/props/subscription-restr" >
+<value>PUBLIC</value>
+</field>
+<field type="text-single" var="development-news/props/subscription-restr-regex" >
+<value>.*</value>
+</field>
+<field type="text-single" var="development-news/props/task-admins" >
+<value></value>
+</field>
+<field type="text-single" var="development-news/props/task-owner" >
+<value>admin@localhost</value>
+</field>
+<field type="text-single" var="development-news/task-type" >
+<value>News Distribution</value>
+</field>
+<field type="text-single" var="max-queue-size" >
+<value>1000</value>
+</field>
+<field type="text-single" var="srec-repo-class" >
+<value>tigase.db.jdbc.JDBCRepository</value>
+</field>
+<field type="text-single" var="srec-repo-url" >
+<value>jdbc:mysql://localhost/tigase?user=tigase&amp;password=mypass</value>
+</field>
+<field type="text-single" var="task-types/default-max-number" >
+<value>1</value>
+</field>
+<field type="text-single" var="task-types/default-policy" >
+<value>ADMIN</value>
+</field>
+<field type="text-single" var="task-types/list" >
+<value>News Distribution</value>
+</field>
+<field type="text-single" var="tasks-list" >
+<value>development-news</value>
+</field>
+<field type="hidden" var="Params set" >
+<value>true</value>
+</field>
+</x>
+</command>
+</iq>
+}
+expect: {
+<iq from="basic-conf.$(hostname)" type="result" id="aae6a" to="$(from-jid)" >
+<command xmlns="http://jabber.org/protocol/commands" status="completed" node="config/set/--none--" >
+<x xmlns="jabber:x:data" type="result" >
+<field type="fixed" var="Note" >
+<value>Please be careful, you are service admin and all changes you make are instantly applied to live system!</value>
+</field>
+<field type="fixed" var="Note" >
+<value>New component created: srecv</value>
+</field>
+</x>
+<note type="info" >New component created: srecv</note>
+</command>
+</iq>
+}

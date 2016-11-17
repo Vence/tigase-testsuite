@@ -1,0 +1,41 @@
+send: {
+<iq type="set" id="aadaa" >
+  <command xmlns="http://jabber.org/protocol/commands" node="new-command" >
+    <x xmlns="jabber:x:data" type="submit" >
+      <field type="jid-single" var="rosterOwnerJID" >
+	<value>honestlawyer@test-d</value>
+      </field>
+      <field type="jid-single" var="jidToManipulate" >
+	<value>noone@whatever</value>
+      </field>
+      <field type="text-single" var="groups" >
+	<value>group1,group2</value>
+      </field>
+      <field type="list-single" var="operationType" >
+	<value>addJid</value>
+      </field>
+      <field type="list-single" var="subscriptionType" >
+	<value>both</value>
+      </field>
+    </x>
+  </command>
+</iq>
+}
+
+expect: {
+<iq id="aadaa" type="result">
+  <command status="completed" xmlns="http://jabber.org/protocol/commands" node="new-command">
+    <x xmlns="jabber:x:data" type="result">
+      <field var="Note" type="fixed">
+        <value>Script execution error.</value>
+      </field>
+      <field var="Error message" type="fixed">
+        <value>tigase.db.UserNotFoundException: User does not exist: honestlawyer@test-d</value>
+      </field><field var="Debug info" type="text-multi">
+        <value>tigase.db.UserNotFoundException: User does not exist: honestlawyer@test-d</value>
+        <value>javax.script.ScriptException: tigase.db.UserNotFoundException: User does not exist: honestlawyer@test-d</value>
+      </field>
+    </x>
+  </command>
+</iq>
+}

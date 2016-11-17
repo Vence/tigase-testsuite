@@ -1,0 +1,13 @@
+<!-- Put here the HTML Document templates -->
+<h3>Stability tests:</h3>
+<table border="1">
+  <thead>
+    <tr>
+      <th>Version</th>
+      <th>XMLDB</th>
+      <th>MySQL</th>
+      <th>PGSQL</th>
+      <th>Distributed</th>
+    </tr>
+  </thead>
+  <tbody>

@@ -1,0 +1,209 @@
+<test-history test='Packet Order 5 (c2s)'>
+<OUTPUT test='Packet Order 5 (c2s)'>
+<![CDATA[<stream:stream xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' to='192.168.72.130' version='1.0'/>
+]]></OUTPUT>
+<INPUT test='Packet Order 5 (c2s)'>
+<![CDATA[<stream:stream xmlns="jabber:client" id="f4ceb90c-782b-4e93-81a1-2a00717d07cc" version="1.0" xmlns:stream="http://etherx.jabber.org/streams" from="192.168.72.130" xml:lang="en"/>
+]]></INPUT>
+<INPUT test='Packet Order 5 (c2s)'>
+<![CDATA[<stream:features><auth xmlns="http://jabber.org/features/iq-auth"/><register xmlns="http://jabber.org/features/iq-register"/><mechanisms xmlns="urn:ietf:params:xml:ns:xmpp-sasl"><mechanism>PLAIN</mechanism><mechanism>ANONYMOUS</mechanism></mechanisms><ver xmlns="urn:xmpp:features:rosterver"/><starttls xmlns="urn:ietf:params:xml:ns:xmpp-tls"/><compression xmlns="http://jabber.org/features/compress"><method>zlib</method></compression></stream:features>
+]]></INPUT>
+<OUTPUT test='Packet Order 5 (c2s)'>
+<![CDATA[<auth xmlns='urn:ietf:params:xml:ns:xmpp-sasl' mechanism='PLAIN'>AGFsbC14bXBwLXRlc3QAYWxsLXhtcHAtdGVzdC1wYXNzd29yZA==</auth>
+]]></OUTPUT>
+<INPUT test='Packet Order 5 (c2s)'>
+<![CDATA[<success xmlns="urn:ietf:params:xml:ns:xmpp-sasl"/>
+]]></INPUT>
+<OUTPUT test='Packet Order 5 (c2s)'>
+<![CDATA[<stream:stream xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' to='192.168.72.130' version='1.0'>
+]]></OUTPUT>
+<INPUT test='Packet Order 5 (c2s)'>
+<![CDATA[<stream:stream xmlns="jabber:client" id="f4ceb90c-782b-4e93-81a1-2a00717d07cc" version="1.0" xmlns:stream="http://etherx.jabber.org/streams" from="192.168.72.130" xml:lang="en"/>
+]]></INPUT>
+<INPUT test='Packet Order 5 (c2s)'>
+<![CDATA[<stream:features><register xmlns="http://jabber.org/features/iq-register"/><ver xmlns="urn:xmpp:features:rosterver"/><starttls xmlns="urn:ietf:params:xml:ns:xmpp-tls"/><compression xmlns="http://jabber.org/features/compress"><method>zlib</method></compression><bind xmlns="urn:ietf:params:xml:ns:xmpp-bind"/><session xmlns="urn:ietf:params:xml:ns:xmpp-session"/></stream:features>
+]]></INPUT>
+<OUTPUT test='Packet Order 5 (c2s)'>
+<![CDATA[<iq type='set' id='bind1'><bind xmlns='urn:ietf:params:xml:ns:xmpp-bind'><resource>def-user-resource</resource></bind></iq>
+]]></OUTPUT>
+<INPUT test='Packet Order 5 (c2s)'>
+<![CDATA[<iq xmlns="jabber:client" id="bind1" to="all-xmpp-test@192.168.72.130/def-user-resource" type="result"><bind xmlns="urn:ietf:params:xml:ns:xmpp-bind"><jid>all-xmpp-test@192.168.72.130/def-user-resource</jid></bind></iq>
+]]></INPUT>
+<OUTPUT test='Packet Order 5 (c2s)'>
+<![CDATA[<iq id="roster_1" type="get">
+<query xmlns="jabber:iq:roster"/>
+</iq>
+]]></OUTPUT>
+<OUTPUT test='Packet Order 5 (c2s)'>
+<![CDATA[<iq id="vcard123" type="get">
+<vCard xmlns="vcard-temp"/>
+</iq>
+]]></OUTPUT>
+<OUTPUT test='Packet Order 5 (c2s)'>
+<![CDATA[<iq id="ping123" to="192.168.72.130" type="get">
+<ping xmlns="urn:xmpp:ping"/>
+</iq>
+]]></OUTPUT>
+<OUTPUT test='Packet Order 5 (c2s)'>
+<![CDATA[<iq id="exodus123" type="get">
+<query xmlns="jabber:iq:private">
+<exodus xmlns="exodus:prefs"/>
+</query>
+</iq>
+]]></OUTPUT>
+<OUTPUT test='Packet Order 5 (c2s)'>
+<![CDATA[<presence id="1" to="echo@192.168.72.130"/>
+]]></OUTPUT>
+<OUTPUT test='Packet Order 5 (c2s)'>
+<![CDATA[<iq id="21" to="echo@192.168.72.130" type="get">
+<default-handler xmlns="tigase:tts"/>
+</iq>
+]]></OUTPUT>
+<OUTPUT test='Packet Order 5 (c2s)'>
+<![CDATA[<iq id="ping222" to="echo@192.168.72.130" type="get">
+<ping xmlns="urn:xmpp:ping"/>
+</iq>
+]]></OUTPUT>
+<OUTPUT test='Packet Order 5 (c2s)'>
+<![CDATA[<presence id="3" to="echo@192.168.72.130"/>
+]]></OUTPUT>
+<OUTPUT test='Packet Order 5 (c2s)'>
+<![CDATA[<iq id="22" to="echo@192.168.72.130" type="get">
+<default-handler xmlns="tigase:tts"/>
+</iq>
+]]></OUTPUT>
+<OUTPUT test='Packet Order 5 (c2s)'>
+<![CDATA[<iq id="4" to="echo@192.168.72.130" type="get">
+<ping xmlns="urn:xmpp:ping"/>
+</iq>
+]]></OUTPUT>
+<OUTPUT test='Packet Order 5 (c2s)'>
+<![CDATA[<presence id="5" to="echo@192.168.72.130"/>
+]]></OUTPUT>
+<OUTPUT test='Packet Order 5 (c2s)'>
+<![CDATA[<iq id="23" to="echo@192.168.72.130" type="get">
+<default-handler xmlns="tigase:tts"/>
+</iq>
+]]></OUTPUT>
+<OUTPUT test='Packet Order 5 (c2s)'>
+<![CDATA[<iq id="6" to="echo@192.168.72.130" type="get">
+<ping xmlns="urn:xmpp:ping"/>
+</iq>
+]]></OUTPUT>
+<OUTPUT test='Packet Order 5 (c2s)'>
+<![CDATA[<presence id="7" to="echo@192.168.72.130"/>
+]]></OUTPUT>
+<OUTPUT test='Packet Order 5 (c2s)'>
+<![CDATA[<iq id="24" to="echo@192.168.72.130" type="get">
+<default-handler xmlns="tigase:tts"/>
+</iq>
+]]></OUTPUT>
+<OUTPUT test='Packet Order 5 (c2s)'>
+<![CDATA[<iq id="8" to="echo@192.168.72.130" type="get">
+<ping xmlns="urn:xmpp:ping"/>
+</iq>
+]]></OUTPUT>
+<OUTPUT test='Packet Order 5 (c2s)'>
+<![CDATA[<presence id="9" to="echo@192.168.72.130"/>
+]]></OUTPUT>
+<OUTPUT test='Packet Order 5 (c2s)'>
+<![CDATA[<iq id="25" to="echo@192.168.72.130" type="get">
+<default-handler xmlns="tigase:tts"/>
+</iq>
+]]></OUTPUT>
+<OUTPUT test='Packet Order 5 (c2s)'>
+<![CDATA[<iq id="10" to="echo@192.168.72.130" type="get">
+<ping xmlns="urn:xmpp:ping"/>
+</iq>
+]]></OUTPUT>
+<OUTPUT test='Packet Order 5 (c2s)'>
+<![CDATA[<presence id="11" to="echo@192.168.72.130"/>
+]]></OUTPUT>
+<OUTPUT test='Packet Order 5 (c2s)'>
+<![CDATA[<iq id="26" to="echo@192.168.72.130" type="get">
+<default-handler xmlns="tigase:tts"/>
+</iq>
+]]></OUTPUT>
+<OUTPUT test='Packet Order 5 (c2s)'>
+<![CDATA[<iq id="12" to="echo@192.168.72.130" type="get">
+<ping xmlns="urn:xmpp:ping"/>
+</iq>
+]]></OUTPUT>
+<OUTPUT test='Packet Order 5 (c2s)'>
+<![CDATA[<presence id="13" to="echo@192.168.72.130"/>
+]]></OUTPUT>
+<OUTPUT test='Packet Order 5 (c2s)'>
+<![CDATA[<iq id="27" to="echo@192.168.72.130" type="get">
+<default-handler xmlns="tigase:tts"/>
+</iq>
+]]></OUTPUT>
+<OUTPUT test='Packet Order 5 (c2s)'>
+<![CDATA[<iq id="14" to="echo@192.168.72.130" type="get">
+<ping xmlns="urn:xmpp:ping"/>
+</iq>
+]]></OUTPUT>
+<OUTPUT test='Packet Order 5 (c2s)'>
+<![CDATA[<presence id="15" to="echo@192.168.72.130"/>
+]]></OUTPUT>
+<OUTPUT test='Packet Order 5 (c2s)'>
+<![CDATA[<iq id="28" to="echo@192.168.72.130" type="get">
+<default-handler xmlns="tigase:tts"/>
+</iq>
+]]></OUTPUT>
+<OUTPUT test='Packet Order 5 (c2s)'>
+<![CDATA[<iq id="16" to="echo@192.168.72.130" type="get">
+<ping xmlns="urn:xmpp:ping"/>
+</iq>
+]]></OUTPUT>
+<OUTPUT test='Packet Order 5 (c2s)'>
+<![CDATA[<presence id="17" to="echo@192.168.72.130"/>
+]]></OUTPUT>
+<OUTPUT test='Packet Order 5 (c2s)'>
+<![CDATA[<iq id="29" to="echo@192.168.72.130" type="get">
+<default-handler xmlns="tigase:tts"/>
+</iq>
+]]></OUTPUT>
+<OUTPUT test='Packet Order 5 (c2s)'>
+<![CDATA[<iq id="18" to="echo@192.168.72.130" type="get">
+<ping xmlns="urn:xmpp:ping"/>
+</iq>
+]]></OUTPUT>
+<OUTPUT test='Packet Order 5 (c2s)'>
+<![CDATA[<presence id="19" to="echo@192.168.72.130"/>
+]]></OUTPUT>
+<OUTPUT test='Packet Order 5 (c2s)'>
+<![CDATA[<iq id="30" to="echo@192.168.72.130" type="get">
+<default-handler xmlns="tigase:tts"/>
+</iq>
+]]></OUTPUT>
+<OUTPUT test='Packet Order 5 (c2s)'>
+<![CDATA[<iq id="20" to="echo@192.168.72.130" type="get">
+<ping xmlns="urn:xmpp:ping"/>
+</iq>
+]]></OUTPUT>
+<INPUT test='Packet Order 5 (c2s)'>
+<![CDATA[<iq xmlns="jabber:client" id="roster_1" to="all-xmpp-test@192.168.72.130/def-user-resource" type="result"><query xmlns="jabber:iq:roster"/></iq>
+]]></INPUT>
+<INPUT test='Packet Order 5 (c2s)'>
+<![CDATA[<iq xmlns="jabber:client" id="vcard123" to="all-xmpp-test@192.168.72.130/def-user-resource" type="result"><vCard xmlns="vcard-temp">
+<FN>Peter Saint-Andre</FN><N>
+<FAMILY>Saint-Andre</FAMILY><GIVEN>Peter</GIVEN><MIDDLE/></N><NICKNAME>stpeter</NICKNAME><URL>http://www.xmpp.org/xsf/people/stpeter.shtml</URL><BDAY>1966-08-06</BDAY><ORG>
+<ORGNAME>XMPP Standards Foundation</ORGNAME><ORGUNIT/></ORG><TITLE>Executive Director</TITLE><ROLE>Patron Saint</ROLE><TEL><WORK/><VOICE/><NUMBER>303-308-3282</NUMBER></TEL><TEL><WORK/><FAX/><NUMBER/></TEL><TEL><WORK/><MSG/><NUMBER/></TEL><ADR>
+<WORK/><EXTADD>Suite 600</EXTADD><STREET>1899 Wynkoop Street</STREET><LOCALITY>Denver</LOCALITY><REGION>CO</REGION><PCODE>80202</PCODE><CTRY>USA</CTRY></ADR><TEL><HOME/><VOICE/><NUMBER>303-555-1212</NUMBER></TEL><TEL><HOME/><FAX/><NUMBER/></TEL><TEL><HOME/><MSG/><NUMBER/></TEL><ADR>
+<HOME/><EXTADD/><STREET/><LOCALITY>Denver</LOCALITY><REGION>CO</REGION><PCODE>80209</PCODE><CTRY>USA</CTRY></ADR><EMAIL><INTERNET/><PREF/><USERID>stpeter@jabber.org</USERID></EMAIL><JABBERID>stpeter@jabber.org</JABBERID><DESC>
+More information about me is located on my
+personal website: http://www.saint-andre.com/
+</DESC></vCard></iq>
+]]></INPUT>
+<INPUT test='Packet Order 5 (c2s)'>
+<![CDATA[<iq xmlns="jabber:client" id="ping123" to="all-xmpp-test@192.168.72.130/def-user-resource" from="192.168.72.130" type="result"/>
+]]></INPUT>
+<INPUT test='Packet Order 5 (c2s)'>
+<![CDATA[<iq xmlns="jabber:client" id="exodus123" to="all-xmpp-test@192.168.72.130/def-user-resource" type="result"><query xmlns="jabber:iq:private"><exodus xmlns="exodus:prefs">
+<defaultnick>Hamlet</defaultnick></exodus></query></iq>
+]]></INPUT>
+<INPUT test='Packet Order 5 (c2s)'>
+<![CDATA[<iq xmlns="jabber:client" id="21" to="all-xmpp-test@192.168.72.130/def-user-resource" from="echo@192.168.72.130" type="error"><default-handler xmlns="tigase:tts"/><error code="503" type="cancel"><service-unavailable xmlns="urn:ietf:params:xml:ns:xmpp-stanzas"/><text xmlns="urn:ietf:params:xml:ns:xmpp-stanzas" xml:lang="en">Service not available.</text></error></iq>
+]]></INPUT>
+
+</test-history>

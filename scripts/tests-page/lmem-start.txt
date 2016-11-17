@@ -1,0 +1,3 @@
+<h2 id="lmem">Low memory tests</h2>
+<p>Basic tests to check if server works correctly with max 50MB of
+RAM<br>Increased to 75MB on August 21, 2014.</p>

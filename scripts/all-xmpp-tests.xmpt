@@ -1,0 +1,257 @@
+##
+##  Tigase XMPP/Jabber Test Suite
+##  Copyright (C) 2004-2009 "Artur Hefczyc" <artur.hefczyc@tigase.org>
+##
+##  This program is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License.
+##
+##  This program is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with this program. Look for COPYING file in the top folder.
+##  If not, see http://www.gnu.org/licenses/.
+##
+##  $Rev: $
+##  Last modified by $Author: $
+##  $Date: $
+##
+-version = "2.0.0"
+
+-output-format  = html
+-output-file    = "../www/functional-tests.html"
+-output-history = yes
+-history-format = separate-file
+-output-cols    = 7
+-title          = "XMPP Server functional tests."
+
+$(server-host) = "192.168.72.130"
+$(virtual-host) = test-domain
+$(def-user)    = all-xmpp-test
+$(def-user-pass) = all-xmpp-test-password
+$(def-user-resr) = def-user-resource
+$(daemon-user) = all-xmpp-test_1
+$(blocking-user) = blocking-test-user_1
+$(long-list-user) = long-list-user_1
+$(ssl-tls-wait) = 15000
+$(stats-user) = admin
+$(stats-pass) = stats
+$(tester-user) = tester_1
+$(number) = 1
+
+$(daemon-domain-user) = all-xmpp-test_1-domain
+$(domain-owner-user) = domain-owner
+$(domain-admin-user) = domain-admin
+-delay=250
+
+-serverip    = "192.168.72.130"
+-host        = $(server-host)
+-user-name   = $(def-user)
+-user-pass   = $(def-user-pass)
+-user-resr   = $(def-user-resr)
+-number      = $(number)
+-socket-wait = 15000
+-base-ns     = "jabber:client"
+-def-auth    = auth-sasl
+-def-stream  = stream-client
+-keys-file-password   = keystore
+-trusts-file-password = truststore
+-keys-file            = "certs/keystore"
+-trusts-file          = "certs/client_truststore"
+
+#-debug
+-debug-on-error
+#-stop-on-fail = true
+
+# Init 0@user-register: {
+# -user-name=$(stats-user) -user-pass=$(stats-pass) -no-record
+# } >> XEP-0077 - In-Band Registration, register <<
+Version@auth-sasl;iq-version: { -user-name=$(stats-user) -user-pass=$(stats-pass) }
+ >> Get server version <<
+Configuration@command-get-config:
+{ -user-name=$(stats-user) -user-pass=$(stats-pass) }
+>> Server configuration <<
+Statistics@iq-stats: { -user-name=$(stats-user) -user-pass=$(stats-pass) }
+ >> Server statistics <<
+
+Global settings:
+{
+  -loop = 1
+  -name-append=c2s
+
+  Prepare: {
+    -no-record
+
+    Prep 1@user-register: >> XEP-0077 - In-Band Registration, register <<
+
+    Prep 2@user-register: {
+      -user-name = $(daemon-user)
+    } >> Create a daemon user account <<
+
+    Prep 3@msg-listen: {
+      -daemon
+      -presence
+
+      -socket-wait = 0
+      -user-name   = $(daemon-user)
+      -delay       = 500
+    } >> Setup a user daemon wating for messages <<
+
+  } >> Basic setup <<
+
+  Basic Tests: {
+    -include-script = "scripts/xmpts/basic-tests.xmpt"
+  } >> Basic XMPP Tests <<
+
+  SSL-TLS Tests: {
+    -include-script = "scripts/xmpts/ssl-tls.xmpt"
+  } >> SSL and TLS Tests <<
+
+  TLS Required Tests: {
+    -include-script = "scripts/xmpts/tls-required.xmpt"
+  } >> TLS Required Tests <<
+
+  Packet Order Tests: {
+    -include-script = "scripts/xmpts/packet-order.xmpt"
+  } >> Packets ordering tests <<
+
+  Privacy Lists Tests: {
+    -include-script = "scripts/xmpts/privacy-lists.xmpt"
+  } >> Privacy Lists XMPP Tests <<
+
+  Presence Subscription Tests: {
+    -include-script = "scripts/xmpts/presence-subscription.xmpt"
+  } >> Presence Subscription XMPP Tests <<
+
+  Extras Tests: {
+    -include-script = "scripts/xmpts/extras.xmpt"
+  } >> Basic XMPP Tests <<
+
+  Large queue and IO: {
+    -include-script = "scripts/xmpts/large-queue.xmpt"
+  } >> Basic XMPP Tests <<
+
+  MUC Tests: {
+    -include-script = "scripts/xmpts/muc-tests.xmpt"
+  } >> Basic XMPP Tests <<
+
+  PubSub Tests: {
+    -include-script = "scripts/xmpts/pubsub-tests.xmpt"
+  } >> Basic XMPP Tests <<
+
+  VHosts Tests: {
+    -include-script = "scripts/xmpts/vhosts-tests.xmpt"
+  } >> Tests for Virtual Hosts implementation in the server <<
+
+#  Admin commands Tests: {
+#    -include-script = "scripts/xmpts/admin-commands-tests.xmpt"
+#  } >> Administration commands tests <<
+
+}
+>> Script with functional tests for all basic XMPP/Jabber features <<
+
+Bosh Tests:
+{
+  -loop = 1
+  -name-append=bosh
+#  -delay = 250
+
+#  Bosh 1@socket-bosh: >> Socket connect. <<
+
+  Basic Tests: {
+    -port = 5280
+    -def-stream  = stream-bosh
+#    -debug
+
+    -include-script = "scripts/xmpts/basic-tests.xmpt"
+  } >> Basic XMPP Tests <<
+
+#  I it impossible to have this test passed over non-keep-alive Bosh, even if it is possible
+#  it is inpractical
+#
+#  Packet Order Tests: {
+#    -port = 5280
+#    -def-stream  = stream-bosh
+#
+#    -include-script = "scripts/xmpts/packet-order.xmpt"
+#  } >> Packets ordering tests <<
+
+# In order to make it work in Bosh the presence subscription tests have to be modified in such
+# a way so each test cases uses different account. Otherwise there is too much interference
+# from previous tests to complete the test successfully
+#
+#  Presence Subscription Tests: {
+#    -port = 5280
+#    -def-stream  = stream-bosh
+#
+#    -include-script = "scripts/xmpts/presence-subscription.xmpt"
+#  } >> Presence Subscription XMPP Tests <<
+
+}
+>> Testing bosh component <<
+
+Bosh keep-alive Tests:
+{
+  -loop = 1
+  -name-append=bosh-keep-alive
+#  -delay=250
+
+#  Bosh keep-alive 1@socket-bosh: >> Socket connect. <<
+
+  Basic Tests: {
+    -port = 5280
+    -def-stream  = stream-bosh
+    -keep-alive = yes
+
+    -include-script = "scripts/xmpts/basic-tests.xmpt"
+  } >> Basic XMPP Tests <<
+
+  Packet Order Tests: {
+    -port = 5280
+    -def-stream  = stream-bosh
+    -keep-alive = yes
+
+    -include-script = "scripts/xmpts/packet-order.xmpt"
+  } >> Packets ordering tests <<
+
+# In order to make it work in Bosh the presence subscription tests have to be modified in such
+# a way so each test cases uses different account. Otherwise there is too much interference
+# from previous tests to complete the test successfully
+#
+#  Presence Subscription Tests: {
+#    -port = 5280
+#    -def-stream  = stream-bosh
+#    -keep-alive = yes
+#    -delay = 3000
+#
+#    -include-script = "scripts/xmpts/presence-subscription.xmpt"
+#  } >> Presence Subscription XMPP Tests <<
+
+}
+>> Testing bosh component in keep-alive mode <<
+
+
+Multi thread tests:
+{
+  -name-append=c2s
+
+  Multi-User Tests: {
+    -include-script = "scripts/xmpts/multi-thread-tests.xmpt"
+  } >> Presence Subscription XMPP Tests <<
+
+
+} >> Multi-threaded tests for various XMPP functions <<
+
+
+Admin ad-hoc commands tests: {
+  -name-append=c2s
+
+  Admin commands Tests: {
+    -include-script = "scripts/xmpts/admin-commands-tests.xmpt"
+  } >> Administration commands tests <<
+
+}
+>> Script with functional tests for Administrator ad-hoc commands <<

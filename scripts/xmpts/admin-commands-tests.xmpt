@@ -1,0 +1,1451 @@
+##
+##  Tigase XMPP/Jabber Test Suite
+##  Copyright (C) 2004-2009 "Artur Hefczyc" <artur.hefczyc@tigase.org>
+##
+##  This program is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License.
+##
+##  This program is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with this program. Look for COPYING file in the top folder.
+##  If not, see http://www.gnu.org/licenses/.
+##
+##  $Rev$
+##  Last modified by $Author$
+##  $Date$
+##
+-version = "2.0.0"
+
+-output-format  = html
+-output-file    = "../www/functional-tests.html"
+-output-history = yes
+-history-format = separate-file
+-output-cols    = 7
+-title          = "XMPP Server functional tests."
+
+$(server-host) = test-d
+$(virtual-host) = test-domain
+
+$(def-user)    = all-xmpp-test
+$(def-user-pass) = all-xmpp-test-password
+$(def-user-resr) = def-user-resource
+
+$(stats-user) = admin
+$(stats-pass) = stats
+
+$(daemon-user) = all-xmpp-test_daemon
+$(daemon-domain-user) = all-xmpp-test_daemon-domain
+
+$(domain-owner-user) = domain-owner
+
+$(domain-admin-user) = domain-admin
+
+$(tester-user) = tester_1
+
+$(ssl-tls-wait) = 15000
+$(number) = 1
+
+
+-serverip    = "127.0.0.1"
+-host        = $(server-host)
+-user-name   = $(def-user)
+-user-pass   = $(def-user-pass)
+-user-resr   = $(def-user-resr)
+-number      = $(number)
+-socket-wait = 15000
+-base-ns     = "jabber:client"
+-def-auth    = auth-sasl
+-def-stream  = stream-client
+-keys-file-password   = keystore
+-trusts-file-password = truststore
+-keys-file            = "certs/keystore"
+-trusts-file          = "certs/client_truststore"
+
+#to_remove
+#-delay = 250
+
+#-debug
+-debug-on-error
+#-stop-on-fail = true
+$(new-user) = "$(def-user)@$(virtual-host)"
+
+Global settings:
+{
+  -loop = 1
+
+  Prepare: {
+
+        Prep 1@user-register: {
+            -no-record
+            -user-name = $(def-user)
+        } >> Create a regular server account <<
+
+  } >> Basic setup <<
+
+        #-delay = 500
+
+        # Admin AdHoc script specific preps
+        Prep 2@user-register: {
+            -no-record
+            -user-name = $(domain-owner-user)
+        } >> Create domain owner account <<
+
+        Prep 3@user-register: {
+            -no-record
+            -user-name = $(domain-admin-user)
+            -host = $(virtual-host)
+        } >> Create a domain admin account <<
+
+        Prep 4@user-register: {
+            -no-record
+            -user-name = $(def-user)
+            -host = $(virtual-host)
+        } >> Create a regular VHost account <<
+
+        Prep 5@common: {
+            -no-record
+            -user-name = $(stats-user)
+            -user-pass = $(stats-pass)
+            -to-jid = "$(def-user)@$(server-host)"
+            -source-file = "tests/data/VHostUpdateAdHocAdminScripts.cot"
+#            -delay       = 15000
+        } >> Configuring VHost in regard of different rights for different users <<
+
+        Prep 6@common: {
+            -no-record
+            -user-name = $(stats-user)
+            -user-pass = $(stats-pass)
+            -to-jid = "$(def-user)@$(server-host)"
+            -source-file = "tests/data/AdHocRosterAddUser.cot"
+        } >> Add user to the test user roster <<
+
+        Prep 7@common: {
+            -no-record
+            -user-name = $(stats-user)
+            -user-pass = $(stats-pass)
+            -to-jid = "$(def-user)@$(virtual-host)"
+            -source-file = "tests/data/AdHocRosterAddUser.cot"
+        } >> Add user to the test user roster (VHost) <<
+
+## XEP-0133: 4.1. Add User
+## http://xmpp.org/extensions/xep-0133.html#add-user
+    # adding user as admin to main domain
+    AdminAdHoc 4_1-1@common: {
+        -user-name = $(stats-user)
+        -user-pass = $(stats-pass)
+        #-to-jid = "$(server-host)" # specs!
+        -to-jid = "sess-man@$(server-host)"
+        -cdata = "$(def-user)1@$(server-host)"
+        -source-file = "tests/data/AdHocAddUser.cot"
+    } >> XEP-0133: 4.1. Add User :: (server-user) as (server-admin) <<
+
+    # adding user as admin to VHost
+    AdminAdHoc 4_1-2@common: {
+        -user-name = $(stats-user)
+        -user-pass = $(stats-pass)
+        #-to-jid = "$(server-host)" # specs!
+        -to-jid = "sess-man@$(server-host)"
+        -cdata = "$(def-user)2@$(virtual-host)"
+        -source-file = "tests/data/AdHocAddUser.cot"
+    } >> XEP-0133: 4.1. Add User :: (domain-user) as (server-admin) <<
+
+    # adding user as domain-admin to main domain
+    AdminAdHoc 4_1-3@common: {
+        -user-name = $(domain-admin-user)
+        #-to-jid = "$(virtual-host)" # specs!
+        -to-jid = "sess-man@$(virtual-host)"
+        -cdata = "$(def-user)3@$(server-host)"
+        -host = $(virtual-host)
+        #-expect-type = error #unfortunatelly <IQ> error stanza is not of type=error
+        -source-file = "tests/data/AdHocAddUserError.cot"
+    } >> XEP-0133: 4.1. Add User :: (server-user) as (domain-admin) (expecting error) <<
+
+    # adding user as domain-admin to VHost
+    AdminAdHoc 4_1-4@common: {
+        -user-name = $(domain-admin-user)
+        #-to-jid = "$(virtual-host)" # specs!
+        -to-jid = "sess-man@$(virtual-host)"
+        -cdata = "$(def-user)4@$(virtual-host)"
+        -host = $(virtual-host)
+        -source-file = "tests/data/AdHocAddUser.cot"
+    } >> XEP-0133: 4.1. Add User :: (domain-user) as (domain-admin) <<
+
+
+## XEP-0133: 4.2. Delete User
+## http://xmpp.org/extensions/xep-0133.html#delete-user
+    # deleting user as admin to main domain
+    AdminAdHoc 4_2-1@common: {
+        -user-name = $(stats-user)
+        -user-pass = $(stats-pass)
+        #-to-jid = "$(server-host)" # specs!
+        -to-jid = "sess-man@$(server-host)"
+        -cdata = "$(def-user)1@$(server-host)"
+        -source-file = "tests/data/AdHocDelUser.cot"
+    } >> XEP-0133: 4.2. Delete User :: (server-user) as (server-admin) <<
+
+    # deleting user as admin to VHost
+    AdminAdHoc 4_2-2@common: {
+        -user-name = $(stats-user)
+        -user-pass = $(stats-pass)
+        #-to-jid = "$(server-host)" # specs!
+        -to-jid = "sess-man@$(server-host)"
+        -cdata = "$(def-user)2@$(virtual-host)"
+        -source-file = "tests/data/AdHocDelUser.cot"
+    } >> XEP-0133: 4.2. Delete User :: (domain-user) as (server-admin) <<
+
+    # deleting user as domain-admin to main domain
+    AdminAdHoc 4_2-3@common: {
+        -user-name = $(domain-admin-user)
+        #-to-jid = "$(virtual-host)" # specs!
+        -to-jid = "sess-man@$(virtual-host)"
+        -cdata = "$(def-user)3@$(server-host)"
+        -host = $(virtual-host)
+        #-expect-type = error #unfortunatelly <IQ> error stanza is not of type=error
+        -source-file = "tests/data/AdHocDelUserError.cot"
+    } >> XEP-0133: 4.2. Delete User :: (server-user) as (domain-admin) (expecting error) <<
+
+    # deleting user as domain-admin to VHost
+    AdminAdHoc 4_2-4@common: {
+        -user-name = $(domain-admin-user)
+        #-to-jid = "$(virtual-host)" # specs!
+        -to-jid = "sess-man@$(virtual-host)"
+        -cdata = "$(def-user)4@$(virtual-host)"
+        -host = $(virtual-host)
+        -source-file = "tests/data/AdHocDelUser.cot"
+    } >> XEP-0133: 4.2. Delete User :: (domain-user) as (domain-admin) <<
+
+## XEP-0133: 4.3. Disable User
+## http://xmpp.org/extensions/xep-0133.html#disable-user
+
+## XEP-0133: 4.4. Re-Enable User
+## http://xmpp.org/extensions/xep-0133.html#reenable-user
+
+## XEP-0133: 4.5. End User Session
+## http://xmpp.org/extensions/xep-0133.html#end-user-session
+
+## XEP-0133: 4.6. Get User Password
+## http://xmpp.org/extensions/xep-0133.html#get-user-password
+
+## XEP-0133: 4.7. Change User Password
+## http://xmpp.org/extensions/xep-0133.html#change-user-password
+    # executing script as admin to main domain
+    AdminAdHoc 4_7-1@common: {
+        -user-name = $(stats-user)
+        -user-pass = $(stats-pass)
+        #-to-jid = "$(server-host)" # specs!
+        -to-jid = "sess-man@$(server-host)"
+        -cdata = "$(def-user)@$(server-host)"
+        -source-file = "tests/data/AdHocChangeUserPassword.cot"
+    } >> XEP-0133: 4.7. Change User Password :: (server-user) as (server-admin) <<
+
+    # executing script as admin to VHost
+    AdminAdHoc 4_7-2@common: {
+        -user-name = $(stats-user)
+        -user-pass = $(stats-pass)
+        #-to-jid = "$(server-host)" # specs!
+        -to-jid = "sess-man@$(server-host)"
+        -cdata = "$(def-user)@$(virtual-host)"
+        -source-file = "tests/data/AdHocChangeUserPassword.cot"
+    } >> XEP-0133: 4.7. Change User Password :: (domain-user) as (server-admin) <<
+
+    # executing script as domain-admin to main domain
+    AdminAdHoc 4_7-3@common: {
+        -user-name = $(domain-admin-user)
+        #-to-jid = "$(virtual-host)" # specs!
+        -to-jid = "sess-man@$(virtual-host)"
+        -cdata = "$(def-user)@$(server-host)"
+        -host = $(virtual-host)
+        #-expect-type = error #unfortunatelly <IQ> error stanza is not of type=error
+        -source-file = "tests/data/AdHocChangeUserPasswordError.cot"
+    } >> XEP-0133: 4.7. Change User Password :: (server-user) as (domain-admin) (expecting error) <<
+
+    # executing script as domain-admin to VHost
+    AdminAdHoc 4_7-4@common: {
+        -user-name = $(domain-admin-user)
+        #-to-jid = "$(virtual-host)" # specs!
+        -to-jid = "sess-man@$(virtual-host)"
+        -cdata = "$(def-user)@$(virtual-host)"
+        -host = $(virtual-host)
+        -source-file = "tests/data/AdHocChangeUserPassword.cot"
+    } >> XEP-0133: 4.7. Change User Password :: (domain-user) as (domain-admin) <<
+
+## XEP-0133: 4.8. Get User Roster
+## http://xmpp.org/extensions/xep-0133.html#get-user-roster
+    # getting roster as admin to main domain
+    AdminAdHoc 4_8-1@common: {
+        -user-name = $(stats-user)
+        -user-pass = $(stats-pass)
+        #-to-jid = "$(server-host)" # specs!
+        -to-jid = "sess-man@$(server-host)"
+        -cdata = "$(def-user)@$(server-host)"
+        -source-file = "tests/data/AdHocGetUserRoster.cot"
+    } >> XEP-0133: 4.8. Get User Roster :: (server-user) as (server-admin) <<
+
+    # getting roster as admin to VHost
+    AdminAdHoc 4_8-2@common: {
+        -user-name = $(stats-user)
+        -user-pass = $(stats-pass)
+        #-to-jid = "$(server-host)" # specs!
+        -to-jid = "sess-man@$(server-host)"
+        -cdata = "$(domain-admin-user)@$(virtual-host)"
+        -source-file = "tests/data/AdHocGetUserRoster.cot"
+    } >> XEP-0133: 4.8. Get User Roster :: (domain-user) as (server-admin) <<
+
+    # getting roster as domain-admin to main domain
+    AdminAdHoc 4_8-3@common: {
+        -user-name = $(domain-admin-user)
+        #-to-jid = "$(virtual-host)" # specs!
+        -to-jid = "sess-man@$(virtual-host)"
+        -cdata = "$(def-user)@$(server-host)"
+        -host = $(virtual-host)
+        #-expect-type = error #unfortunatelly <IQ> error stanza is not of type=error
+        -source-file = "tests/data/AdHocGetUserRosterError.cot"
+    } >> XEP-0133: 4.8. Get User Roster :: (server-user) as (domain-admin) (expecting error) <<
+
+    # getting roster as domain-admin to VHost
+    AdminAdHoc 4_8-4@common: {
+        -user-name = $(domain-admin-user)
+        #-to-jid = "$(virtual-host)" # specs!
+        -to-jid = "sess-man@$(virtual-host)"
+        -cdata = "$(domain-admin-user)@$(virtual-host)"
+        -host = $(virtual-host)
+        -source-file = "tests/data/AdHocGetUserRoster.cot"
+    } >> XEP-0133: 4.8. Get User Roster :: (domain-user) as (domain-admin) <<
+
+## XEP-0133: 4.9. Get User Last Login Time
+## http://xmpp.org/extensions/xep-0133.html#get-user-lastlogin
+
+
+## XEP-0133: 4.10. Get User Statistics
+## http://xmpp.org/extensions/xep-0133.html#get-user-stats
+    # gettin user statistics as admin
+    AdminAdHoc 4_10-1@common: {
+        -user-name = $(stats-user)
+        -user-pass = $(stats-pass)
+        #-to-jid = "$(server-host)" # specs!
+        -to-jid = "sess-man@$(server-host)"
+        -cdata = "$(def-user)1@$(server-host)"
+        -source-file = "tests/data/AdHocUsrStatistics.cot"
+    } >> XEP-0133: 4.10. Get User Statistics :: statistics of (server-user) user as (server-admin) <<
+
+    # gettin domain-user statistics as admin
+    AdminAdHoc 4_10-2@common: {
+        -user-name = $(stats-user)
+        -user-pass = $(stats-pass)
+        #-to-jid = "$(server-host)" # specs!
+        -to-jid = "sess-man@$(server-host)"
+        -cdata = "$(def-user)2@$(virtual-host)"
+        -source-file = "tests/data/AdHocUsrStatistics.cot"
+    } >> XEP-0133: 4.10. Get User Statistics :: statistics of (domain-user) user as (server-admin) <<
+
+    # gettin user statistics as domain-admin
+    AdminAdHoc 4_10-3@common: {
+        -user-name = $(domain-admin-user)
+        #-to-jid = "$(virtual-host)" # specs!
+        -to-jid = "sess-man@$(virtual-host)"
+        -cdata = "$(def-user)5@$(server-host)"
+        -host = $(virtual-host)
+        #-expect-type = error #unfortunatelly <IQ> error stanza is not of type=error
+        -source-file = "tests/data/AdHocUsrStatisticsError.cot"
+    } >> XEP-0133: 4.10. Get User Statistics :: statistics of (server-user) user as (domain-admin) [expecting error] <<
+
+    # gettin domain-user statistics as domain-admin
+    AdminAdHoc 4_10-4@common: {
+        -user-name = $(domain-admin-user)
+        #-to-jid = "$(virtual-host)" # specs!
+        -to-jid = "sess-man@$(virtual-host)"
+        -cdata = "$(def-user)6@$(virtual-host)"
+        -host = $(virtual-host)
+        -source-file = "tests/data/AdHocUsrStatistics.cot"
+    } >> XEP-0133: 4.10. Get User Statistics :: statistics of (domain-user) user as (domain-admin) <<
+
+## XEP-0133: 4.10. Get User Statistics
+## http://xmpp.org/extensions/xep-0133.html#get-user-stats
+
+## XEP-0133: 4.11. Edit Blacklist
+## http://xmpp.org/extensions/xep-0133.html#edit-blacklist
+
+## XEP-0133: 4.12. Edit Whitelist
+## http://xmpp.org/extensions/xep-0133.html#edit-whitelist
+
+## XEP-0133: 4.13. Get Number of Registered Users
+## http://xmpp.org/extensions/xep-0133.html#get-registered-users-num
+
+## XEP-0133: 4.14. Get Number of Disabled Users
+## http://xmpp.org/extensions/xep-0133.html#get-disabled-users-num
+
+## XEP-0133: 4.15. Get Number of Online Users
+## http://xmpp.org/extensions/xep-0133.html#get-online-users-num
+
+## XEP-0133: 4.16. Get Number of Active Users
+## http://xmpp.org/extensions/xep-0133.html#get-active-users-num
+
+    # getting server number of active users as admin
+    AdminAdHoc 4_16-1@common:  {
+        -user-name = $(stats-user)
+        -user-pass = $(stats-pass)
+        #-to-jid = "$(server-host)" # specs!
+        -to-jid = "sess-man@$(server-host)"
+        -cdata = "$(server-host)"
+        -source-file = "tests/data/AdHocGetActiveUsersNumber.cot"
+    } >> XEP-0133: 4.16. Get Number of Active Users :: server $(server-host) user number as (server-admin) <<
+
+    # getting domain number of active users as admin
+    # list should contains only users for the given domain
+    AdminAdHoc 4_16-2@common: {
+        -user-name = $(stats-user)
+        -user-pass = $(stats-pass)
+        #-to-jid = "$(server-host)" # specs!
+        -to-jid = "sess-man@$(server-host)"
+        -cdata = "$(virtual-host)"
+        -source-file = "tests/data/AdHocGetActiveUsersNumber.cot"
+    } >> XEP-0133: 4.16. Get Number of Active Users :: VHost $(virtual-host) user number as (server-admin) <<
+
+
+    # getting server number of active users as domain-admin
+    AdminAdHoc 4_16-3@common:  {
+        -user-name = $(domain-admin-user)
+        #-to-jid = "$(virtual-host)" # specs!
+        -to-jid = "sess-man@$(virtual-host)"
+        -cdata = "$(server-host)"
+        -host = $(virtual-host)
+        #-expect-type = error #unfortunatelly <IQ> error stanza is not of type=error
+        -source-file = "tests/data/AdHocGetActiveUsersNumberError.cot"
+    } >> XEP-0133: 4.16. Get Number of Active Users :: server $(server-host) user number as (server-admin) [expecting error] <<
+
+    # getting domain number of active users as domain-admin
+    # list should contains only users for the given domain
+    AdminAdHoc 4_16-4@common: {
+        -user-name = $(domain-admin-user)
+        #-to-jid = "$(virtual-host)" # specs!
+        -to-jid = "sess-man@$(virtual-host)"
+        -cdata = "$(virtual-host)"
+        -host = $(virtual-host)
+        -source-file = "tests/data/AdHocGetActiveUsersNumber.cot"
+    } >> XEP-0133: 4.16. Get Number of Active Users :: VHost $(virtual-host) user number as (domain-admin) <<
+
+# TO DO
+
+
+## XEP-0133: 4.17. Get Number of Idle Users
+## http://xmpp.org/extensions/xep-0133.html#get-idle-users-num
+
+    # getting server number of idle users as admin
+    AdminAdHoc 4_17-1@common:  {
+        -user-name = $(stats-user)
+        -user-pass = $(stats-pass)
+        #-to-jid = "$(server-host)" # specs!
+        -to-jid = "sess-man@$(server-host)"
+        -cdata = "$(server-host)"
+        -source-file = "tests/data/AdHocGetIdleUsersNumber.cot"
+    } >> XEP-0133: 4.17. Get Number of Idle Users :: server $(server-host) user number as (server-admin) <<
+
+    # getting domain number of idle users as admin
+    # list should contains only users for the given domain
+    AdminAdHoc 4_17-2@common: {
+        -user-name = $(stats-user)
+        -user-pass = $(stats-pass)
+        #-to-jid = "$(server-host)" # specs!
+        -to-jid = "sess-man@$(server-host)"
+        -cdata = "$(virtual-host)"
+        -source-file = "tests/data/AdHocGetIdleUsersNumber.cot"
+    } >> XEP-0133: 4.17. Get Number of Idle Users :: VHost $(virtual-host) user number as (server-admin) <<
+
+
+    # getting server number of idle users as domain-admin
+    AdminAdHoc 4_17-3@common:  {
+        -user-name = $(domain-admin-user)
+        #-to-jid = "$(virtual-host)" # specs!
+        -to-jid = "sess-man@$(virtual-host)"
+        -cdata = "$(server-host)"
+        -host = $(virtual-host)
+        #-expect-type = error #unfortunatelly <IQ> error stanza is not of type=error
+        -source-file = "tests/data/AdHocGetIdleUsersNumberError.cot"
+    } >> XEP-0133: 4.17. Get Number of Idle Users :: server $(server-host) user number as (server-admin) [expecting error] <<
+
+    # getting domain number of idle users as domain-admin
+    # list should contains only users for the given domain
+    AdminAdHoc 4_17-4@common: {
+        -user-name = $(domain-admin-user)
+        #-to-jid = "$(virtual-host)" # specs!
+        -to-jid = "sess-man@$(virtual-host)"
+        -cdata = "$(virtual-host)"
+        -host = $(virtual-host)
+        -source-file = "tests/data/AdHocGetIdleUsersNumber.cot"
+    } >> XEP-0133: 4.17. Get Number of Idle Users :: VHost $(virtual-host) user number as (domain-admin) <<
+# TO DO
+
+
+
+## XEP-0133: 4.18. Get List of Registered Users
+## http://xmpp.org/extensions/xep-0133.html#get-registered-users-list
+
+    # getting server list of registered users as admin
+    AdminAdHoc 4_18-1@common:  {
+        -user-name = $(stats-user)
+        -user-pass = $(stats-pass)
+        #-to-jid = "$(server-host)" # specs!
+        -to-jid = "sess-man@$(server-host)"
+        -cdata = "$(server-host)"
+        -source-file = "tests/data/AdHocListRegisteredUsers.cot"
+    } >> XEP-0133: 4.18. Get List of Registered Users :: server $(server-host) user list as (server-admin) <<
+
+    # getting domain list of registered users as admin
+    # list should contains only users for the given domain
+    AdminAdHoc 4_18-2@common: {
+        -user-name = $(stats-user)
+        -user-pass = $(stats-pass)
+        #-to-jid = "$(server-host)" # specs!
+        -to-jid = "sess-man@$(server-host)"
+        -cdata = "$(virtual-host)"
+        -source-file = "tests/data/AdHocListRegisteredUsers.cot"
+    } >> XEP-0133: 4.18. Get List of Registered Users :: VHost $(virtual-host) user list as (server-admin) <<
+
+
+    # getting server list of registered users as domain-admin
+    AdminAdHoc 4_18-3@common:  {
+        -user-name = $(domain-admin-user)
+        #-to-jid = "$(virtual-host)" # specs!
+        -to-jid = "sess-man@$(virtual-host)"
+        -cdata = "$(server-host)"
+        -host = $(virtual-host)
+        #-expect-type = error #unfortunatelly <IQ> error stanza is not of type=error
+        -source-file = "tests/data/AdHocListRegisteredUsersError.cot"
+    } >> XEP-0133: 4.18. Get List of Registered Users :: server $(server-host) user list as (server-admin) [expecting error] <<
+
+    # getting domain list of registered users as domain-admin
+    # list should contains only users for the given domain
+    AdminAdHoc 4_18-4@common: {
+        -user-name = $(domain-admin-user)
+        #-to-jid = "$(virtual-host)" # specs!
+        -to-jid = "sess-man@$(virtual-host)"
+        -cdata = "$(virtual-host)"
+        -host = $(virtual-host)
+        -source-file = "tests/data/AdHocListRegisteredUsers.cot"
+    } >> XEP-0133: 4.18. Get List of Registered Users :: VHost $(virtual-host) user list as (domain-admin) <<
+# TO DO
+
+
+
+## XEP-0133: 4.19. Get List of Disabled Users
+## http://xmpp.org/extensions/xep-0133.html#get-disabled-users-list
+
+## XEP-0133: 4.20. Get List of Online Users
+## http://xmpp.org/extensions/xep-0133.html#get-online-users-list
+
+    # getting server user-list as admin
+    AdminAdHoc 4_20-1@common:  {
+        -user-name = $(stats-user)
+        -user-pass = $(stats-pass)
+        #-to-jid = "$(server-host)" # specs!
+        -to-jid = "sess-man@$(server-host)"
+        -cdata = "$(server-host)"
+        -source-file = "tests/data/AdHocListOnlineUsers.cot"
+    } >> XEP-0133: 4.20. Get List of Online Users :: server $(server-host) user list as (server-admin) <<
+
+    # getting domain user-list as admin
+    # list should contains only users for the given domain
+    AdminAdHoc 4_20-2@common: {
+        -user-name = $(stats-user)
+        -user-pass = $(stats-pass)
+        #-to-jid = "$(server-host)" # specs!
+        -to-jid = "sess-man@$(server-host)"
+        -cdata = "$(virtual-host)"
+        #-expect-type = error #unfortunatelly <IQ> error stanza is not of type=error
+        -source-file = "tests/data/AdHocListOnlineUsers.cot"
+    } >> XEP-0133: 4.20. Get List of Online Users :: VHost $(virtual-host) user list as (server-admin) <<
+
+
+    # getting server user-list as domain-admin
+    AdminAdHoc 4_20-3@common:  {
+        -user-name = $(domain-admin-user)
+        #-to-jid = "$(virtual-host)" # specs!
+        -to-jid = "sess-man@$(virtual-host)"
+        -cdata = "$(server-host)"
+        -host = $(virtual-host)
+        -source-file = "tests/data/AdHocListOnlineUsersError.cot"
+    } >> XEP-0133: 4.20. Get List of Online Users :: server $(server-host) user list as (server-admin) [expecting error] <<
+
+    # getting domain user-list as domain-admin
+    # list should contains only users for the given domain
+    AdminAdHoc 4_20-4@common: {
+        -user-name = $(domain-admin-user)
+        #-to-jid = "$(virtual-host)" # specs!
+        -to-jid = "sess-man@$(virtual-host)"
+        -cdata = "$(virtual-host)"
+        -host = $(virtual-host)
+        -source-file = "tests/data/AdHocListOnlineUsers.cot"
+    } >> XEP-0133: 4.20. Get List of Online Users :: VHost $(virtual-host) user list as (domain-admin) <<
+
+
+## XEP-0133: 4.21. Get List of Active Users
+## http://xmpp.org/extensions/xep-0133.html#get-active-users-list
+
+    # getting server user-list as admin
+    AdminAdHoc 4_21-1@common:  {
+        -user-name = $(stats-user)
+        -user-pass = $(stats-pass)
+        #-to-jid = "$(server-host)" # specs!
+        -to-jid = "sess-man@$(server-host)"
+        -cdata = "$(server-host)"
+        -source-file = "tests/data/AdHocListActiveUsers.cot"
+    } >> XEP-0133: 4.21. Get List of Active Users :: server $(server-host) user list as (server-admin) <<
+
+    # getting domain user-list as admin
+    # list should contains only users for the given domain
+    AdminAdHoc 4_21-2@common: {
+        -user-name = $(stats-user)
+        -user-pass = $(stats-pass)
+        #-to-jid = "$(server-host)" # specs!
+        -to-jid = "sess-man@$(server-host)"
+        -cdata = "$(virtual-host)"
+        -source-file = "tests/data/AdHocListActiveUsers.cot"
+    } >> XEP-0133: 4.21. Get List of Active Users :: VHost $(virtual-host) user list as (server-admin) <<
+
+
+    # getting server user-list as domain-admin
+    AdminAdHoc 4_21-3@common:  {
+        -user-name = $(domain-admin-user)
+        #-to-jid = "$(virtual-host)" # specs!
+        -to-jid = "sess-man@$(virtual-host)"
+        -cdata = "$(server-host)"
+        -host = $(virtual-host)
+        #-expect-type = error #unfortunatelly <IQ> error stanza is not of type=error
+        -source-file = "tests/data/AdHocListActiveUsersError.cot"
+    } >> XEP-0133: 4.21. Get List of Active Users :: server $(server-host) user list as (server-admin) [expecting error] <<
+
+    # getting domain user-list as domain-admin
+    # list should contains only users for the given domain
+    AdminAdHoc 4_21-4@common: {
+        -user-name = $(domain-admin-user)
+        #-to-jid = "$(virtual-host)" # specs!
+        -to-jid = "sess-man@$(virtual-host)"
+        -cdata = "$(virtual-host)"
+        -host = $(virtual-host)
+        -source-file = "tests/data/AdHocListActiveUsers.cot"
+    } >> XEP-0133: 4.21. Get List of Active Users :: VHost $(virtual-host) user list as (domain-admin) <<
+# TO DO
+
+
+
+## XEP-0133: 4.22. Get List of Idle Users
+## http://xmpp.org/extensions/xep-0133.html#get-idle-users-list
+
+    # getting server user-list as admin
+    AdminAdHoc 4_22-1@common:  {
+        -user-name = $(stats-user)
+        -user-pass = $(stats-pass)
+        #-to-jid = "$(server-host)" # specs!
+        -to-jid = "sess-man@$(server-host)"
+        -cdata = "$(server-host)"
+        -source-file = "tests/data/AdHocListIdleUsers.cot"
+    } >> XEP-0133: 4.22. Get List of Idle Users :: server $(server-host) user list as (server-admin) <<
+
+    # getting domain user-list as admin
+    # list should contains only users for the given domain
+    AdminAdHoc 4_22-2@common: {
+        -user-name = $(stats-user)
+        -user-pass = $(stats-pass)
+        #-to-jid = "$(server-host)" # specs!
+        -to-jid = "sess-man@$(server-host)"
+        -cdata = "$(virtual-host)"
+        -source-file = "tests/data/AdHocListIdleUsers.cot"
+    } >> XEP-0133: 4.22. Get List of Idle Users :: VHost $(virtual-host) user list as (server-admin) <<
+
+
+    # getting server user-list as domain-admin
+    AdminAdHoc 4_22-3@common:  {
+        -user-name = $(domain-admin-user)
+        #-to-jid = "$(virtual-host)" # specs!
+        -to-jid = "sess-man@$(virtual-host)"
+        -cdata = "$(server-host)"
+        -host = $(virtual-host)
+        #-expect-type = error #unfortunatelly <IQ> error stanza is not of type=error
+        -source-file = "tests/data/AdHocListIdleUsersError.cot"
+    } >> XEP-0133: 4.22. Get List of Idle Users :: server $(server-host) user list as (server-admin) [expecting error] <<
+
+    # getting domain user-list as domain-admin
+    # list should contains only users for the given domain
+    AdminAdHoc 4_22-4@common: {
+        -user-name = $(domain-admin-user)
+        #-to-jid = "$(virtual-host)" # specs!
+        -to-jid = "sess-man@$(virtual-host)"
+        -cdata = "$(virtual-host)"
+        -host = $(virtual-host)
+        -source-file = "tests/data/AdHocListIdleUsers.cot"
+    } >> XEP-0133: 4.22. Get List of Idle Users :: VHost $(virtual-host) user list as (domain-admin) <<
+# TO DO
+
+
+
+## XEP-0133: 4.23 Send Announcement to Online Users
+## http://xmpp.org/extensions/xep-0133.html#announce
+
+## unfortunatelly - currently there is no way to differentiate whether the results contain only valid
+## data (i.e. propper for a given request) so it only checks if the script was run without exceptions
+
+    # sending announcement as server-admin
+    AdminAdHoc 4_23-1@common:  {
+        #-debug
+        -delay = 1500
+
+        Prep-deamon 1@user-register: {
+            -no-record
+
+            -user-name = $(daemon-user)
+        } >> Create a daemon user account <<
+
+        Prep-deamon 2@msg-listen: {
+            -no-record
+
+            -daemon
+
+            -socket-wait = 0
+            -user-name   = $(daemon-user)
+            -delay       = 500
+        } >> Setup a user daemon wating for messages <<
+
+
+        Prep-deamon 3@user-register: {
+            -no-record
+
+            -user-name = $(daemon-domain-user)
+            -host = $(virtual-host)
+        } >> Create a daemon domain-user account <<
+
+        Prep-deamon 4@msg-listen: {
+            -no-record
+
+            -daemon
+
+            -socket-wait = 0
+            -user-name   = $(daemon-domain-user)
+            -host = $(virtual-host)
+            -delay       = 500
+        } >> Setup a domain-user daemon wating for messages <<
+
+
+        -user-name = $(stats-user)
+        -user-pass = $(stats-pass)
+        #-to-jid = "$(server-host)" # specs!
+        -to-jid = "sess-man@$(server-host)"
+        -cdata = "$(def-user)1@$(server-host)"
+        -source-file = "tests/data/AdHocAnnouncement.cot"
+    } >> XEP-0133: 4.23 Send Announcement to Online Users :: sending announcement as (server-admin) <<
+
+    # sending announcement as domain-admin
+    # only domain-users should receive announcement
+    AdminAdHoc 4_23-2@common: {
+        #-debug
+        -delay = 1500
+
+
+        Prep-deamon 1@user-register: {
+            -no-record
+
+            -user-name = $(daemon-user)
+        } >> Create a daemon user account <<
+
+        Prep-deamon 2@msg-listen: {
+            -no-record
+
+            -daemon
+
+            -socket-wait = 0
+            -user-name   = $(daemon-user)
+            -delay       = 500
+        } >> Setup a user daemon wating for messages <<
+
+
+        Prep-deamon 3@user-register: {
+            -no-record
+
+            -user-name = $(daemon-domain-user)
+            -host = $(virtual-host)
+        } >> Create a daemon domain-user account <<
+
+        Prep-deamon 4@msg-listen: {
+            -no-record
+
+            -daemon
+
+            -socket-wait = 0
+            -user-name   = $(daemon-domain-user)
+            -host = $(virtual-host)
+            -delay       = 500
+        } >> Setup a domain-user daemon wating for messages <<
+
+        -user-name = $(domain-admin-user)
+        #-to-jid = "$(virtual-host)" # specs!
+        -to-jid = "sess-man@$(virtual-host)"
+        -cdata = "$(def-user)6@$(virtual-host)"
+        -host = $(virtual-host)
+        -source-file = "tests/data/AdHocAnnouncement.cot"
+    } >> XEP-0133: 4.23 Send Announcement to Online Users :: sending announcement as (domain-admin) [expecting response only from domain users] [[n/a]] <<
+
+
+## XEP-0133: 4.24. Set Message of the Day
+## http://xmpp.org/extensions/xep-0133.html#set-motd
+
+## XEP-0133: 4.25. Edit Message of the Day
+## http://xmpp.org/extensions/xep-0133.html#edit-motd
+
+## XEP-0133: 4.26. Delete Message of the Day
+## http://xmpp.org/extensions/xep-0133.html#delete-motd
+
+## XEP-0133: 4.27. Set Welcome Message
+## http://xmpp.org/extensions/xep-0133.html#set-welcome
+
+## XEP-0133: 4.28. Delete Welcome Message
+## http://xmpp.org/extensions/xep-0133.html#delete-welcome
+
+## XEP-0133: 4.29. Edit Admin List
+## http://xmpp.org/extensions/xep-0133.html#edit-admin
+
+## XEP-0133: 4.30. Restart Service
+## http://xmpp.org/extensions/xep-0133.html#restart
+
+## XEP-0133: 4.31. Shut Down Service
+## http://xmpp.org/extensions/xep-0133.html#shutdown
+
+
+
+################################################################################################################################################
+################ non XEP functionality
+
+## Monitor/LoadErrors
+    # executing script as admin
+    AdminAdHoc Monitor_1_1@common: {
+        -user-name = $(stats-user)
+        -user-pass = $(stats-pass)
+        #-to-jid = "$(server-host)" # specs!
+        -to-jid = "monitor@$(server-host)"
+        -source-file = "tests/data/AdHocMonitorLoadErrors.cot"
+    } >> Execute script monitor/LoadErrors as (server-admin) <<
+
+    # # executing script as domain-admin
+    AdminAdHoc Monitor_1_2@common: {
+        -user-name = $(domain-admin-user)
+        #-to-jid = "$(virtual-host)" # specs!
+        -to-jid = "monitor@$(virtual-host)"
+        -host = $(virtual-host)
+        #-expect-type = error
+        -source-file = "tests/data/AdHocMonitorLoadErrorsError.cot"
+    } >> Execute script monitor/LoadErrors as (domain-admin) [expecting error] <<
+
+## BasicConf/ListConfiguration
+    # executing script as admin
+    AdminAdHoc BasicConf_1_1@common: {
+        #-debug
+        -user-name = $(stats-user)
+        -user-pass = $(stats-pass)
+        #-to-jid = "$(server-host)" # specs!
+        -to-jid = "basic-conf@$(server-host)"
+        -source-file = "tests/data/AdHocBasicConfListConfiguration.cot"
+    } >> Execute script basic-conf/ListConfiguration as (server-admin) <<
+
+    # executing script as domain-admin
+    AdminAdHoc BasicConf_1_2@common: {
+        #-debug
+        -user-name = $(domain-admin-user)
+        #-to-jid = "$(virtual-host)" # specs!
+        -to-jid = "basic-conf@$(virtual-host)"
+        -host = $(virtual-host)
+        #-expect-type = error
+        -source-file = "tests/data/AdHocBasicConfListConfigurationError.cot"
+    } >> Execute script basic-conf/ListConfiguration as (domain-admin) [expecting error] <<
+
+
+## BasicConf/UpdateConfiguration
+    # executing script as admin
+    AdminAdHoc BasicConf_2_1@common: {
+        #-debug
+        -user-name = $(stats-user)
+        -user-pass = $(stats-pass)
+        #-to-jid = "$(server-host)" # specs!
+        -to-jid = "basic-conf@$(server-host)"
+        -source-file = "tests/data/AdHocBasicConfUpdateConfiguration.cot"
+    } >> Execute script basic-conf/UpdateConfiguration as (server-admin) <<
+
+    # executing script as domain-admin
+    AdminAdHoc BasicConf_2_2@common: {
+        #-debug
+        -user-name = $(domain-admin-user)
+        #-to-jid = "$(virtual-host)" # specs!
+        -to-jid = "basic-conf@$(virtual-host)"
+        -host = $(virtual-host)
+        #-expect-type = error
+        -source-file = "tests/data/AdHocBasicConfUpdateConfigurationError.cot"
+    } >> Execute script basic-conf/UpdateConfiguration as (domain-admin) [expecting error] <<
+
+
+## BasicConf/GetAnyFile
+    # executing script as admin
+    AdminAdHoc BasicConf_3_1@common: {
+        #-debug
+        -user-name = $(stats-user)
+        -user-pass = $(stats-pass)
+        #-to-jid = "$(server-host)" # specs!
+        -to-jid = "basic-conf@$(server-host)"
+        -source-file = "tests/data/AdHocBasicConfGetAnyFile.cot"
+    } >> Execute script basic-conf/GetAnyFile as (server-admin) <<
+
+    # executing script as domain-admin
+    AdminAdHoc BasicConf_3_2@common: {
+        #-debug
+        -user-name = $(domain-admin-user)
+        #-to-jid = "$(virtual-host)" # specs!
+        -to-jid = "basic-conf@$(virtual-host)"
+        -host = $(virtual-host)
+        #-expect-type = error
+        -source-file = "tests/data/AdHocBasicConfGetAnyFileError.cot"
+    } >> Execute script basic-conf/GetAnyFile as (domain-admin) [expecting error] <<
+
+
+## BasicConf/GetConfigurationFile
+    # executing script as admin
+    AdminAdHoc BasicConf_4_1@common: {
+        #-debug
+        -user-name = $(stats-user)
+        -user-pass = $(stats-pass)
+        #-to-jid = "$(server-host)" # specs!
+        -to-jid = "basic-conf@$(server-host)"
+        -source-file = "tests/data/AdHocBasicConfGetConfigurationFile.cot"
+    } >> Execute script basic-conf/GetConfigurationFile as (server-admin) <<
+
+    # executing script as domain-admin
+    AdminAdHoc BasicConf_4_2@common: {
+        #-debug
+        -user-name = $(domain-admin-user)
+        #-to-jid = "$(virtual-host)" # specs!
+        -to-jid = "basic-conf@$(virtual-host)"
+        -host = $(virtual-host)
+        #-expect-type = error
+        -source-file = "tests/data/AdHocBasicConfGetConfigurationFileError.cot"
+    } >> Execute script basic-conf/GetConfigurationFile as (domain-admin) [expecting error] <<
+
+
+## BasicConf/Get_init.properties_configuration
+    # executing script as admin
+    AdminAdHoc BasicConf_5_1@common: {
+        #-debug
+        -user-name = $(stats-user)
+        -user-pass = $(stats-pass)
+        #-to-jid = "$(server-host)" # specs!
+        -to-jid = "basic-conf@$(server-host)"
+        -source-file = "tests/data/AdHocBasicConfGet_init.properties_configuration.cot"
+    } >> Execute script basic-conf/Get_init.properties_configuration as (server-admin) <<
+
+    # executing script as domain-admin
+    AdminAdHoc BasicConf_5_2@common: {
+        #-debug
+        -user-name = $(domain-admin-user)
+        #-to-jid = "$(virtual-host)" # specs!
+        -to-jid = "basic-conf@$(virtual-host)"
+        -host = $(virtual-host)
+        #-expect-type = error
+        -source-file = "tests/data/AdHocBasicConfGet_init.properties_configurationError.cot"
+    } >> Execute script basic-conf/Get_init.properties_configuration as (domain-admin) [expecting error] <<
+
+
+
+## BasicConf/Manage active server components - List
+    # executing script as admin
+    AdminAdHoc BasicConf_6_1@common: {
+        #-debug
+        -user-name = $(stats-user)
+        -user-pass = $(stats-pass)
+        #-to-jid = "$(server-host)" # specs!
+        -to-jid = "basic-conf@$(server-host)"
+        -source-file = "tests/data/AdHocBasicConfManageComponentList.cot"
+    } >> Execute script basic-conf/Manage active server components: List as (server-admin) <<
+
+    # executing script as domain-admin
+    AdminAdHoc BasicConf_6_2@common: {
+        #-debug
+        -user-name = $(domain-admin-user)
+        #-to-jid = "$(virtual-host)" # specs!
+        -to-jid = "basic-conf@$(virtual-host)"
+        -host = $(virtual-host)
+        #-expect-type = error
+        -source-file = "tests/data/AdHocBasicConfManageComponentListError.cot"
+    } >> Execute script basic-conf/Manage active server components: List as (domain-admin) [expecting error] <<
+
+## BasicConf/Manage active server components - Edit
+    # executing script as admin
+    AdminAdHoc BasicConf_7_1@common: {
+        #-debug
+        -user-name = $(stats-user)
+        -user-pass = $(stats-pass)
+        #-to-jid = "$(server-host)" # specs!
+        -to-jid = "basic-conf@$(server-host)"
+        -source-file = "tests/data/AdHocBasicConfManageComponentEdit.cot"
+    } >> Execute script basic-conf/Manage active server components: Edit as (server-admin) <<
+
+    # executing script as domain-admin
+    AdminAdHoc BasicConf_7_2@common: {
+        #-debug
+        -user-name = $(domain-admin-user)
+        #-to-jid = "$(virtual-host)" # specs!
+        -to-jid = "basic-conf@$(virtual-host)"
+        -host = $(virtual-host)
+        #-expect-type = error
+        -source-file = "tests/data/AdHocBasicConfManageComponentEditError.cot"
+    } >> Execute script basic-conf/Manage active server components: Edit as (domain-admin) [expecting error] <<
+
+## BasicConf/Manage active server components - Remove
+    # executing script as admin
+    AdminAdHoc BasicConf_8_1@common: {
+        #-debug
+        -user-name = $(stats-user)
+        -user-pass = $(stats-pass)
+        #-to-jid = "$(server-host)" # specs!
+        -to-jid = "basic-conf@$(server-host)"
+        -source-file = "tests/data/AdHocBasicConfManageComponentRemove.cot"
+    } >> Execute script basic-conf/Manage active server components: Remove as (server-admin) <<
+
+    # executing script as domain-admin
+    AdminAdHoc BasicConf_8_2@common: {
+        #-debug
+        -user-name = $(domain-admin-user)
+        #-to-jid = "$(virtual-host)" # specs!
+        -to-jid = "basic-conf@$(virtual-host)"
+        -host = $(virtual-host)
+        #-expect-type = error
+        -source-file = "tests/data/AdHocBasicConfManageComponentRemoveError.cot"
+    } >> Execute script basic-conf/Manage active server components: Remove as (domain-admin) [expecting error] <<
+
+
+## BasicConf/Manage active server components - Add
+    # executing script as admin
+    AdminAdHoc BasicConf_9_1@common: {
+        #-debug
+        -user-name = $(stats-user)
+        -user-pass = $(stats-pass)
+        #-to-jid = "$(server-host)" # specs!
+        -to-jid = "basic-conf@$(server-host)"
+        -source-file = "tests/data/AdHocBasicConfManageComponentAdd.cot"
+    } >> Execute script basic-conf/Manage active server components: Add as (server-admin) <<
+
+    # executing script as domain-admin
+    AdminAdHoc BasicConf_9_2@common: {
+        #-debug
+        -user-name = $(domain-admin-user)
+        #-to-jid = "$(virtual-host)" # specs!
+        -to-jid = "basic-conf@$(virtual-host)"
+        -host = $(virtual-host)
+        #-expect-type = error
+        -source-file = "tests/data/AdHocBasicConfManageComponentAddError.cot"
+    } >> Execute script basic-conf/Manage active server components: Add as (domain-admin) [expecting error] <<
+
+
+## s2s/Bad State Connections
+    # executing script as admin
+    AdminAdHoc s2s_1_1@common: {
+        #-debug
+        -user-name = $(stats-user)
+        -user-pass = $(stats-pass)
+        #-to-jid = "$(server-host)" # specs!
+        -to-jid = "s2s@$(server-host)"
+        -source-file = "tests/data/AdHocS2SBadStateConnections.cot"
+    } >> Execute script s2s/Bad State Connections as (server-admin) <<
+
+    # executing script as domain-admin
+    AdminAdHoc s2s_1_2@common: {
+        #-debug
+        -user-name = $(domain-admin-user)
+        #-to-jid = "$(virtual-host)" # specs!
+        -to-jid = "s2s@$(virtual-host)"
+        -host = $(virtual-host)
+        #-expect-type = error
+        -source-file = "tests/data/AdHocS2SBadStateConnectionsError.cot"
+    } >> Execute script s2s/Bad State Connections as (domain-admin) [expecting error] <<
+
+## s2s/Reset Bad State Connections
+    # executing script as admin
+    AdminAdHoc s2s_2_1@common: {
+        #-debug
+        -user-name = $(stats-user)
+        -user-pass = $(stats-pass)
+        #-to-jid = "$(server-host)" # specs!
+        -to-jid = "s2s@$(server-host)"
+        -source-file = "tests/data/AdHocS2SResetBadStateConnections.cot"
+    } >> Execute script s2s/Reset Bad State Connections as (server-admin) <<
+
+    # executing script as domain-admin
+    AdminAdHoc s2s_2_2@common: {
+        #-debug
+        -user-name = $(domain-admin-user)
+        #-to-jid = "$(virtual-host)" # specs!
+        -to-jid = "s2s@$(virtual-host)"
+        -host = $(virtual-host)
+        #-expect-type = error
+        -source-file = "tests/data/AdHocS2SResetBadStateConnectionsError.cot"
+    } >> Execute script s2s/Reset Bad State Connections as (domain-admin) [expecting error] <<
+
+## s2s/S2S get CID connection state
+    # executing script as admin
+    AdminAdHoc s2s_3_1@common: {
+        #-debug
+        -user-name = $(stats-user)
+        -user-pass = $(stats-pass)
+        #-to-jid = "$(server-host)" # specs!
+        -to-jid = "s2s@$(server-host)"
+        -cdata = "$(virtual-host)@$(server-host)"
+        -source-file = "tests/data/AdHocS2SGetCIDConnectionState.cot"
+    } >> Execute script s2s/Get CID connection state as (server-admin) <<
+
+    # executing script as domain-admin
+    AdminAdHoc s2s_3_2@common: {
+        #-debug
+        -user-name = $(domain-admin-user)
+        #-to-jid = "$(virtual-host)" # specs!
+        -to-jid = "s2s@$(virtual-host)"
+        -cdata = "$(virtual-host)@$(server-host)"
+        -host = $(virtual-host)
+        #-expect-type = error
+        -source-file = "tests/data/AdHocS2SGetCIDConnectionStateError.cot"
+    } >> Execute script s2s/Get CID connection state as (domain-admin) [expecting error] <<
+
+## Stats/Server Statistics
+    # executing script as admin
+    AdminAdHoc Stats_1_1@common: {
+        #-debug
+        -user-name = $(stats-user)
+        -user-pass = $(stats-pass)
+        #-to-jid = "$(server-host)" # specs!
+        -to-jid = "stats@$(server-host)"
+        -source-file = "tests/data/AdHocStatsServerStatistics.cot"
+    } >> Execute script Stats/Server Statistics as (server-admin) <<
+
+    # executing script as domain-admin
+    AdminAdHoc Stats_1_2@common: {
+        #-debug
+        -user-name = $(domain-admin-user)
+        #-to-jid = "$(virtual-host)" # specs!
+        -to-jid = "stats@$(virtual-host)"
+        -host = $(virtual-host)
+        #-expect-type = error
+        -source-file = "tests/data/AdHocStatsServerStatisticsError.cot"
+    } >> Execute script Stats/Server Statistics as (domain-admin) [expecting error] <<
+
+
+
+
+## cl-comp/List Service Keys
+    # executing script as admin
+    AdminAdHoc cl-comp_1_1@common: {
+        #-debug
+        -user-name = $(stats-user)
+        -user-pass = $(stats-pass)
+        #-to-jid = "$(server-host)" # specs!
+        -to-jid = "cl-comp@$(server-host)"
+        -source-file = "tests/data/AdHocClCompListServiceKeys.cot"
+    } >> Execute script cl-comp/List Service Keys as (server-admin) <<
+
+    # executing script as domain-admin
+    AdminAdHoc cl-comp_1_2@common: {
+        #-debug
+        -user-name = $(domain-admin-user)
+        #-to-jid = "$(virtual-host)" # specs!
+        -to-jid = "cl-comp@$(virtual-host)"
+        -host = $(virtual-host)
+        #-expect-type = error
+        -source-file = "tests/data/AdHocClCompListServiceKeysError.cot"
+    } >> Execute script cl-comp/List Service Keys as (domain-admin) [expecting error] <<
+
+
+## cl-comp/Force stop service
+    # executing script as admin
+    AdminAdHoc cl-comp_2_1@common: {
+        #-debug
+        -user-name = $(stats-user)
+        -user-pass = $(stats-pass)
+        #-to-jid = "$(server-host)" # specs!
+        -to-jid = "cl-comp@$(server-host)"
+        -source-file = "tests/data/AdHocClCompForceStopService.cot"
+    } >> Execute script cl-comp/Force stop service as (server-admin) <<
+
+    # executing script as domain-admin
+    AdminAdHoc cl-comp_2_2@common: {
+        #-debug
+        -user-name = $(domain-admin-user)
+        #-to-jid = "$(virtual-host)" # specs!
+        -to-jid = "cl-comp@$(virtual-host)"
+        -host = $(virtual-host)
+        #-expect-type = error
+        -source-file = "tests/data/AdHocClCompForceStopServiceError.cot"
+    } >> Execute script cl-comp/Force stop service as (domain-admin) [expecting error] <<
+
+
+## cl-comp/Simulate serviceStopped method call
+    # executing script as admin
+    AdminAdHoc cl-comp_3_1@common: {
+        #-debug
+        -user-name = $(stats-user)
+        -user-pass = $(stats-pass)
+        #-to-jid = "$(server-host)" # specs!
+        -to-jid = "cl-comp@$(server-host)"
+        -source-file = "tests/data/AdHocClCompSimulateServiceStoppedMethodCall.cot"
+    } >> Execute script cl-comp/Simulate serviceStopped method call as (server-admin) <<
+
+    # executing script as domain-admin
+    AdminAdHoc cl-comp_3_2@common: {
+        #-debug
+        -user-name = $(domain-admin-user)
+        #-to-jid = "$(virtual-host)" # specs!
+        -to-jid = "cl-comp@$(virtual-host)"
+        -host = $(virtual-host)
+        #-expect-type = error
+        -source-file = "tests/data/AdHocClCompSimulateServiceStoppedMethodCallError.cot"
+    } >> Execute script cl-comp/Simulate serviceStopped method call as (domain-admin) [expecting error] <<
+
+## sess-man/Activate log tracker for a user
+    # executing script as admin
+    AdminAdHoc sess-man_1_1@common: {
+        #-debug
+        -user-name = $(stats-user)
+        -user-pass = $(stats-pass)
+        #-to-jid = "$(server-host)" # specs!
+        -to-jid = "sess-man@$(server-host)"
+        -cdata = "$(def-user)@$(server-host)"
+        -source-file = "tests/data/AdHocSessManActivateLogTrackerForAUser.cot"
+    } >> Execute script sess-man/Activate log tracker for a user as (server-admin) <<
+
+    # executing script as domain-admin
+    AdminAdHoc sess-man_1_2@common: {
+        #-debug
+        -user-name = $(domain-admin-user)
+        #-to-jid = "$(virtual-host)" # specs!
+        -to-jid = "sess-man@$(virtual-host)"
+        -host = $(virtual-host)
+        #-expect-type = error
+        -cdata = "$(def-user)@$(server-host)"
+        -source-file = "tests/data/AdHocSessManActivateLogTrackerForAUserError.cot"
+    } >> Execute script sess-man/Activate log tracker for a user as (domain-admin) [expecting error] <<
+
+## sess-man/Remove log tracker for a user
+    # executing script as admin
+    AdminAdHoc sess-man_2_1@common: {
+        #-debug
+        -user-name = $(stats-user)
+        -user-pass = $(stats-pass)
+        #-to-jid = "$(server-host)" # specs!
+        -to-jid = "sess-man@$(server-host)"
+        -cdata = "$(def-user)@$(server-host)"
+        -source-file = "tests/data/AdHocSessManRemoveLogTrackerForAUser.cot"
+    } >> Execute script sess-man/Remove log tracker for a user as (server-admin) <<
+
+    # executing script as domain-admin
+    AdminAdHoc sess-man_2_2@common: {
+        #-debug
+        -user-name = $(domain-admin-user)
+        #-to-jid = "$(virtual-host)" # specs!
+        -to-jid = "sess-man@$(virtual-host)"
+        -host = $(virtual-host)
+        #-expect-type = error
+        -cdata = "$(def-user)@$(server-host)"
+        -source-file = "tests/data/AdHocSessManRemoveLogTrackerForAUserError.cot"
+    } >> Execute script sess-man/Remove log tracker for a user as (domain-admin) [expecting error] <<
+
+
+
+## sess-man/Update user roster entry
+    # executing script as admin to main domain
+    AdminAdHoc sess-man_3_1@common: {
+        #-debug
+        -user-name = $(stats-user)
+        -user-pass = $(stats-pass)
+        #-to-jid = "$(server-host)" # specs!
+        -to-jid = "sess-man@$(server-host)"
+        -cdata = "$(def-user)@$(server-host)"
+        -source-file = "tests/data/AdHocSessManUpdateUserRosterEntry.cot"
+    } >> Execute script sess-man/Update user roster entry :: (server-user) as (server-admin) <<
+
+    # executing script as admin to VHost
+    AdminAdHoc sess-man_3_2@common: {
+        #-debug
+        -user-name = $(stats-user)
+        -user-pass = $(stats-pass)
+        #-to-jid = "$(server-host)" # specs!
+        -to-jid = "sess-man@$(virtual-host)"
+        -cdata = "$(def-user)@$(server-host)"
+        -source-file = "tests/data/AdHocSessManUpdateUserRosterEntry.cot"
+    } >> Execute script sess-man/Update user roster entry :: (domain-user) as (server-admin) <<
+
+    # executing script as domain-admin to main domain
+    AdminAdHoc sess-man_3_3@common: {
+        #-debug
+        -user-name = $(domain-admin-user)
+        #-to-jid = "$(virtual-host)" # specs!
+        -to-jid = "sess-man@$(virtual-host)"
+        -host = $(virtual-host)
+        #-expect-type = error
+        -cdata = "$(def-user)@$(server-host)"
+        -source-file = "tests/data/AdHocSessManUpdateUserRosterEntryError.cot"
+    } >> Execute script sess-man/Update user roster entry :: (server-user) as (domain-admin) (expecting error) [expecting error] <<
+
+    # executing script as domain-admin to VHost
+    AdminAdHoc sess-man_3_4@common: {
+        #-debug
+        -user-name = $(domain-admin-user)
+        #-to-jid = "$(virtual-host)" # specs!
+        -to-jid = "sess-man@$(virtual-host)"
+        -host = $(virtual-host)
+        #-expect-type = error
+        -cdata = "$(def-user)@$(virtual-host)"
+        -source-file = "tests/data/AdHocSessManUpdateUserRosterEntry.cot"
+    } >> Execute script sess-man/Update user roster entry :: (domain-user) as (domain-admin) <<
+
+
+## sess-man/Update user roster entry, extended version.
+    # executing script as admin to main domain
+    AdminAdHoc sess-man_4_1@common: {
+        #-debug
+        -user-name = $(stats-user)
+        -user-pass = $(stats-pass)
+        #-to-jid = "$(server-host)" # specs!
+        -to-jid = "sess-man@$(server-host)"
+        -cdata = "$(def-user)@$(server-host)"
+        -source-file = "tests/data/AdHocSessManUpdateUserRosterEntryExt.cot"
+    } >> Execute script sess-man/Update user roster entry, extended version. :: (server-user) as (server-admin) <<
+
+    # executing script as admin to VHost
+    AdminAdHoc sess-man_4_2@common: {
+        #-debug
+        -user-name = $(stats-user)
+        -user-pass = $(stats-pass)
+        #-to-jid = "$(server-host)" # specs!
+        -to-jid = "sess-man@$(virtual-host)"
+        -cdata = "$(def-user)@$(virtual-host)"
+        -source-file = "tests/data/AdHocSessManUpdateUserRosterEntryExt.cot"
+    } >> Execute script sess-man/Update user roster entry, extended version. :: (domain-user) as (server-admin) <<
+
+    # executing script as domain-admin to main domain
+    AdminAdHoc sess-man_4_3@common: {
+        #-debug
+        -user-name = $(domain-admin-user)
+        #-to-jid = "$(virtual-host)" # specs!
+        -to-jid = "sess-man@$(virtual-host)"
+        -host = $(virtual-host)
+        #-expect-type = error
+        -cdata = "$(def-user)@$(server-host)"
+        -source-file = "tests/data/AdHocSessManUpdateUserRosterEntryExtError.cot"
+    } >> Execute script sess-man/Update user roster entry, extended version. :: (server-user) as (domain-admin) (expecting error) [expecting error] <<
+
+    # executing script as domain-admin to VHost
+    AdminAdHoc sess-man_4_4@common: {
+        #-debug
+        -user-name = $(domain-admin-user)
+        #-to-jid = "$(virtual-host)" # specs!
+        -to-jid = "sess-man@$(virtual-host)"
+        -host = $(virtual-host)
+        #-expect-type = error
+        -cdata = "$(def-user)@$(virtual-host)"
+        -source-file = "tests/data/AdHocSessManUpdateUserRosterEntryExt.cot"
+    } >> Execute script sess-man/Update user roster entry, extended version. :: (domain-user) as (domain-admin) <<
+
+## sess-man/Fixes user's roster
+    # executing script as admin
+    AdminAdHoc sess-man_5_1@common: {
+        #-debug
+        -user-name = $(stats-user)
+        -user-pass = $(stats-pass)
+        #-to-jid = "$(server-host)" # specs!
+        -to-jid = "sess-man@$(server-host)"
+        -cdata = "$(def-user)@$(server-host)"
+        -source-file = "tests/data/AdHocSessManFixesUsersRoster.cot"
+    } >> Execute script sess-man/Fixes user's roster as (server-admin) <<
+
+    # executing script as domain-admin
+    AdminAdHoc sess-man_5_2@common: {
+        #-debug
+        -user-name = $(domain-admin-user)
+        #-to-jid = "$(virtual-host)" # specs!
+        -to-jid = "sess-man@$(virtual-host)"
+        -host = $(virtual-host)
+        #-expect-type = error
+        -cdata = "$(def-user)@$(server-host)"
+        -source-file = "tests/data/AdHocSessManFixesUsersRosterError.cot"
+    } >> Execute script sess-man/Fixes user's roster as (domain-admin) [expecting error] <<
+
+## sess-man/Fixes user's roster on Tigase cluster
+    # executing script as admin
+    AdminAdHoc sess-man_6_1@common: {
+        #-debug
+        -user-name = $(stats-user)
+        -user-pass = $(stats-pass)
+        #-to-jid = "$(server-host)" # specs!
+        -to-jid = "sess-man@$(server-host)"
+        -cdata = "$(def-user)@$(server-host)"
+        -source-file = "tests/data/AdHocSessManFixesUsersRosterCluster.cot"
+    } >> Execute script sess-man/Fixes user's roster on Tigase cluster as (server-admin) <<
+
+    # executing script as domain-admin
+    AdminAdHoc sess-man_6_2@common: {
+        #-debug
+        -user-name = $(domain-admin-user)
+        #-to-jid = "$(virtual-host)" # specs!
+        -to-jid = "sess-man@$(virtual-host)"
+        -host = $(virtual-host)
+        #-expect-type = error
+        -cdata = "$(def-user)@$(server-host)"
+        -source-file = "tests/data/AdHocSessManFixesUsersRosterClusterError.cot"
+    } >> Execute script sess-man/Fixes user's roster on Tigase cluster as (domain-admin) [expecting error] <<
+
+
+
+## sess-man/ConnectionTime
+    # executing script as admin
+    AdminAdHoc sess-man_7_1@common: {
+        -user-name = $(stats-user)
+        -user-pass = $(stats-pass)
+        -to-jid = "sess-man@$(server-host)"
+        -cdata = "$(def-user)@$(server-host)"
+        -source-file = "tests/data/AdHocSessManConnectionTime.cot"
+    } >> Execute script sess-man/ConnectionTime as (server-admin) <<
+
+    # executing script as domain-admin
+    AdminAdHoc sess-man_7_2@common: {
+        -user-name = $(domain-admin-user)
+        -to-jid = "sess-man@$(virtual-host)"
+        -host = $(virtual-host)
+        -cdata = "$(def-user)@$(server-host)"
+        -source-file = "tests/data/AdHocSessManConnectionTime.cot"
+    } >> Execute script sess-man/ConnectionTime as (domain-admin) <<
+    # results are not differentiated on per domain basis therefore running the script can be valid for VHost admin
+
+
+## sess-man/Change user inter-domain communication permission
+    # executing script as admin
+    AdminAdHoc sess-man_8_1@common: {
+        -user-name = $(stats-user)
+        -user-pass = $(stats-pass)
+        -to-jid = "sess-man@$(server-host)"
+        -cdata = "$(def-user)@$(server-host)"
+        -source-file = "tests/data/AdHocSessManChangeInterDomainPermission.cot"
+    } >> Execute script sess-man/Change user inter-domain communication permission as (server-admin) <<
+
+    # executing script as domain-admin
+    AdminAdHoc sess-man_8_2@common: {
+        #-debug
+        -user-name = $(domain-admin-user)
+        -to-jid = "sess-man@$(virtual-host)"
+        -host = $(virtual-host)
+        #-expect-type = error
+        -cdata = "$(def-user)@$(server-host)"
+        -source-file = "tests/data/AdHocSessManChangeInterDomainPermissionError.cot"
+    } >> Execute script sess-man/Change user inter-domain communication permission as (domain-admin) [expecting error] <<
+
+
+################ non XEP functionality
+################################################################################################################################
+
+
+}
+>> Admin ad-hoc scripts <<

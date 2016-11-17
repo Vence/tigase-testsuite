@@ -1,0 +1,39 @@
+<test-history test='Configuration'>
+<OUTPUT test='Configuration'>
+<![CDATA[<stream:stream xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' to='192.168.72.130' version='1.0'/>
+]]></OUTPUT>
+<INPUT test='Configuration'>
+<![CDATA[<stream:stream xmlns="jabber:client" id="5afc5b9a-6d53-40da-80fc-a2083a3585e4" version="1.0" xmlns:stream="http://etherx.jabber.org/streams" from="192.168.72.130" xml:lang="en"/>
+]]></INPUT>
+<INPUT test='Configuration'>
+<![CDATA[<stream:features><auth xmlns="http://jabber.org/features/iq-auth"/><register xmlns="http://jabber.org/features/iq-register"/><mechanisms xmlns="urn:ietf:params:xml:ns:xmpp-sasl"><mechanism>PLAIN</mechanism><mechanism>ANONYMOUS</mechanism></mechanisms><ver xmlns="urn:xmpp:features:rosterver"/><starttls xmlns="urn:ietf:params:xml:ns:xmpp-tls"/><compression xmlns="http://jabber.org/features/compress"><method>zlib</method></compression></stream:features>
+]]></INPUT>
+<OUTPUT test='Configuration'>
+<![CDATA[<auth xmlns='urn:ietf:params:xml:ns:xmpp-sasl' mechanism='PLAIN'>AGFkbWluAHN0YXRz</auth>
+]]></OUTPUT>
+<INPUT test='Configuration'>
+<![CDATA[<success xmlns="urn:ietf:params:xml:ns:xmpp-sasl"/>
+]]></INPUT>
+<OUTPUT test='Configuration'>
+<![CDATA[<stream:stream xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' to='192.168.72.130' version='1.0'>
+]]></OUTPUT>
+<INPUT test='Configuration'>
+<![CDATA[<stream:stream xmlns="jabber:client" id="5afc5b9a-6d53-40da-80fc-a2083a3585e4" version="1.0" xmlns:stream="http://etherx.jabber.org/streams" from="192.168.72.130" xml:lang="en"/>
+]]></INPUT>
+<INPUT test='Configuration'>
+<![CDATA[<stream:features><register xmlns="http://jabber.org/features/iq-register"/><ver xmlns="urn:xmpp:features:rosterver"/><starttls xmlns="urn:ietf:params:xml:ns:xmpp-tls"/><compression xmlns="http://jabber.org/features/compress"><method>zlib</method></compression><bind xmlns="urn:ietf:params:xml:ns:xmpp-bind"/><session xmlns="urn:ietf:params:xml:ns:xmpp-session"/></stream:features>
+]]></INPUT>
+<OUTPUT test='Configuration'>
+<![CDATA[<iq type='set' id='bind1'><bind xmlns='urn:ietf:params:xml:ns:xmpp-bind'><resource>def-user-resource</resource></bind></iq>
+]]></OUTPUT>
+<INPUT test='Configuration'>
+<![CDATA[<iq xmlns="jabber:client" id="bind1" to="admin@192.168.72.130/def-user-resource" type="result"><bind xmlns="urn:ietf:params:xml:ns:xmpp-bind"><jid>admin@192.168.72.130/def-user-resource</jid></bind></iq>
+]]></INPUT>
+<OUTPUT test='Configuration'>
+<![CDATA[<iq type="set" to="basic-conf@192.168.72.130" id="config-get"><command xmlns="http://jabber.org/protocol/commands" node="config-list"><x xmlns="jabber:x:data" type="submit"><field type="list-single" var="comp-name"><value>sess-man</value></field></x></command></iq>
+]]></OUTPUT>
+<INPUT test='Configuration'>
+<![CDATA[<iq id="config-get" to="admin@192.168.72.130/def-user-resource" from="basic-conf@192.168.72.130" type="result"><command xmlns="http://jabber.org/protocol/commands" status="completed" node="config-list"><x xmlns="jabber:x:data" type="result"><field var="comp-name" type="fixed"><value>sess-man</value></field><field var="params-set" type="hidden"><value>params-set</value></field><field var="sess-man/component-id"><value>sess-man@ubuntu</value></field><field var="sess-man/def-hostname"><value>ubuntu</value></field><field var="sess-man/admins"><value>admin@192.168.72.130</value></field><field var="sess-man/scripts-dir"><value>scripts/admin</value></field><field var="sess-man/command/ALL"><value>ADMIN</value></field><field var="sess-man/max-queue-size"><value>5060</value></field><field var="sess-man/scheduler-threads"><value>1</value></field><field var="sess-man/incoming-filters"><value>tigase.server.filters.PacketCounter</value></field><field var="sess-man/outgoing-filters"><value>tigase.server.filters.PacketCounter</value></field><field var="sess-man/admin-scripts-dir"><value>scripts/admin/</value></field><field var="sess-man/plugins"><value>session-close, session-open, default-handler, jabber:iq:register, jabber:iq:auth, urn:ietf:params:xml:ns:xmpp-sasl, urn:ietf:params:xml:ns:xmpp-bind, urn:ietf:params:xml:ns:xmpp-session, jabber:iq:roster, jabber:iq:privacy, jabber:iq:version, http://jabber.org/protocol/stats, starttls, vcard-temp, http://jabber.org/protocol/commands, jabber:iq:private, urn:xmpp:ping, presence, disco, domain-filter, zlib, message-carbons, message-archive-xep-0136, kunlun-pep, kunlun-amp, message-apns</value></field><field var="sess-man/plugins-concurrency"><value/></field><field var="sess-man/skip-privacy"><value>false</value></field><field var="sess-man/trusted"><value>admin@192.168.72.130</value></field><field var="sess-man/offline-user-autocreate"><value>false</value></field><field var="sess-man/sm-threads-pool"><value>default</value></field><field var="sess-man/force-detail-stale-connection-check"><value>true</value></field><field var="sess-man/stale-connection-closer-queue-size"><value>1000</value></field><field var="sess-man/auth-timeout"><value>120</value></field><field var="sess-man/sm-cluster-strategy-class"><value>tigase.cluster.strategy.DefaultClusteringStrategy</value></field><field var="sess-man/error-forwarding"><value>drop</value></field><field var="sess-man/domain-name"><value>192.168.72.130</value></field></x></command></iq>
+]]></INPUT>
+
+</test-history>

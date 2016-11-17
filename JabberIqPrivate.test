@@ -1,0 +1,14 @@
+send: {
+
+<iq type="set" id="1001">
+  <query xmlns="jabber:iq:private">
+    <exodus xmlns="exodus:prefs">
+      <defaultnick>Hamlet</defaultnick>
+    </exodus>
+  </query>
+</iq>
+}
+
+expect: {
+<iq type="result" id="1001"/>
+}

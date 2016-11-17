@@ -1,0 +1,291 @@
+##
+##  Tigase XMPP/Jabber Test Suite
+##  Copyright (C) 2004-2009 "Artur Hefczyc" <artur.hefczyc@tigase.org>
+##
+##  This program is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License.
+##
+##  This program is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with this program. Look for COPYING file in the top folder.
+##  If not, see http://www.gnu.org/licenses/.
+##
+##  $Rev: $
+##  Last modified by $Author: $
+##  $Date: $
+##
+# Script version number
+-version = "2.0.0"
+
+# Additional global settings
+
+-output-format  = html
+-output-file    = "../www/stability-tests.html"
+-output-history = no
+# Only valid values for setting below are: 5 or 7
+# 7 means:
+# "Test name", "Result", "Total time", "OK", "Average", "Description" [, "History" ]
+# 5 means:
+# "Test name", "Result", "Test time", "Description" [, "History" ]
+# History column is optional if -output-history is "true | yes | 1 | on | tak"
+-output-cols    = 7
+-title          = "XMPP Server stability tests."
+
+# Other global settings
+-debug-on-error
+
+$(server-host) = "192.168.72.130"
+$(repeats)      = 100000
+$(daemon-users) = 1
+$(daemon-user) = tester_1
+$(def-user)    = perf-tester
+$(long-list-user) = long-list-user_1
+$(messages)     = 10
+$(stats-user) = admin
+$(stats-pass) = stats
+
+-serverip    = "192.168.72.130"
+-host        = $(server-host)
+-socket-wait = 5000
+-base-ns     = "jabber:client"
+
+-loop                 = $(repeats)
+-keys-file-password   = keystore
+-trusts-file-password = truststore
+-keys-file            = "certs/keystore"
+-trusts-file          = "certs/client_truststore"
+-def-auth             = auth-plain
+
+-user-name   = $(stats-user)
+-user-pass   = $(stats-pass)
+-user_resr = perf-test
+
+# Now tell TestLoader how to obtain server version and
+# get server statistics.
+# It can detect test with names: Version and Statistics
+Version@iq-version: { -loop = 1 } >> Get server version <<
+Configuration@command-get-config:
+{ -loop = 1 -user-name=$(stats-user) -user-pass=$(stats-pass) }
+>> Server configuration <<
+Statistics@iq-stats: { -loop = 1 -user-name=$(stats-user) -user-pass=$(stats-pass) }
+ >> Get server statistics <<
+Common test@auth-plain;common: {
+  -loop = 1
+  -no-record
+#  -debug
+  -source-file = "tests/data/CreateTesterTask.cot"
+}
+>> Create tester task <<
+
+# This is not actual test. This is container for all common variables
+# and parameters for other tests which inherits this settings.
+Global settings:
+{
+
+# Initialization section, this tests are rather cleanup tasks
+# To prepare server environment before real tests.
+# For example remove user accounts which will be created during
+# later tests. Otherwise we will get errors
+
+#   Warm up prep@user-register: { -no-record -loop = 1 }
+#   >> Create user acc for server warm up <<
+
+  Server warm up 1@ssl-init;msg-send:
+  Send $(repeats) messages to self user over SSL
+  {
+    $(repeats) = 100
+
+#    -no-record
+
+    -messages  = 1
+    -loop      = $(repeats)
+    -port      = 5223
+    -to-jid    = $(self)
+  }
+  >> Send $(repeats) messages to self user over SSL and don\'t wait for
+  response <<
+
+
+  Server warm up 2@ssl-init;msg-send:
+  Send $(repeats) messages to self user over SSL on one connection
+  {
+    $(repeats) = 100
+
+#    -no-record
+    -on-one-socket
+
+    -messages  = 1
+    -loop      = $(repeats)
+    -port      = 5223
+    -to-jid    = $(self)
+  }
+  >> Send $(repeats) messages to self user over SSL and don\'t wait for
+  response on one connection <<
+
+  Prep 1@user-register: Register $(daemon-users) test user accounts {
+    $(daemon-users) = 5000
+    -no-record
+    -on-one-socket
+    -loop-start = 1
+    -delay     = 0
+    -loop          = $(daemon-users)
+    -user-name     = "perf-test_$(loop)"
+  }
+  >> Create $(daemon-users) user account <<
+
+# Real tests section
+
+ Test 0@xmpp-session:
+ Bind XMPP session over TLS $(repeats) times
+ >> Bind XMPP session over TLS $(repeats) times <<
+
+  Init 1@user-unregister: Remove test account { -no-record -loop = 1 }
+  >> Remove test account - just in case if there is already such account <<
+
+  Test 1@user-register;user-unregister: Add and remove account $(repeats) times
+  !! Remove user@user-unregister: { -loop = 1 }
+  >> Add and remove user account over plain socket $(repeats) times <<
+
+  Test 2@user-register: Register $(repeats) user accounts
+  {
+    -on-one-socket
+
+    -user-name = "all-xmpp-test$(loop)"
+  }
+  >> Add $(repeats) number of user accounts over plain socket <<
+
+  Test 3@user-unregister: Unregister $(repeats) user accounts
+  {
+    -user-name = "all-xmpp-test$(loop)"
+  }
+  !! Remove user@user-unregister: { -loop = 1 }
+  >> Remove $(repeats) number of user accounts over plain socket <<
+
+#   Prep 8@user-unregister: Unregister test user { -no-record -loop = 1 }
+#   >> Unregister test user <<
+
+  Test 4@ssl-init;user-register;user-unregister:
+  Add and remove account $(repeats) times over SSL
+  { -port = 5223 }
+  !! Unregister user@user-unregister: { -port = 5222 -loop = 1 }
+  >> Add and remove user account over SSL $(repeats) times <<
+
+  Prep 9@user-register: Create test user account { -no-record -loop = 1 }
+  >> Create test user account for using by later tests  <<
+
+  Test 5@xmpp-session:
+  Bind XMPP session over TLS $(repeats) times
+  >> Bind XMPP session over TLS $(repeats) times <<
+
+#  Prep 10@user-unregister: {
+#    -no-record
+#    -user-name = $(long-list-user)
+#    -loop = 1
+#  } >> Remove test account. <<
+
+  Prep 11@user-register: {
+    -no-record
+    -user-name = $(long-list-user)
+    -loop = 1
+  } >> Create a daemon user account with very long privacy list <<
+
+  Prep 12@privacy-long-list;msg-listen: {
+    -no-record
+    -daemon
+
+    -loop = 1
+    -socket-wait = 0
+    -user-name   = $(long-list-user)
+    -delay       = 5000
+  } >> Setup a user daemon with very long privacy list <<
+
+  Test 6@msg-send: Send $(repeats) * $(messages) * 2 messages to $(long-list-user) user with very long privacy list
+  {
+    -on-one-socket
+
+    -delay       = 0
+    -socket-wait = 5000
+    -loop        = $(repeats)
+    -messages    = $(messages)
+    -to-jid = "$(long-list-user)@$(server-host)/xmpp-test"
+  } >> Send a message to $(long-list-user)@$(server-host)/xmpp-test user
+  with very long privacy list and wait for message response <<
+
+#   Test end@user-unregister: Cleanup, test user unregister
+#   { -no-record -loop = 1 }
+#   >> Cleanup - test user unregister <<
+
+  Test 7@auth-plain;common: Setup $(daemon-users) daemon connections sending $(repeats) messages to $(daemon-user) user
+  {
+#      -debug
+    $(daemon-users) = 10
+    -loop-delay = 1
+    -multi-thread
+    -repeat-script = $(repeats)
+    -repeat-wait = 1
+    -loop-start = 1
+    -loop          = $(daemon-users)
+    -background
+    -user-name     = "perf-test_$(loop)"
+    -to-jid = "$(daemon-user)@srecv.$(server-host)"
+    -source-file = "tests/data/TesterMessage.cot"
+  } >> Send a message to $(daemon-user) user <<
+
+  Test 8@auth-plain;common: Setup $(daemon-users) daemon connections sending $(repeats) messages to $(daemon-user) user
+  {
+#      -debug
+    $(daemon-users) = 100
+    -loop-delay = 10
+    -multi-thread
+    -repeat-script = $(repeats)
+    -repeat-wait = 1
+    -loop-start = 1
+    -loop          = $(daemon-users)
+    -background
+    -user-name     = "perf-test_$(loop)"
+    -to-jid = "$(daemon-user)@srecv.$(server-host)"
+    -source-file = "tests/data/TesterMessage.cot"
+  } >> Send a message to $(daemon-user) user <<
+
+  Test 9@auth-plain;common: Setup $(daemon-users) daemon connections sending $(repeats) messages to $(daemon-user) user
+  {
+#      -debug
+    $(daemon-users) = 500
+    -loop-delay = 50
+
+    -multi-thread
+    -repeat-script = $(repeats)
+    -repeat-wait = 1
+    -loop-start = 1
+    -loop          = $(daemon-users)
+    -background
+    -user-name     = "perf-test_$(loop)"
+    -to-jid = "$(daemon-user)@srecv.$(server-host)"
+    -source-file = "tests/data/TesterMessage.cot"
+  } >> Send a message to $(daemon-user) user <<
+
+  Test 9@auth-plain;common: Setup $(daemon-users) daemon connections sending $(repeats) messages to $(daemon-user) user
+  {
+#      -debug
+    $(daemon-users) = 1000
+    -loop-delay = 100
+
+    -multi-thread
+    -repeat-script = $(repeats)
+    -repeat-wait = 1
+    -loop-start = 1
+    -loop          = $(daemon-users)
+    -background
+    -user-name     = "perf-test_$(loop)"
+    -to-jid = "$(daemon-user)@srecv.$(server-host)"
+    -source-file = "tests/data/TesterMessage.cot"
+  } >> Send a message to $(daemon-user) user <<
+
+}
+>> Script with stability tests, selected tests are repeated
+$(repeats) times, processing time is measured for each XMPP/Jabber feature <<

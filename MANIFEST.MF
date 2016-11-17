@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Created-By: Artur Hefczyc
+Main-Class: tigase.test.TestSuite
+
+Name: tigase/test/
+Specification-Title: Tigase Test Suite
+Specification-Version: 2.1.1
+Specification-Vendor: tigase.org
+Implementation-Title: tigase.test
+Implementation-Version: 2.1.1-b
+Implementation-Vendor: tigase.org
+Package-Title: tigase.test
+Package-Version: build
+Package-Vendor: tigase.org
+Tigase-Version: 2.1.1-b

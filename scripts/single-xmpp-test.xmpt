@@ -1,0 +1,58 @@
+##
+##  Tigase XMPP/Jabber Test Suite
+##  Copyright (C) 2004-2009 "Artur Hefczyc" <artur.hefczyc@tigase.org>
+##
+##  This program is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License.
+##
+##  This program is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with this program. Look for COPYING file in the top folder.
+##  If not, see http://www.gnu.org/licenses/.
+##
+##  $Rev: $
+##  Last modified by $Author: $
+##  $Date: $
+##
+-version = "2.0.0"
+
+-output-format  = html
+-output-file    = "files/single-test.html"
+-output-history = yes
+-history-format = separate-file
+-output-cols    = 7
+-title          = "XMPP Server single, common test."
+
+$(server-host) = "192.168.72.130"
+$(def-user)    = all-xmpp-test
+$(daemon-user) = all-xmpp-test_1
+$(blocking-user) = blocking-test-user_1
+$(long-list-user) = long-list-user_1
+$(ssl-tls-wait) = 5000
+$(stats-user) = admin
+$(stats-pass) = stats
+
+-serverip    = "192.168.72.130"
+-host        = $(server-host)
+-user-name   = $(stats-user)
+-user-pass   = $(stats-pass)
+-socket-wait = 5000
+-base-ns     = "jabber:client"
+-def-auth    = auth-sasl
+-def-stream  = stream-client
+-keys-file-password   = keystore
+-trusts-file-password = truststore
+-keys-file            = "certs/keystore"
+-trusts-file          = "certs/client_truststore"
+
+-debug-on-error
+
+Version@auth-sasl;iq-version: >> Get server version <<
+Configuration@command-get-config: >> Server configuration <<
+Statistics@iq-stats: >> Server statistics <<
+Common test@xmpp-session;common: >> Common test <<

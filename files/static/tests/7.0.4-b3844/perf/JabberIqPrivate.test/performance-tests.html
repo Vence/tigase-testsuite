@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+ <head>
+  <title>XMPP Server performance tests.</title>
+ </head>
+ <body>
+  <h2>XMPP Server performance tests.</h2>
+  <b>
+   <ol>
+    <li> Get server version </li>
+    <li> Server configuration </li>
+    <li> Get server statistics </li>
+    <li> Create user acc for server warm up </li>
+    <li> Create tester task </li>
+    <li> Script with performance tests, selected tests are repeated
+$(repeats) times, processing time is measured for each XMPP/Jabber feature </li>
+   </ol>
+  </b>
+
+  <p>Test start time: <b>2016-11-15 15:19:26</b></p>
+   <h3>Server version info:</h3>
+   <table>
+    <tr valign="top"><td width="15%">Name:</td><td width="3%">&nbsp;</td><td width="2%">&nbsp;</td><td width="80%"><b>Tigase</b></td></tr>
+    <tr valign="top"><td width="15%">Version:</td><td width="3%">&nbsp;</td><td width="2%">&nbsp;</td><td width="80%"><b>7.0.4-b3844/014490ac (2016-04-28/09:01:54)</b></td></tr>
+    <tr valign="top"><td width="15%">OS:</td><td width="3%">&nbsp;</td><td width="2%">&nbsp;</td><td width="80%"><b>Linux-amd64-3.19.0-26-generic, Java HotSpot(TM) 64-Bit Server VM-25.111-b14-Oracle Corporation</b></td></tr>
+    <tr valign="top"><td width="15%">&nbsp;</td><td width="3%">&nbsp;</td><td width="2%">&nbsp;</td><td width="80%">&nbsp;</td></tr>
+    <tr valign="top"><td width="15%">Local IP:</td><td width="3%">&nbsp;</td><td width="2%">&nbsp;</td><td width="80%"><b>192.168.72.1</b></td></tr>
+    <tr valign="top"><td width="15%">Remote IP:</td><td width="3%">&nbsp;</td><td width="2%">&nbsp;</td><td width="80%"><b>192.168.72.130</b></td></tr>
+   </table>
+      <h3>Server basic configuration parameters:</h3>
+   <table>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/component-id</td><td width="2%">&nbsp;</td><td width="58%"><b>sess-man@ubuntu</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/def-hostname</td><td width="2%">&nbsp;</td><td width="58%"><b>ubuntu</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/admins</td><td width="2%">&nbsp;</td><td width="58%"><b>admin@192.168.72.130</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/scripts-dir</td><td width="2%">&nbsp;</td><td width="58%"><b>scripts/admin</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/command/ALL</td><td width="2%">&nbsp;</td><td width="58%"><b>ADMIN</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/max-queue-size</td><td width="2%">&nbsp;</td><td width="58%"><b>5060</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/scheduler-threads</td><td width="2%">&nbsp;</td><td width="58%"><b>1</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/incoming-filters</td><td width="2%">&nbsp;</td><td width="58%"><b>tigase.server.filters.PacketCounter</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/outgoing-filters</td><td width="2%">&nbsp;</td><td width="58%"><b>tigase.server.filters.PacketCounter</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/admin-scripts-dir</td><td width="2%">&nbsp;</td><td width="58%"><b>scripts/admin/</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/plugins</td><td width="2%">&nbsp;</td><td width="58%"><b>session-close, session-open, default-handler, jabber:iq:register, jabber:iq:auth, urn:ietf:params:xml:ns:xmpp-sasl, urn:ietf:params:xml:ns:xmpp-bind, urn:ietf:params:xml:ns:xmpp-session, jabber:iq:roster, jabber:iq:privacy, jabber:iq:version, http://jabber.org/protocol/stats, starttls, vcard-temp, http://jabber.org/protocol/commands, jabber:iq:private, urn:xmpp:ping, presence, disco, domain-filter, zlib, message-carbons, message-archive-xep-0136, kunlun-pep, kunlun-amp, message-apns</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/plugins-concurrency</td><td width="2%">&nbsp;</td><td width="58%"><b></b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/skip-privacy</td><td width="2%">&nbsp;</td><td width="58%"><b>false</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/trusted</td><td width="2%">&nbsp;</td><td width="58%"><b>admin@192.168.72.130</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/offline-user-autocreate</td><td width="2%">&nbsp;</td><td width="58%"><b>false</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/sm-threads-pool</td><td width="2%">&nbsp;</td><td width="58%"><b>default</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/force-detail-stale-connection-check</td><td width="2%">&nbsp;</td><td width="58%"><b>true</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/stale-connection-closer-queue-size</td><td width="2%">&nbsp;</td><td width="58%"><b>1000</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/auth-timeout</td><td width="2%">&nbsp;</td><td width="58%"><b>120</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/sm-cluster-strategy-class</td><td width="2%">&nbsp;</td><td width="58%"><b>tigase.cluster.strategy.DefaultClusteringStrategy</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/error-forwarding</td><td width="2%">&nbsp;</td><td width="58%"><b>drop</b></td></tr>
+    <tr valign="top"><td width="20%">sess-man:</td><td width="20%">sess-man/domain-name</td><td width="2%">&nbsp;</td><td width="58%"><b>192.168.72.130</b></td></tr>
+   </table>
+  </p>
+   <h3>Tests results:</h3>
+  <p>
+  <table border='1' style='min-width: 800px;'>
+   <thead valign='middle'>
+    <tr>
+     <th width='225px'>Test name</th>
+     <th>Result</th>
+     <th>Total time</th>
+     <th>OK</th>
+     <th>Average</th>
+     <th>Description</th>
+    </tr>
+   </thead>
+   <tr valign="top">    <td>Version</td>    <td bgcolor="#90FF90"><b>success</b></td>    <td>0 sec</td>    <td>1</td>    <td><b>142</b> ms</td>    <td> Get server version </td>   </tr>
+   <tr valign="top">    <td>Configuration</td>    <td bgcolor="#90FF90"><b>success</b></td>    <td>0 sec</td>    <td>1</td>    <td><b>205</b> ms</td>    <td> Server configuration </td>   </tr>
+   <tr valign="top">    <td>Statistics</td>    <td bgcolor="#90FF90"><b>success</b></td>    <td>0 sec</td>    <td>1</td>    <td><b>243</b> ms</td>    <td> Get server statistics </td>   </tr>
+   <tr valign="top">    <td>Prep 1</td>    <td bgcolor="#90FF90"><b>success</b></td>    <td>0 sec</td>    <td>50</td>    <td><b>16</b> ms</td>    <td> Register 50 test user accounts </td>   </tr>
+   <tr valign="top">    <td>Test 0</td>    <td bgcolor="#90FF90"><b>success</b></td>    <td>1 sec</td>    <td>10</td>    <td><b>129</b> ms</td>    <td> Bind XMPP session over TLS 10 times </td>   </tr>
+   <tr valign="top">    <td>Test 2</td>    <td bgcolor="#90FF90"><b>success</b></td>    <td>0 sec</td>    <td>10</td>    <td><b>18</b> ms</td>    <td> Register 10 user accounts  </td>   </tr>
+   <tr valign="top">    <td>Test 3</td>    <td bgcolor="#90FF90"><b>success</b></td>    <td>1 sec</td>    <td>10</td>    <td><b>154</b> ms</td>    <td> Unregister 10 user accounts  </td>   </tr>
+   <tr valign="top">    <td>Prep 12</td>    <td bgcolor="#90FF90"><b>success</b></td>    <td>1 sec</td>    <td>1</td>    <td><b>0</b> ms</td>    <td> Setup a user daemon with very long privacy list </td>   </tr>

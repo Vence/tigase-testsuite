@@ -1,0 +1,22 @@
+<html>
+	<head>
+		<title>Tigase XMPP Server automated tests reports</title>
+	</head>
+<body>
+
+<h1>Tigase XMPP Server automated tests reports</h1>
+
+<p>This is a page with reports for the automatic tests we run for each public release of the Tigase server. In fact we run these tests much more often. They are part of our development.</p>
+<p>This is the new page with redesigned layout for test reports. The old page for all older versions is available <a href="/tests">here</a>. We are now running more and more tests for each release to limit number of bugs to minimum thus the new page to present results in more convenient way.</p>
+<p>What tests do we run? There are 4 major automatic tests scenarios we run:</p>
+<ol>
+    <li>Functional tests - published for each release for all databases we support: MySQL, PostgreSQL and Derby. There are also 3 variants for each database the server can be configured in: <strong>default authentication</strong>, <strong>stored procedures based</strong>&nbsp;(SP) authentication and authentication based on <strong>custom SQL queries</strong> (SQL). Functional tests are run for all of them.</li>
+    <li>Performance tests - published for each major release for all databases we support: MySQL, PostgreSQL and Derby.</li>
+    <li>Load tests - we run them occasionally when we have an access to proper equipment as we don't own hardware good enough to run load tests. The last load tests results are published on a separate page. Click on the 'Load tests' link in the menu on the left hand side of the page.</li>
+    <li>Clustering tests - we run them during our development process to make sure the server works correctly in the cluster mode. The results are not directly related to any public release yet and they are available on a separate page. To find the report please click 'Clustering tests' link in the menu on the left hand side of the page.</li>
+</ol>
+
+<ul>
+<li><a href="#func">Functional tests</a></li>
+<li><a href="#lmem">Low memory tests</a></li>
+</ul>

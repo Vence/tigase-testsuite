@@ -1,0 +1,117 @@
+<test-history test='Privacy 1 (c2s)'>
+<OUTPUT test='Privacy 1 (c2s)'>
+<![CDATA[<stream:stream xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' to='192.168.72.130' version='1.0'/>
+]]></OUTPUT>
+<INPUT test='Privacy 1 (c2s)'>
+<![CDATA[<stream:stream xmlns="jabber:client" id="7fec886c-22dc-4f9f-a332-3f8b65d0e23a" version="1.0" xmlns:stream="http://etherx.jabber.org/streams" from="192.168.72.130" xml:lang="en"/>
+]]></INPUT>
+<INPUT test='Privacy 1 (c2s)'>
+<![CDATA[<stream:features><auth xmlns="http://jabber.org/features/iq-auth"/><register xmlns="http://jabber.org/features/iq-register"/><mechanisms xmlns="urn:ietf:params:xml:ns:xmpp-sasl"><mechanism>PLAIN</mechanism><mechanism>ANONYMOUS</mechanism></mechanisms><ver xmlns="urn:xmpp:features:rosterver"/><starttls xmlns="urn:ietf:params:xml:ns:xmpp-tls"/><compression xmlns="http://jabber.org/features/compress"><method>zlib</method></compression></stream:features>
+]]></INPUT>
+<OUTPUT test='Privacy 1 (c2s)'>
+<![CDATA[<auth xmlns='urn:ietf:params:xml:ns:xmpp-sasl' mechanism='PLAIN'>AGFsbC14bXBwLXRlc3QAYWxsLXhtcHAtdGVzdC1wYXNzd29yZA==</auth>
+]]></OUTPUT>
+<INPUT test='Privacy 1 (c2s)'>
+<![CDATA[<success xmlns="urn:ietf:params:xml:ns:xmpp-sasl"/>
+]]></INPUT>
+<OUTPUT test='Privacy 1 (c2s)'>
+<![CDATA[<stream:stream xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' to='192.168.72.130' version='1.0'>
+]]></OUTPUT>
+<INPUT test='Privacy 1 (c2s)'>
+<![CDATA[<stream:stream xmlns="jabber:client" id="7fec886c-22dc-4f9f-a332-3f8b65d0e23a" version="1.0" xmlns:stream="http://etherx.jabber.org/streams" from="192.168.72.130" xml:lang="en"/>
+]]></INPUT>
+<INPUT test='Privacy 1 (c2s)'>
+<![CDATA[<stream:features><register xmlns="http://jabber.org/features/iq-register"/><ver xmlns="urn:xmpp:features:rosterver"/><starttls xmlns="urn:ietf:params:xml:ns:xmpp-tls"/><compression xmlns="http://jabber.org/features/compress"><method>zlib</method></compression><bind xmlns="urn:ietf:params:xml:ns:xmpp-bind"/><session xmlns="urn:ietf:params:xml:ns:xmpp-session"/></stream:features>
+]]></INPUT>
+<OUTPUT test='Privacy 1 (c2s)'>
+<![CDATA[<iq type='set' id='bind1'><bind xmlns='urn:ietf:params:xml:ns:xmpp-bind'><resource>def-user-resource</resource></bind></iq>
+]]></OUTPUT>
+<INPUT test='Privacy 1 (c2s)'>
+<![CDATA[<iq xmlns="jabber:client" id="bind1" to="all-xmpp-test@192.168.72.130/def-user-resource" type="result"><bind xmlns="urn:ietf:params:xml:ns:xmpp-bind"><jid>all-xmpp-test@192.168.72.130/def-user-resource</jid></bind></iq>
+]]></INPUT>
+<OUTPUT test='Privacy 1 (c2s)'>
+<![CDATA[<iq type="get" id="privacy_1" from="all-xmpp-test@192.168.72.130/def-user-resource"><query xmlns="jabber:iq:privacy"/></iq>
+]]></OUTPUT>
+<INPUT test='Privacy 1 (c2s)'>
+<![CDATA[<iq xmlns="jabber:client" id="privacy_1" to="all-xmpp-test@192.168.72.130/def-user-resource" type="result"><query xmlns="jabber:iq:privacy"/></iq>
+]]></INPUT>
+<OUTPUT test='Privacy 1 (c2s)'>
+<![CDATA[<iq type="set" id="privacy_2" from="all-xmpp-test@192.168.72.130/def-user-resource"><query xmlns="jabber:iq:privacy"><list name='public'><item type='jid'	value='tybalt@example.com' action='deny' order='3'/><item type='jid' value='paris@example.org' action='deny' order='5'/><item action='allow' order='68'/></list></query></iq>
+]]></OUTPUT>
+<INPUT test='Privacy 1 (c2s)'>
+<![CDATA[<iq xmlns="jabber:client" id="privacy_2" to="all-xmpp-test@192.168.72.130/def-user-resource" type="result"/>
+]]></INPUT>
+<OUTPUT test='Privacy 1 (c2s)'>
+<![CDATA[<iq type="get" id="privacy_3" from="all-xmpp-test@192.168.72.130/def-user-resource"><query xmlns="jabber:iq:privacy"/></iq>
+]]></OUTPUT>
+<INPUT test='Privacy 1 (c2s)'>
+<![CDATA[<iq xmlns="jabber:client" id="privacy_3" to="all-xmpp-test@192.168.72.130/def-user-resource" type="result"><query xmlns="jabber:iq:privacy"><list name="public"/></query></iq>
+]]></INPUT>
+<OUTPUT test='Privacy 1 (c2s)'>
+<![CDATA[<iq type="get" id="privacy_4" from="all-xmpp-test@192.168.72.130/def-user-resource"><query xmlns="jabber:iq:privacy"><list name="public"/></query></iq>
+]]></OUTPUT>
+<INPUT test='Privacy 1 (c2s)'>
+<![CDATA[<iq xmlns="jabber:client" id="privacy_4" to="all-xmpp-test@192.168.72.130/def-user-resource" type="result"><query xmlns="jabber:iq:privacy"><list name="public"><item value="tybalt@example.com" action="deny" order="3" type="jid"/><item value="paris@example.org" action="deny" order="5" type="jid"/><item action="allow" order="68"/></list></query></iq>
+]]></INPUT>
+<OUTPUT test='Privacy 1 (c2s)'>
+<![CDATA[<iq type="set" id="privacy_5" from="all-xmpp-test@192.168.72.130/def-user-resource"><query xmlns="jabber:iq:privacy"><active name="public"/></query></iq>
+]]></OUTPUT>
+<INPUT test='Privacy 1 (c2s)'>
+<![CDATA[<iq xmlns="jabber:client" id="privacy_5" to="all-xmpp-test@192.168.72.130/def-user-resource" type="result"/>
+]]></INPUT>
+<OUTPUT test='Privacy 1 (c2s)'>
+<![CDATA[<iq type="get" id="privacy_6" from="all-xmpp-test@192.168.72.130/def-user-resource"><query xmlns="jabber:iq:privacy"/></iq>
+]]></OUTPUT>
+<INPUT test='Privacy 1 (c2s)'>
+<![CDATA[<iq xmlns="jabber:client" id="privacy_6" to="all-xmpp-test@192.168.72.130/def-user-resource" type="result"><query xmlns="jabber:iq:privacy"><list name="public"/><active name="public"/></query></iq>
+]]></INPUT>
+<OUTPUT test='Privacy 1 (c2s)'>
+<![CDATA[<iq type="set" id="privacy_7" from="all-xmpp-test@192.168.72.130/def-user-resource"><query xmlns="jabber:iq:privacy"><default name="public"/></query></iq>
+]]></OUTPUT>
+<INPUT test='Privacy 1 (c2s)'>
+<![CDATA[<iq xmlns="jabber:client" id="privacy_7" to="all-xmpp-test@192.168.72.130/def-user-resource" type="result"/>
+]]></INPUT>
+<OUTPUT test='Privacy 1 (c2s)'>
+<![CDATA[<iq type="get" id="privacy_8" from="all-xmpp-test@192.168.72.130/def-user-resource"><query xmlns="jabber:iq:privacy"/></iq>
+]]></OUTPUT>
+<INPUT test='Privacy 1 (c2s)'>
+<![CDATA[<iq xmlns="jabber:client" id="privacy_8" to="all-xmpp-test@192.168.72.130/def-user-resource" type="result"><query xmlns="jabber:iq:privacy"><list name="public"/><default name="public"/><active name="public"/></query></iq>
+]]></INPUT>
+<OUTPUT test='Privacy 1 (c2s)'>
+<![CDATA[<iq type="set" id="privacy_9" from="all-xmpp-test@192.168.72.130/def-user-resource"><query xmlns="jabber:iq:privacy"><default/></query></iq>
+]]></OUTPUT>
+<INPUT test='Privacy 1 (c2s)'>
+<![CDATA[<iq xmlns="jabber:client" id="privacy_9" to="all-xmpp-test@192.168.72.130/def-user-resource" type="result"/>
+]]></INPUT>
+<OUTPUT test='Privacy 1 (c2s)'>
+<![CDATA[<iq type="get" id="privacy_10" from="all-xmpp-test@192.168.72.130/def-user-resource"><query xmlns="jabber:iq:privacy"/></iq>
+]]></OUTPUT>
+<INPUT test='Privacy 1 (c2s)'>
+<![CDATA[<iq xmlns="jabber:client" id="privacy_10" to="all-xmpp-test@192.168.72.130/def-user-resource" type="result"><query xmlns="jabber:iq:privacy"><list name="public"/><active name="public"/></query></iq>
+]]></INPUT>
+<OUTPUT test='Privacy 1 (c2s)'>
+<![CDATA[<iq type="set" id="privacy_11" from="all-xmpp-test@192.168.72.130/def-user-resource"><query xmlns="jabber:iq:privacy"><active/></query></iq>
+]]></OUTPUT>
+<INPUT test='Privacy 1 (c2s)'>
+<![CDATA[<iq xmlns="jabber:client" id="privacy_11" to="all-xmpp-test@192.168.72.130/def-user-resource" type="result"/>
+]]></INPUT>
+<OUTPUT test='Privacy 1 (c2s)'>
+<![CDATA[<iq type="get" id="privacy_12" from="all-xmpp-test@192.168.72.130/def-user-resource"><query xmlns="jabber:iq:privacy"/></iq>
+]]></OUTPUT>
+<INPUT test='Privacy 1 (c2s)'>
+<![CDATA[<iq xmlns="jabber:client" id="privacy_12" to="all-xmpp-test@192.168.72.130/def-user-resource" type="result"><query xmlns="jabber:iq:privacy"><list name="public"/></query></iq>
+]]></INPUT>
+<OUTPUT test='Privacy 1 (c2s)'>
+<![CDATA[<iq type="set" id="privacy_13" from="all-xmpp-test@192.168.72.130/def-user-resource"><query xmlns="jabber:iq:privacy"><list name="public"/></query></iq>
+]]></OUTPUT>
+<INPUT test='Privacy 1 (c2s)'>
+<![CDATA[<iq xmlns="jabber:client" id="privacy_13" to="all-xmpp-test@192.168.72.130/def-user-resource" type="result"/>
+]]></INPUT>
+<OUTPUT test='Privacy 1 (c2s)'>
+<![CDATA[<iq type="get" id="privacy_14" from="all-xmpp-test@192.168.72.130/def-user-resource"><query xmlns="jabber:iq:privacy"/></iq>
+]]></OUTPUT>
+<INPUT test='Privacy 1 (c2s)'>
+<![CDATA[<iq xmlns="jabber:client" id="privacy_14" to="all-xmpp-test@192.168.72.130/def-user-resource" type="result"><query xmlns="jabber:iq:privacy"/></iq>
+]]></INPUT>
+
+</test-history>

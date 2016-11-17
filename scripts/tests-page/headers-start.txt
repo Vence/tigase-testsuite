@@ -1,0 +1,6 @@
+<table width="100%" border="1" cellpadding="1" cellspacing="1" summary="Tigase XMPP Server tests results for different databases">
+    <caption>Test results<br/>~<br/>(Passed | Failed | Total number of tests | Running time)</caption>
+    <tbody>
+        <tr>
+            <th width="125px">Date</th>
+            <th width="225px">Version</th>

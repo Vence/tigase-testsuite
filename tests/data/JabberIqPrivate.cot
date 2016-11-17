@@ -1,0 +1,147 @@
+##
+##  Tigase XMPP/Jabber Test Suite
+##  Copyright (C) 2004-2009 "Artur Hefczyc" <artur.hefczyc@tigase.org>
+##
+##  This program is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License.
+##
+##  This program is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with this program. Look for COPYING file in the top folder.
+##  If not, see http://www.gnu.org/licenses/.
+##
+##  $Rev: $
+##  Last modified by $Author: $
+##  $Date: $
+##
+
+# Test for jabber:iq:private - XEP-0049: Private XML Storage
+# http://www.xmpp.org/extensions/xep-0049.html
+# @author <a href="mailto:artur.hefczyc@tigase.org">Artur Hefczyc</a>
+# @version $Rev: $
+
+### 1. Repository is empty so asking for private data should return empty data
+send: {
+<iq type="get" id="1">
+  <query xmlns="jabber:iq:private">
+    <exodus xmlns="exodus:prefs"/>
+  </query>
+</iq>
+}
+expect: {
+<iq type="result" id="1">
+  <query xmlns="jabber:iq:private">
+    <exodus xmlns="exodus:prefs"/>
+  </query>
+</iq>
+}
+
+### 2. Save some private data... (taken from XEP)
+send: {
+<iq type="set" id="2">
+  <query xmlns="jabber:iq:private">
+    <exodus xmlns="exodus:prefs">
+      <defaultnick>Hamlet</defaultnick>
+    </exodus>
+  </query>
+</iq>
+}
+expect:
+{
+<iq type="result" id="2"/>
+}
+
+### 3. Save more data in different namespace...
+send: {
+<iq type="set" id="3">
+  <query xmlns="jabber:iq:private">
+    <test-data xmlns="tigase:test">
+      <data-element>and the content</data-element>
+    </test-data>
+  </query>
+</iq>
+}
+expect:
+{
+<iq type="result" id="3"/>
+}
+
+### 4. Rertieve saved data:
+send: {
+<iq type="get" id="4">
+  <query xmlns="jabber:iq:private">
+    <exodus xmlns="exodus:prefs"/>
+  </query>
+</iq>
+}
+expect: {
+<iq type="result" id="4">
+  <query xmlns="jabber:iq:private">
+    <exodus xmlns="exodus:prefs">
+      <defaultnick>Hamlet</defaultnick>
+    </exodus>
+  </query>
+</iq>
+}
+
+### 5. Rertieve different, saved data:
+send: {
+<iq type="get" id="5">
+  <query xmlns="jabber:iq:private">
+    <test-data xmlns="tigase:test"/>
+  </query>
+</iq>
+}
+expect: {
+<iq type="result" id="5">
+  <query xmlns="jabber:iq:private">
+    <test-data xmlns="tigase:test">
+      <data-element>and the content</data-element>
+    </test-data>
+  </query>
+</iq>
+}
+
+### 6. User Attempts to Get or Set Data for Another User (from XEP)
+send: {
+<iq type="set" to="hamlet@shakespeare.lit" id="1003">
+  <query xmlns="jabber:iq:private">
+    <exodus xmlns="exodus:prefs">
+      <defaultnick>Macbeth</defaultnick>
+    </exodus>
+  </query>
+</iq>
+}
+expect: {
+<iq id="1003" from="hamlet@shakespeare.lit" type="error">
+  <query xmlns="jabber:iq:private">
+    <exodus xmlns="exodus:prefs">
+      <defaultnick>Macbeth</defaultnick>
+    </exodus>
+  </query>
+  <error type="cancel">
+    <service-unavailable xmlns='urn:ietf:params:xml:ns:xmpp-stanzas'/>
+  </error>
+</iq>
+}
+
+### 7. User Attempts to Get Data Without Specifying Child Element/Namespace
+###    (taken from XEP)
+send: {
+<iq type="get" id="1004">
+  <query xmlns="jabber:iq:private"/>
+</iq>
+}
+expect: {
+<iq type="error" id="1004">
+  <query xmlns="jabber:iq:private"/>
+  <error type="modify">
+    <not-acceptable xmlns='urn:ietf:params:xml:ns:xmpp-stanzas'/>
+  </error>
+</iq>
+}

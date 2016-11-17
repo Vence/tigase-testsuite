@@ -1,0 +1,929 @@
+##
+##  Tigase XMPP/Jabber Test Suite
+##  Copyright (C) 2004-2009 "Artur Hefczyc" <artur.hefczyc@tigase.org>
+##
+##  This program is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License.
+##
+##  This program is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with this program. Look for COPYING file in the top folder.
+##  If not, see http://www.gnu.org/licenses/.
+##
+##  $Rev$
+##  Last modified by $Author$
+##  $Date$
+##
+
+# Sends message to a tester user who responsed with well defined text.
+# @author <a href="mailto:artur.hefczyc@tigase.org">Artur Hefczyc</a>
+# @version $Rev$
+
+send: {
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="1" >
+<body>Test message no 0000000</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="2" >
+<body>Test message no 1111111</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="3" >
+<body>Test message no 2222222</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="4" >
+<body>Test message no 3333333</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="5" >
+<body>Test message no 4444444</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="6" >
+<body>Test message no 5555555</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="7" >
+<body>Test message no 6666666</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="8" >
+<body>Test message no 7777777</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="9" >
+<body>Test message no 8888888</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="10" >
+<body>Test message no 9999999</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="11" >
+<body>Test message no 0000000</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="12" >
+<body>Test message no 1111111</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="13" >
+<body>Test message no 2222222</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="14" >
+<body>Test message no 3333333</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="15" >
+<body>Test message no 4444444</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="16" >
+<body>Test message no 5555555</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="17" >
+<body>Test message no 6666666</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="18" >
+<body>Test message no 7777777</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="19" >
+<body>Test message no 8888888</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="20" >
+<body>Test message no 9999999</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="21" >
+<body>Test message no 0000000</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="22" >
+<body>Test message no 1111111</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="23" >
+<body>Test message no 2222222</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="24" >
+<body>Test message no 3333333</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="25" >
+<body>Test message no 4444444</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="26" >
+<body>Test message no 5555555</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="27" >
+<body>Test message no 6666666</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="28" >
+<body>Test message no 7777777</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="29" >
+<body>Test message no 8888888</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="30" >
+<body>Test message no 9999999</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="31" >
+<body>Test message no 0000000</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="32" >
+<body>Test message no 1111111</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="33" >
+<body>Test message no 2222222</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="34" >
+<body>Test message no 3333333</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="35" >
+<body>Test message no 4444444</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="36" >
+<body>Test message no 5555555</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="37" >
+<body>Test message no 6666666</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="38" >
+<body>Test message no 7777777</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="39" >
+<body>Test message no 8888888</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="40" >
+<body>Test message no 9999999</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="41" >
+<body>Test message no 0000000</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="42" >
+<body>Test message no 1111111</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="43" >
+<body>Test message no 2222222</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="44" >
+<body>Test message no 3333333</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="45" >
+<body>Test message no 4444444</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="46" >
+<body>Test message no 5555555</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="47" >
+<body>Test message no 6666666</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="48" >
+<body>Test message no 7777777</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="49" >
+<body>Test message no 8888888</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="50" >
+<body>Test message no 9999999</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="51" >
+<body>Test message no 0000000</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="52" >
+<body>Test message no 1111111</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="53" >
+<body>Test message no 2222222</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="54" >
+<body>Test message no 3333333</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="55" >
+<body>Test message no 4444444</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="56" >
+<body>Test message no 5555555</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="57" >
+<body>Test message no 6666666</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="58" >
+<body>Test message no 7777777</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="59" >
+<body>Test message no 8888888</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="60" >
+<body>Test message no 9999999</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="61" >
+<body>Test message no 0000000</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="62" >
+<body>Test message no 1111111</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="63" >
+<body>Test message no 2222222</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="64" >
+<body>Test message no 3333333</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="65" >
+<body>Test message no 4444444</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="66" >
+<body>Test message no 5555555</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="67" >
+<body>Test message no 6666666</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="68" >
+<body>Test message no 7777777</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="69" >
+<body>Test message no 8888888</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="70" >
+<body>Test message no 9999999</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="71" >
+<body>Test message no 0000000</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="72" >
+<body>Test message no 1111111</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="73" >
+<body>Test message no 2222222</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="74" >
+<body>Test message no 3333333</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="75" >
+<body>Test message no 4444444</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="76" >
+<body>Test message no 5555555</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="77" >
+<body>Test message no 6666666</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="78" >
+<body>Test message no 7777777</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="79" >
+<body>Test message no 8888888</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="80" >
+<body>Test message no 9999999</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="81" >
+<body>Test message no 0000000</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="82" >
+<body>Test message no 1111111</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="83" >
+<body>Test message no 2222222</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="84" >
+<body>Test message no 3333333</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="85" >
+<body>Test message no 4444444</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="86" >
+<body>Test message no 5555555</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="87" >
+<body>Test message no 6666666</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="88" >
+<body>Test message no 7777777</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="89" >
+<body>Test message no 8888888</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="90" >
+<body>Test message no 9999999</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="91" >
+<body>Test message no 0000000</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="92" >
+<body>Test message no 1111111</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="93" >
+<body>Test message no 2222222</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="94" >
+<body>Test message no 3333333</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="95" >
+<body>Test message no 4444444</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="96" >
+<body>Test message no 5555555</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="97" >
+<body>Test message no 6666666</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="98" >
+<body>Test message no 7777777</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="99" >
+<body>Test message no 8888888</body>
+</message>
+<message type="chat" from="$(from-jid)" to="$(to-jid)" id="100" >
+<body>Test message no 9999999</body>
+</message>
+}
+
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="1">
+<body>This is response to your message: [Test message no 0000000]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="2">
+<body>This is response to your message: [Test message no 1111111]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="3">
+<body>This is response to your message: [Test message no 2222222]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="4">
+<body>This is response to your message: [Test message no 3333333]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="5">
+<body>This is response to your message: [Test message no 4444444]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="6">
+<body>This is response to your message: [Test message no 5555555]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="7">
+<body>This is response to your message: [Test message no 6666666]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="8">
+<body>This is response to your message: [Test message no 7777777]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="9">
+<body>This is response to your message: [Test message no 8888888]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="10">
+<body>This is response to your message: [Test message no 9999999]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="11">
+<body>This is response to your message: [Test message no 0000000]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="12">
+<body>This is response to your message: [Test message no 1111111]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="13">
+<body>This is response to your message: [Test message no 2222222]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="14">
+<body>This is response to your message: [Test message no 3333333]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="15">
+<body>This is response to your message: [Test message no 4444444]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="16">
+<body>This is response to your message: [Test message no 5555555]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="17">
+<body>This is response to your message: [Test message no 6666666]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="18">
+<body>This is response to your message: [Test message no 7777777]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="19">
+<body>This is response to your message: [Test message no 8888888]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="20">
+<body>This is response to your message: [Test message no 9999999]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="21">
+<body>This is response to your message: [Test message no 0000000]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="22">
+<body>This is response to your message: [Test message no 1111111]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="23">
+<body>This is response to your message: [Test message no 2222222]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="24">
+<body>This is response to your message: [Test message no 3333333]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="25">
+<body>This is response to your message: [Test message no 4444444]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="26">
+<body>This is response to your message: [Test message no 5555555]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="27">
+<body>This is response to your message: [Test message no 6666666]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="28">
+<body>This is response to your message: [Test message no 7777777]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="29">
+<body>This is response to your message: [Test message no 8888888]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="30">
+<body>This is response to your message: [Test message no 9999999]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="31">
+<body>This is response to your message: [Test message no 0000000]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="32">
+<body>This is response to your message: [Test message no 1111111]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="33">
+<body>This is response to your message: [Test message no 2222222]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="34">
+<body>This is response to your message: [Test message no 3333333]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="35">
+<body>This is response to your message: [Test message no 4444444]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="36">
+<body>This is response to your message: [Test message no 5555555]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="37">
+<body>This is response to your message: [Test message no 6666666]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="38">
+<body>This is response to your message: [Test message no 7777777]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="39">
+<body>This is response to your message: [Test message no 8888888]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="40">
+<body>This is response to your message: [Test message no 9999999]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="41">
+<body>This is response to your message: [Test message no 0000000]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="42">
+<body>This is response to your message: [Test message no 1111111]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="43">
+<body>This is response to your message: [Test message no 2222222]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="44">
+<body>This is response to your message: [Test message no 3333333]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="45">
+<body>This is response to your message: [Test message no 4444444]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="46">
+<body>This is response to your message: [Test message no 5555555]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="47">
+<body>This is response to your message: [Test message no 6666666]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="48">
+<body>This is response to your message: [Test message no 7777777]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="49">
+<body>This is response to your message: [Test message no 8888888]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="50">
+<body>This is response to your message: [Test message no 9999999]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="51">
+<body>This is response to your message: [Test message no 0000000]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="52">
+<body>This is response to your message: [Test message no 1111111]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="53">
+<body>This is response to your message: [Test message no 2222222]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="54">
+<body>This is response to your message: [Test message no 3333333]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="55">
+<body>This is response to your message: [Test message no 4444444]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="56">
+<body>This is response to your message: [Test message no 5555555]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="57">
+<body>This is response to your message: [Test message no 6666666]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="58">
+<body>This is response to your message: [Test message no 7777777]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="59">
+<body>This is response to your message: [Test message no 8888888]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="60">
+<body>This is response to your message: [Test message no 9999999]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="61">
+<body>This is response to your message: [Test message no 0000000]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="62">
+<body>This is response to your message: [Test message no 1111111]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="63">
+<body>This is response to your message: [Test message no 2222222]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="64">
+<body>This is response to your message: [Test message no 3333333]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="65">
+<body>This is response to your message: [Test message no 4444444]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="66">
+<body>This is response to your message: [Test message no 5555555]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="67">
+<body>This is response to your message: [Test message no 6666666]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="68">
+<body>This is response to your message: [Test message no 7777777]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="69">
+<body>This is response to your message: [Test message no 8888888]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="70">
+<body>This is response to your message: [Test message no 9999999]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="71">
+<body>This is response to your message: [Test message no 0000000]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="72">
+<body>This is response to your message: [Test message no 1111111]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="73">
+<body>This is response to your message: [Test message no 2222222]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="74">
+<body>This is response to your message: [Test message no 3333333]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="75">
+<body>This is response to your message: [Test message no 4444444]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="76">
+<body>This is response to your message: [Test message no 5555555]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="77">
+<body>This is response to your message: [Test message no 6666666]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="78">
+<body>This is response to your message: [Test message no 7777777]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="79">
+<body>This is response to your message: [Test message no 8888888]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="80">
+<body>This is response to your message: [Test message no 9999999]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="81">
+<body>This is response to your message: [Test message no 0000000]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="82">
+<body>This is response to your message: [Test message no 1111111]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="83">
+<body>This is response to your message: [Test message no 2222222]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="84">
+<body>This is response to your message: [Test message no 3333333]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="85">
+<body>This is response to your message: [Test message no 4444444]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="86">
+<body>This is response to your message: [Test message no 5555555]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="87">
+<body>This is response to your message: [Test message no 6666666]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="88">
+<body>This is response to your message: [Test message no 7777777]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="89">
+<body>This is response to your message: [Test message no 8888888]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="90">
+<body>This is response to your message: [Test message no 9999999]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="91">
+<body>This is response to your message: [Test message no 0000000]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="92">
+<body>This is response to your message: [Test message no 1111111]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="93">
+<body>This is response to your message: [Test message no 2222222]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="94">
+<body>This is response to your message: [Test message no 3333333]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="95">
+<body>This is response to your message: [Test message no 4444444]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="96">
+<body>This is response to your message: [Test message no 5555555]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="97">
+<body>This is response to your message: [Test message no 6666666]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="98">
+<body>This is response to your message: [Test message no 7777777]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="99">
+<body>This is response to your message: [Test message no 8888888]</body>
+<subject>Response</subject>
+</message>
+}
+expect: {
+<message from="$(to-jid)" type="normal" to="$(from-jid)" id="100">
+<body>This is response to your message: [Test message no 9999999]</body>
+<subject>Response</subject>
+</message>
+}

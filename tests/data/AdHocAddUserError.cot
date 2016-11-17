@@ -1,0 +1,117 @@
+##
+##  Tigase XMPP/Jabber Test Suite
+##  Copyright (C) 2004-2009 "Artur Hefczyc" <artur.hefczyc@tigase.org>
+##
+##  This program is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License.
+##
+##  This program is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with this program. Look for COPYING file in the top folder.
+##  If not, see http://www.gnu.org/licenses/.
+##
+##  $Rev: $
+##  Last modified by $Author: $
+##  $Date: $
+##
+
+
+send: {
+<iq id="add-user-1"
+    from="$(from-jid)"
+    to="$(to-jid)"
+    type="set">
+    <command xmlns="http://jabber.org/protocol/commands"
+             node="http://jabber.org/protocol/admin#add-user" />
+</iq>
+}
+
+
+expect: {
+<iq id="add-user-1"
+    from="$(to-jid)"
+    to="$(from-jid)"
+    type="result">
+    <command
+        xmlns="http://jabber.org/protocol/commands"
+        node="http://jabber.org/protocol/admin#add-user"
+        status="executing">
+        <x xmlns="jabber:x:data" type="form">
+            <title>Adding a User</title>
+            <instructions>Fill out this form to add a user.</instructions>
+            <field type="hidden" var="FORM_TYPE">
+                <value>http://jabber.org/protocol/admin</value>
+            </field>
+            <field type="jid-single" label="The Jabber ID for the account to be added" var="accountjid">
+                <value/>
+            </field>
+            <field type="text-private" label="The password for this account" var="password">
+                <value/>
+            </field>
+            <field type="text-private" label="Retype password" var="password-verify">
+                <value/>
+            </field>
+            <field type="text-single" label="Email address" var="email">
+                <value/>
+            </field>
+        </x>
+        <actions execute="complete">
+            <complete/>
+        </actions>
+    </command>
+</iq>
+}
+
+send: {
+<iq id="add-user-1"
+    from="$(from-jid)"
+    to="$(to-jid)"
+    type="set">
+    <command
+        xmlns="http://jabber.org/protocol/commands"
+        node="http://jabber.org/protocol/admin#add-user">
+        <x xmlns="jabber:x:data" type="submit">
+            <field type="hidden" var="FORM_TYPE">
+                <value>http://jabber.org/protocol/admin</value>
+            </field>
+            <field type="jid-single" var="accountjid">
+                <value>$(cdata)</value>
+            </field>
+            <field type="text-private" var="password">
+                <value>pass</value>
+            </field>
+            <field type="text-private" var="password-verify">
+                <value>pass</value>
+            </field>
+            <field type="text-single" var="email">
+                <value>$(cdata)</value>
+            </field>
+        </x>
+    </command>
+</iq>
+}
+
+# Expecting error
+
+expect: {
+<iq id="add-user-1"
+    from="$(to-jid)"
+    to="$(from-jid)"
+    type="result">
+    <command xmlns="http://jabber.org/protocol/commands"
+        status="completed"
+        node="http://jabber.org/protocol/admin#add-user">
+        <x xmlns="jabber:x:data" type="result">
+            <field type="fixed" var="Error">
+                <value>You do not have enough permissions to create account for this domain.</value>
+            </field>
+        </x>
+    </command>
+</iq>
+}
+

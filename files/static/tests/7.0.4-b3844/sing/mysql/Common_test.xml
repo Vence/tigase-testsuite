@@ -1,0 +1,51 @@
+<test-history test='Common test'>
+<OUTPUT test='Common test'>
+<![CDATA[<stream:stream xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' to='192.168.72.130' version='1.0'/>
+]]></OUTPUT>
+<INPUT test='Common test'>
+<![CDATA[<stream:stream xmlns="jabber:client" id="02147422-15ec-485a-b7f6-68e8324769eb" version="1.0" xmlns:stream="http://etherx.jabber.org/streams" from="192.168.72.130" xml:lang="en"/>
+]]></INPUT>
+<INPUT test='Common test'>
+<![CDATA[<stream:features><auth xmlns="http://jabber.org/features/iq-auth"/><register xmlns="http://jabber.org/features/iq-register"/><mechanisms xmlns="urn:ietf:params:xml:ns:xmpp-sasl"><mechanism>PLAIN</mechanism><mechanism>ANONYMOUS</mechanism></mechanisms><ver xmlns="urn:xmpp:features:rosterver"/><starttls xmlns="urn:ietf:params:xml:ns:xmpp-tls"/><compression xmlns="http://jabber.org/features/compress"><method>zlib</method></compression></stream:features>
+]]></INPUT>
+<OUTPUT test='Common test'>
+<![CDATA[<auth xmlns='urn:ietf:params:xml:ns:xmpp-sasl' mechanism='PLAIN'>AGFkbWluAHN0YXRz</auth>
+]]></OUTPUT>
+<INPUT test='Common test'>
+<![CDATA[<success xmlns="urn:ietf:params:xml:ns:xmpp-sasl"/>
+]]></INPUT>
+<OUTPUT test='Common test'>
+<![CDATA[<stream:stream xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' to='192.168.72.130' version='1.0'>
+]]></OUTPUT>
+<INPUT test='Common test'>
+<![CDATA[<stream:stream xmlns="jabber:client" id="02147422-15ec-485a-b7f6-68e8324769eb" version="1.0" xmlns:stream="http://etherx.jabber.org/streams" from="192.168.72.130" xml:lang="en"/>
+]]></INPUT>
+<INPUT test='Common test'>
+<![CDATA[<stream:features><register xmlns="http://jabber.org/features/iq-register"/><ver xmlns="urn:xmpp:features:rosterver"/><starttls xmlns="urn:ietf:params:xml:ns:xmpp-tls"/><compression xmlns="http://jabber.org/features/compress"><method>zlib</method></compression><bind xmlns="urn:ietf:params:xml:ns:xmpp-bind"/><session xmlns="urn:ietf:params:xml:ns:xmpp-session"/></stream:features>
+]]></INPUT>
+<OUTPUT test='Common test'>
+<![CDATA[<iq type='set' id='bind1'><bind xmlns='urn:ietf:params:xml:ns:xmpp-bind'><resource>xmpp-test</resource></bind></iq>
+]]></OUTPUT>
+<INPUT test='Common test'>
+<![CDATA[<iq xmlns="jabber:client" id="bind1" to="admin@192.168.72.130/xmpp-test" type="result"><bind xmlns="urn:ietf:params:xml:ns:xmpp-bind"><jid>admin@192.168.72.130/xmpp-test</jid></bind></iq>
+]]></INPUT>
+<OUTPUT test='Common test'>
+<![CDATA[<iq id="1001" type="set">
+<query xmlns="jabber:iq:private">
+<exodus xmlns="exodus:prefs">
+<defaultnick>Hamlet</defaultnick>
+</exodus>
+</query>
+</iq>
+]]></OUTPUT>
+<INPUT test='Common test'>
+<![CDATA[<iq xmlns="jabber:client" id="1001" to="admin@192.168.72.130/xmpp-test" type="result"/>
+]]></INPUT>
+<OUTPUT test='Common test'>
+<![CDATA[<iq type='set' id='session1'><session xmlns='urn:ietf:params:xml:ns:xmpp-session'/></iq>
+]]></OUTPUT>
+<INPUT test='Common test'>
+<![CDATA[<iq xmlns="jabber:client" id="session1" to="admin@192.168.72.130/xmpp-test" type="result"/>
+]]></INPUT>
+
+</test-history>

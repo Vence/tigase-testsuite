@@ -1,0 +1,85 @@
+##
+##  Tigase XMPP/Jabber Test Suite
+##  Copyright (C) 2004-2009 "Artur Hefczyc" <artur.hefczyc@tigase.org>
+##
+##  This program is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License.
+##
+##  This program is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with this program. Look for COPYING file in the top folder.
+##  If not, see http://www.gnu.org/licenses/.
+##
+##  $Rev: 213 $
+##  Last modified by $Author: kobit $
+##  $Date: 2010-08-03 03:24:53 +0200 (Tue, 03 Aug 2010) $
+##
+
+send: {
+	<iq type="set" to="vhost-man@$(to-hostname)">
+		<command xmlns="http://jabber.org/protocol/commands" node="comp-repo-item-update">
+			<x xmlns="jabber:x:data" type="submit">
+				<field type="text-single" var="Domain name">
+					<value>$(virtual-host)</value>
+				</field>
+				<field type="boolean" var="Enabled">
+					<value>1</value>
+				</field>
+				<field type="boolean" var="Anonymous enabled">
+					<value>1</value>
+				</field>
+				<field type="boolean" var="In-band registration">
+					<value>1</value>
+				</field>
+				<field type="text-single" var="Max users">
+					<value>0</value>
+				</field>
+				<field type="text-single" var="Presence forward address">
+					<value>
+					</value>
+				</field>
+				<field type="text-single" var="Message forward address">
+					<value>
+					</value>
+				</field>
+				<field type="text-single" var="Other parameters">
+					<value>
+					</value>
+				</field>
+				<field type="text-single" var="Owner">
+					<value>$(domain-owner-user)@$(to-hostname)</value>
+				</field>
+				<field type="text-single" var="Administrators">
+					<value>$(domain-admin-user)@$(virtual-host)</value>
+				</field>
+				<field var="S2S secret">
+					<value>some-secret</value>
+				</field>			
+				<field type="hidden" var="command-marker">
+					<value>command-marker</value>
+				</field>
+				<field type="hidden" var="item-list">
+					<value>test-domain</value>
+				</field>
+			</x>
+		</command>
+	</iq>
+}
+
+expect: {
+<iq from="vhost-man@$(to-hostname)" type="result">
+    <command xmlns="http://jabber.org/protocol/commands" status="completed" node="comp-repo-item-update">
+        <x xmlns="jabber:x:data" type="result">
+            <field type="fixed" var="Note">
+                <value>Operation successful</value>
+            </field>
+        </x>
+    </command>
+</iq>
+}
+

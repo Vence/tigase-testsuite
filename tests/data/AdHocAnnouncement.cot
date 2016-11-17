@@ -1,0 +1,133 @@
+##
+##  Tigase XMPP/Jabber Test Suite
+##  Copyright (C) 2004-2009 "Artur Hefczyc" <artur.hefczyc@tigase.org>
+##
+##  This program is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License.
+##
+##  This program is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with this program. Look for COPYING file in the top folder.
+##  If not, see http://www.gnu.org/licenses/.
+##
+##  $Rev: $
+##  Last modified by $Author: $
+##  $Date: $
+##
+
+send: {
+<iq id="announce-1"
+    from="$(from-jid)"
+    to="$(to-jid)"
+    type="set">
+    <command xmlns="http://jabber.org/protocol/commands"
+             node="http://jabber.org/protocol/admin#announce" />
+</iq>
+}
+
+expect: {
+<iq id="announce-1"
+    from="$(to-jid)"
+    to="$(from-jid)"
+    type="result">
+    <command
+        xmlns="http://jabber.org/protocol/commands"
+        node="http://jabber.org/protocol/admin#announce"
+        status="executing">
+        <x xmlns="jabber:x:data" type="form">
+            <title>Message to online users</title>
+            <instructions>Fill out this form to make an announcement to all active users of this service.</instructions>
+            <field type='hidden' var='FORM_TYPE'>
+                <value>http://jabber.org/protocol/admin</value>
+            </field>
+            <field type="jid-single" label="From address" var="from-jid">
+                <value>$(hostname)</value>
+            </field>
+            <field type="text-single" label="Subject" var="subject">
+                <value>Message from administrators</value>
+            </field>
+            <field type="list-single" label="Type" var="msg-type">
+                <value>normal</value>
+                <option label="normal">
+                    <value>normal</value>
+                </option>
+                <option label="headline">
+                    <value>headline</value>
+                </option>
+                <option label="chat">
+                    <value>chat</value>
+                </option>
+            </field>
+            <field type="text-multi" var="announcement">
+                <value/>
+            </field>
+        </x>
+    </command>
+</iq>
+}
+
+
+send: {
+<iq id="announce-2"
+    from="$(from-jid)"
+    to="$(to-jid)"
+    type="set">
+    <command
+        xmlns="http://jabber.org/protocol/commands"
+        node="http://jabber.org/protocol/admin#announce">
+        <x xmlns='jabber:x:data' type='submit'>
+          <field type='hidden' var='FORM_TYPE'>
+            <value>http://jabber.org/protocol/admin</value>
+          </field>
+            <field type="jid-single" var="from-jid">
+                <value>$(hostname)</value>
+            </field>
+            <field type="text-single" var="subject">
+                <value>Message from administrators</value>
+            </field>
+            <field type="list-single" var="msg-type">
+                <value>normal</value>
+            </field>
+            <field type="text-multi" var="announcement">
+                <value>test</value>
+            </field>
+        </x>
+    </command>
+</iq>
+}
+
+#expect: {
+#<message
+#    from="$(hostname)"
+#    type="normal"
+#    to="$(from-jid)">
+#    <body>test</body>
+#    <subject>Message from administrators</subject>
+#</message>
+#}
+
+## unfortunatelly currently there is no way to differentiate responses based on some conditions
+
+expect: {
+<message>
+</message>
+<iq id="announce-2"
+    from="$(to-jid)"
+    to="$(from-jid)"
+    type="result">
+    <command xmlns="http://jabber.org/protocol/commands"
+        status="completed"
+        node="http://jabber.org/protocol/admin#announce">
+        <x xmlns="jabber:x:data" type="result">
+            <field type="fixed" var="Note">
+                <value>Operation successful</value>
+            </field>
+        </x>
+    </command>
+</iq>
+}

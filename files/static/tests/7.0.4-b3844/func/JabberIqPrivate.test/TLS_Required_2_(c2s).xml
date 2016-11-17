@@ -1,0 +1,48 @@
+<test-history test='TLS Required 2 (c2s)'>
+<OUTPUT test='TLS Required 2 (c2s)'>
+<![CDATA[<stream:stream xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' to='tls-required.com' version='1.0'/>
+]]></OUTPUT>
+<INPUT test='TLS Required 2 (c2s)'>
+<![CDATA[<stream:stream xmlns="jabber:client" id="tigase-error-tigase" version="1.0" xmlns:stream="http://etherx.jabber.org/streams" from="192.168.72.130" xml:lang="en"/>
+]]></INPUT>
+<OUTPUT test='TLS Required 2 (c2s)'>
+<![CDATA[<starttls xmlns='urn:ietf:params:xml:ns:xmpp-tls'/>
+]]></OUTPUT>
+<INPUT test='TLS Required 2 (c2s)'>
+<![CDATA[tigase.test.impl.TestTLS, all-xmpp-test@tls-required.com/def-user-resource(all-xmpp-test-password), java.io.EOFException: End of stream on network socket detected.
+tigase.test.util.SocketXMLIO.read(SocketXMLIO.java:199)
+tigase.test.TestAbstract.run(TestAbstract.java:390)
+tigase.test.Test$DaemonTest.run(Test.java:501)
+tigase.test.Test.runTest(Test.java:270)
+tigase.test.Test.runTest(Test.java:218)
+tigase.test.TestScriptLoader.runTest(TestScriptLoader.java:152)
+tigase.test.TestScriptLoader.runTest(TestScriptLoader.java:178)
+tigase.test.TestScriptLoader.runTest(TestScriptLoader.java:178)
+tigase.test.TestScriptLoader.runTests(TestScriptLoader.java:95)
+tigase.test.TestSuite.main(TestSuite.java:75)
+
+]]></INPUT>
+<OUTPUT test='TLS Required 2 (c2s)'>
+<![CDATA[<iq id="reg-tls1" type="get">
+<query xmlns="jabber:iq:register"/>
+</iq>
+]]></OUTPUT>
+<INPUT test='TLS Required 2 (c2s)'>
+<![CDATA[1: tigase.test.impl.TestCommonNoBind, java.net.SocketException: Software caused connection abort: socket write error
+java.net.SocketOutputStream.socketWrite0(Native Method)
+java.net.SocketOutputStream.socketWrite(SocketOutputStream.java:109)
+java.net.SocketOutputStream.write(SocketOutputStream.java:141)
+tigase.test.util.SocketXMLIO.write(SocketXMLIO.java:173)
+tigase.test.impl.TestCommon.run(TestCommon.java:307)
+tigase.test.Test$DaemonTest.run(Test.java:501)
+tigase.test.Test.runTest(Test.java:270)
+tigase.test.Test.runTest(Test.java:218)
+tigase.test.TestScriptLoader.runTest(TestScriptLoader.java:152)
+tigase.test.TestScriptLoader.runTest(TestScriptLoader.java:178)
+tigase.test.TestScriptLoader.runTest(TestScriptLoader.java:178)
+tigase.test.TestScriptLoader.runTests(TestScriptLoader.java:95)
+tigase.test.TestSuite.main(TestSuite.java:75)
+
+]]></INPUT>
+
+</test-history>

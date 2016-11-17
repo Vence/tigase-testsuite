@@ -1,0 +1,179 @@
+##
+##  Tigase XMPP/Jabber Test Suite
+##  Copyright (C) 2004-2009 "Artur Hefczyc" <artur.hefczyc@tigase.org>
+##
+##  This program is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License.
+##
+##  This program is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with this program. Look for COPYING file in the top folder.
+##  If not, see http://www.gnu.org/licenses/.
+##
+##  $Rev$
+##  Last modified by $Author$
+##  $Date$
+##
+-version = "2.0.0"
+
+-output-format  = html
+-output-file    = "../www/basic-tests.html"
+-output-history = yes
+-history-format = separate-file
+-output-cols    = 7
+-title          = "XMPP Server basic functional tests."
+
+$(server-host) = "192.168.72.130"
+$(virtual-host) = "192.168.72.130"
+$(def-user)    = all-xmpp-test
+$(def-user-pass) = all-xmpp-test-password
+$(def-user-resr) = def-user-resource
+$(daemon-user) = all-xmpp-test_1
+$(blocking-user) = blocking-test-user_1
+$(long-list-user) = long-list-user_1
+$(ssl-tls-wait) = 15000
+$(stats-user) = admin
+$(stats-pass) = stats
+$(tester-user) = tester_1
+$(number) = 1
+
+
+-serverip    = "192.168.72.130"
+-host        = $(server-host)
+-user-name   = $(def-user)
+-user-pass   = $(def-user-pass)
+-user-resr   = $(def-user-resr)
+-number      = $(number)
+-socket-wait = 15000
+-base-ns     = "jabber:client"
+-def-auth    = auth-sasl
+-def-stream  = stream-client
+-keys-file-password   = keystore
+-trusts-file-password = truststore
+-keys-file            = "certs/keystore"
+-trusts-file          = "certs/client_truststore"
+
+#-debug
+-debug-on-error
+-stop-on-fail = true
+
+Global settings:
+{
+  -loop = 1
+
+  Prepare: {
+    -no-record
+
+    Prep 1@user-register: >> XEP-0077 - In-Band Registration, register <<
+
+    Prep 2@user-register: {
+      -user-name = $(daemon-user)
+    } >> Create a daemon user account <<
+
+    Prep 3@msg-listen: {
+      -daemon
+      -presence
+
+      -socket-wait = 0
+      -user-name   = $(daemon-user)
+      -delay       = 500
+    } >> Setup a user daemon wating for messages <<
+
+  } >> Basic setup <<
+
+#  Basic 1@socket: >> Plain socket connect. <<
+  Basic 1@stream-open: >> Stream open to server. <<
+
+  Basic 2@user-register: {
+    -user-name   = user-register-name
+    -user-pass   = user-register-pass
+  } >> XEP-0077 - In-Band Registration, register <<
+
+  Basic 3@user-unregister: {
+    -user-name   = user-register-name
+    -user-pass   = user-register-pass
+    -disconnect-ok = true
+  } >> XEP-0077 - In-Band Registration - user unregister <<
+
+  Basic 4@auth-plain: { -def-auth = auth-plain } >> XEP-0078 Non-SASL authorization with plain password. <<
+  Basic 5@auth-digest: { -def-auth = auth-plain } >> XEP-0078 Non-SASL authorization with digest password. <<
+
+  Basic 6@msg-send: {
+    -to-jid = $(self)
+    -delay       = 500
+    -time-out-ok
+   } >> Send a message to self user and don't wait for response <<
+
+  Basic 7@common: {
+    -to-jid = "$(daemon-user)@$(server-host)/def-user-resource"
+    -source-file = "tests/data/MessageSendFullJidOK.cot"
+  } >> Message send to correct/available full JID: $(daemon-user)@$(server-host)/def-user-resource, expecting response <<
+
+  Basic 8@common: {
+    -presence
+    -to-jid = "$(daemon-user)@$(server-host)/def-user-resource"
+    -source-file = "tests/data/MessageSendBareJidOK.cot"
+  } >> Message send to correct/available bare JID: $(daemon-user)@$(server-host), expecting response <<
+
+  Basic 9@common: {
+    -to-jid = "$(daemon-user)@$(server-host)/wrong-resource"
+    -source-file = "tests/data/IQSendUnavailableError.cot"
+  } >> IQ stanza send to incorrect/unavailable full JID: $(daemon-user)@$(server-host)/wrong-resource, expecting error response <<
+
+  Basic 10@iq-version: >> XEP-0092 - get entity version <<
+  Basic 11@iq-stats: XEP-0039 Statistics Gathering
+    { -user-name=$(stats-user) -user-pass=$(stats-pass) }
+    >> XEP-0039 Statistics Gathering. <<
+
+  Basic 12@common: {
+    -reset-stanza-vars = "@{roster-test-id},@{roster-test-group},@{roster-test-id1},@{roster-test-id2},@{roster-test-id3}"
+    -source-file = "tests/data/RosterTest.cot"
+  } >> Roster management test <<
+
+  Basic 13@common: {
+    -reset-stanza-vars = "@{roster-test-id},@{roster-test-group},@{roster-test-id1},@{roster-test-id2},@{roster-test-id3}"
+    -source-file = "tests/data/RosterUppercaseTest.cot"
+  } >> Roster with uppercase characters test, this tests verifies if the roster item removed in previous test is really removed from DB and empty on user relogin. <<
+
+  Basic 14@common: { -source-file = "tests/data/JabberIqPrivate.cot" }
+  >> XEP-0049: Private XML Storage <<
+
+  Basic 15@common: { -source-file = "tests/data/FeatureNotImplemented.cot" }
+  >> Test for feature-not-implemented error which should be returned when client sends unsupported stanza <<
+
+  Basic 16@common: { -source-file = "tests/data/vcard-temp.cot" }
+  >> XEP-0054: vcard-temp <<
+
+  Basic 17@common: {
+    -to-jid = $(server-host)
+    -source-file = "tests/data/UrnXmppPing.cot"
+  } >> XEP-0199: XMPP Ping to domain '$(server-host)' the user is logged in <<
+
+  Basic 18@common: {
+    -to-jid = $(virtual-host)
+    -source-file = "tests/data/UrnXmppPing.cot"
+  } >> XEP-0199: XMPP Ping to another, vrtual domain '$(virtual-host)' on the server <<
+
+  Basic 19@common: {
+    -user-name = $(stats-user)
+    -user-pass = $(stats-pass)
+    -source-file = "tests/data/ServiceDiscovery.cot"
+  } >> XEP-0030: XMPP Service Discovery <<
+
+  Basic 20@auth-sasl;common-no-bind: {
+    -to-jid = "$(stats-user)@$(server-host)/$(def-user-resr)"
+    -source-file = "tests/data/MessageNoBind.cot"
+  } >> Send a message without resource binding and expect an error response. <<
+
+  Basic 21@common: {
+    -reset-stanza-vars = "@{roster-test-id},@{roster-test-group},@{roster-test-id1},@{roster-test-id2},@{roster-test-id3}"
+    -source-file = "tests/data/XMLUtilEncodingBug431Test.cot"
+  } >> Bug #431 - XMLUtil encoding problem: https://projects.tigase.org/issues/431 <<
+
+}
+>> Script for basic XMPP functions <<

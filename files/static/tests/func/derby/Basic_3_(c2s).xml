@@ -1,0 +1,27 @@
+<test-history test='Basic 3 (c2s)'>
+<OUTPUT test='Basic 3 (c2s)'>
+<![CDATA[<stream:stream xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' to='test-d' version='1.0'/>
+]]></OUTPUT>
+<INPUT test='Basic 3 (c2s)'>
+<![CDATA[<stream:stream xmlns="jabber:client" from="127.0.0.1" version="1.0" xmlns:stream="http://etherx.jabber.org/streams" id="tigase-error-tigase" xml:lang="en"/>
+]]></INPUT>
+<OUTPUT test='Basic 3 (c2s)'>
+<![CDATA[<auth xmlns='urn:ietf:params:xml:ns:xmpp-sasl' mechanism='CRAP-NO-MECHS-IN-FEATURES'/>
+]]></OUTPUT>
+<INPUT test='Basic 3 (c2s)'>
+<![CDATA[tigase.test.impl.TestSASL, user-register-name@test-d/def-user-resource(user-register-pass), Software caused connection abort: recv failed
+]]></INPUT>
+<OUTPUT test='Basic 3 (c2s)'>
+<![CDATA[<iq type='set' id='bind1'><bind xmlns='urn:ietf:params:xml:ns:xmpp-bind'><resource>def-user-resource</resource></bind></iq>
+]]></OUTPUT>
+<INPUT test='Basic 3 (c2s)'>
+<![CDATA[tigase.test.impl.TestXMPPBind, user-register-name@test-d/def-user-resource(user-register-pass), Software caused connection abort: socket write error
+]]></INPUT>
+<OUTPUT test='Basic 3 (c2s)'>
+<![CDATA[<iq type='set' id='unreg1' from='user-register-name@test-d/def-user-resource'><query xmlns='jabber:iq:register'><remove/></query></iq>
+]]></OUTPUT>
+<INPUT test='Basic 3 (c2s)'>
+<![CDATA[tigase.test.impl.TestUnregister, user-register-name@test-d/def-user-resource(user-register-pass), Software caused connection abort: socket write error
+]]></INPUT>
+
+</test-history>

@@ -1,0 +1,44 @@
+<test-history test='TLS Required 1 (c2s)'>
+<OUTPUT test='TLS Required 1 (c2s)'>
+<![CDATA[<stream:stream xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' to='tls-required.com' version='1.0'/>
+]]></OUTPUT>
+<INPUT test='TLS Required 1 (c2s)'>
+<![CDATA[<stream:stream xmlns="jabber:client" from="127.0.0.1" version="1.0" xmlns:stream="http://etherx.jabber.org/streams" id="tigase-error-tigase" xml:lang="en"/>
+]]></INPUT>
+<OUTPUT test='TLS Required 1 (c2s)'>
+<![CDATA[<iq type="get" id="reg-no-tls1">
+<query xmlns="jabber:iq:register"/>
+</iq>
+]]></OUTPUT>
+<INPUT test='TLS Required 1 (c2s)'>
+<![CDATA[1: tigase.test.impl.TestCommonNoBind, java.net.SocketException: Software caused connection abort: recv failed
+java.net.SocketInputStream.socketRead0(Native Method)
+java.net.SocketInputStream.socketRead(SocketInputStream.java:116)
+java.net.SocketInputStream.read(SocketInputStream.java:170)
+java.net.SocketInputStream.read(SocketInputStream.java:141)
+sun.nio.cs.StreamDecoder.readBytes(StreamDecoder.java:284)
+sun.nio.cs.StreamDecoder.implRead(StreamDecoder.java:326)
+sun.nio.cs.StreamDecoder.read(StreamDecoder.java:178)
+java.io.InputStreamReader.read(InputStreamReader.java:184)
+java.io.Reader.read(Reader.java:140)
+tigase.test.util.SocketXMLIO.read(SocketXMLIO.java:196)
+tigase.test.impl.TestCommon.run(TestCommon.java:320)
+tigase.test.Test$DaemonTest.run(Test.java:501)
+tigase.test.Test.runTest(Test.java:270)
+tigase.test.Test.runTest(Test.java:218)
+tigase.test.TestScriptLoader.runTest(TestScriptLoader.java:152)
+tigase.test.TestScriptLoader.runTest(TestScriptLoader.java:178)
+tigase.test.TestScriptLoader.runTest(TestScriptLoader.java:178)
+tigase.test.TestScriptLoader.runTests(TestScriptLoader.java:95)
+tigase.test.TestSuite.main(TestSuite.java:75)
+
+1: Expected: [<iq type="error" id="reg-no-tls1">
+<query xmlns="jabber:iq:register"/>
+<error type="cancel" code="503">
+<service-unavailable xmlns="urn:ietf:params:xml:ns:xmpp-stanzas"/>
+<text xmlns="urn:ietf:params:xml:ns:xmpp-stanzas" xml:lang="en">Service not available.</text>
+</error>
+</iq>]
+]]></INPUT>
+
+</test-history>

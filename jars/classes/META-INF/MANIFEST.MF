@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Implementation-Vendor: Tigase
+Implementation-Title: Tigase Test Suite
+Implementation-Version: 2.3.0-SNAPSHOT-b${gitVersion}/${buildNumber}
+Implementation-Vendor-Id: tigase
+Build-Jdk: 1.6.0_43
+Built-By: shenj
+Created-By: Maven Integration for Eclipse
+Implementation-Build: ${gitVersion}/${buildNumber} (${maven.build.time
+ stamp})
+

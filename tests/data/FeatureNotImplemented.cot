@@ -1,0 +1,57 @@
+##
+##  Tigase XMPP/Jabber Test Suite
+##  Copyright (C) 2004-2009 "Artur Hefczyc" <artur.hefczyc@tigase.org>
+##
+##  This program is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License.
+##
+##  This program is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with this program. Look for COPYING file in the top folder.
+##  If not, see http://www.gnu.org/licenses/.
+##
+##  $Rev: $
+##  Last modified by $Author: $
+##  $Date: $
+##
+
+# Test for feature-not-implemented error which should be returned when
+# client sends unsupported stanza
+# @author <a href="mailto:artur.hefczyc@tigase.org">Artur Hefczyc</a>
+# @version $Rev: $
+
+### 1. Send some, non existen element to the server:
+send: {
+<iq type="get" id="1">
+  <not-yet-supported xmlns="test:unsupported:feature"/>
+</iq>
+}
+expect: {
+<iq id="1" type="error">
+  <not-yet-supported xmlns="test:unsupported:feature"/>
+  <error type="cancel">
+    <feature-not-implemented xmlns="urn:ietf:params:xml:ns:xmpp-stanzas"/>
+  </error>
+</iq>
+}
+
+### 2. This is old service discovery request which is not supported
+###    by Tigase server so the same error should be returned
+send: {
+<iq xmlns="jabber:client" id="agsXMPP_3" type="get" to="$(hostname)">
+  <query xmlns="jabber:iq:agents" />
+</iq>
+}
+expect: {
+<iq id="agsXMPP_3" type="error" from="$(hostname)">
+  <query xmlns="jabber:iq:agents" />
+  <error type="cancel">
+    <feature-not-implemented xmlns="urn:ietf:params:xml:ns:xmpp-stanzas"/>
+  </error>
+</iq>
+}

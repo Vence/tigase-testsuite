@@ -1,0 +1,51 @@
+<test-history test='Basic 12 (c2s)'>
+<OUTPUT test='Basic 12 (c2s)'>
+<![CDATA[<stream:stream xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' to='192.168.72.130' version='1.0'/>
+]]></OUTPUT>
+<INPUT test='Basic 12 (c2s)'>
+<![CDATA[<stream:stream xmlns="jabber:client" id="8a6607e8-cbc7-4329-980d-68a6d17e4d12" version="1.0" xmlns:stream="http://etherx.jabber.org/streams" from="192.168.72.130" xml:lang="en"/>
+]]></INPUT>
+<INPUT test='Basic 12 (c2s)'>
+<![CDATA[<stream:features><auth xmlns="http://jabber.org/features/iq-auth"/><register xmlns="http://jabber.org/features/iq-register"/><mechanisms xmlns="urn:ietf:params:xml:ns:xmpp-sasl"><mechanism>PLAIN</mechanism><mechanism>ANONYMOUS</mechanism></mechanisms><ver xmlns="urn:xmpp:features:rosterver"/><starttls xmlns="urn:ietf:params:xml:ns:xmpp-tls"/><compression xmlns="http://jabber.org/features/compress"><method>zlib</method></compression></stream:features>
+]]></INPUT>
+<OUTPUT test='Basic 12 (c2s)'>
+<![CDATA[<auth xmlns='urn:ietf:params:xml:ns:xmpp-sasl' mechanism='PLAIN'>AGFsbC14bXBwLXRlc3QAYWxsLXhtcHAtdGVzdC1wYXNzd29yZA==</auth>
+]]></OUTPUT>
+<INPUT test='Basic 12 (c2s)'>
+<![CDATA[<success xmlns="urn:ietf:params:xml:ns:xmpp-sasl"/>
+]]></INPUT>
+<OUTPUT test='Basic 12 (c2s)'>
+<![CDATA[<stream:stream xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' to='192.168.72.130' version='1.0'>
+]]></OUTPUT>
+<INPUT test='Basic 12 (c2s)'>
+<![CDATA[<stream:stream xmlns="jabber:client" id="8a6607e8-cbc7-4329-980d-68a6d17e4d12" version="1.0" xmlns:stream="http://etherx.jabber.org/streams" from="192.168.72.130" xml:lang="en"/>
+]]></INPUT>
+<INPUT test='Basic 12 (c2s)'>
+<![CDATA[<stream:features><register xmlns="http://jabber.org/features/iq-register"/><ver xmlns="urn:xmpp:features:rosterver"/><starttls xmlns="urn:ietf:params:xml:ns:xmpp-tls"/><compression xmlns="http://jabber.org/features/compress"><method>zlib</method></compression><bind xmlns="urn:ietf:params:xml:ns:xmpp-bind"/><session xmlns="urn:ietf:params:xml:ns:xmpp-session"/></stream:features>
+]]></INPUT>
+<OUTPUT test='Basic 12 (c2s)'>
+<![CDATA[<iq type='set' id='bind1'><bind xmlns='urn:ietf:params:xml:ns:xmpp-bind'><resource>def-user-resource</resource></bind></iq>
+]]></OUTPUT>
+<INPUT test='Basic 12 (c2s)'>
+<![CDATA[<iq xmlns="jabber:client" id="bind1" to="all-xmpp-test@192.168.72.130/def-user-resource" type="result"><bind xmlns="urn:ietf:params:xml:ns:xmpp-bind"><jid>all-xmpp-test@192.168.72.130/def-user-resource</jid></bind></iq>
+]]></INPUT>
+<OUTPUT test='Basic 12 (c2s)'>
+<![CDATA[<iq id="roster_1" type="get">
+<query xmlns="jabber:iq:roster"/>
+</iq>
+]]></OUTPUT>
+<INPUT test='Basic 12 (c2s)'>
+<![CDATA[<iq xmlns="jabber:client" id="roster_1" to="all-xmpp-test@192.168.72.130/def-user-resource" type="result"><query xmlns="jabber:iq:roster"/></iq>
+]]></INPUT>
+<INPUT test='Basic 12 (c2s)'>
+<![CDATA[1: tigase.test.impl.TestCommon, Read timed out
+1: Expected: [<iq id="@{roster-test-id}" type="set">
+<query xmlns="jabber:iq:roster">
+<item name="dynrost" jid="dynrost@test-d" subscription="both">
+<group>@{roster-test-group}</group>
+</item>
+</query>
+</iq>]
+]]></INPUT>
+
+</test-history>
